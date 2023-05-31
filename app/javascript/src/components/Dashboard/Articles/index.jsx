@@ -4,14 +4,15 @@ import { Search, Plus } from "neetoicons";
 import { Typography, Button } from "neetoui";
 import { MenuBar, Header, Container } from "neetoui/layouts";
 
-import EmptyState from "components/Common/EmptyState";
+import { ARTICLES } from "./constants";
+import List from "./List";
 
 const Articles = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [articles, setArticles] = useState([]);
 
-  useEffect(() => setArticles([]), []);
+  useEffect(() => setArticles(ARTICLES), []);
 
   return (
     <>
@@ -37,19 +38,11 @@ const Articles = () => {
           title="All articles"
           searchProps={{
             placeholder: "Search article titles",
-            onChange: ({ target: value }) => setSearchTerm(value),
+            onChange: ({ target: { value } }) => setSearchTerm(value),
             value: searchTerm,
           }}
         />
-        {articles.length ? (
-          <>Table</>
-        ) : (
-          <EmptyState
-            actionLabel="Add article"
-            subTitle="You have not yet creted an article. Create an article using the CTA given below."
-            title="There are no articles."
-          />
-        )}
+        <List articles={articles} />
       </Container>
     </>
   );
