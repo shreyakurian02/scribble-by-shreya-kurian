@@ -46,9 +46,11 @@ module.exports = function (api) {
       ],
     ].filter(Boolean),
     plugins: [
-      "js-logger",
+      ["@babel/plugin-proposal-private-methods", { loose: true }],
+      ["@babel/plugin-proposal-private-property-in-object", { loose: true }],
       "babel-plugin-macros",
       "@babel/plugin-syntax-dynamic-import",
+      "js-logger",
       isTestEnv && "babel-plugin-dynamic-import-node",
       "@babel/plugin-transform-destructuring",
       [
@@ -61,18 +63,6 @@ module.exports = function (api) {
         "@babel/plugin-proposal-object-rest-spread",
         {
           useBuiltIns: true,
-        },
-      ],
-      [
-        "@babel/plugin-proposal-private-methods",
-        {
-          loose: true,
-        },
-      ],
-      [
-        "@babel/plugin-proposal-private-property-in-object",
-        {
-          loose: true,
         },
       ],
       [
