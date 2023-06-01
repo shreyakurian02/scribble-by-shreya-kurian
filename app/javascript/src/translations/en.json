@@ -1,0 +1,32 @@
+{
+  "common": {
+    "all": "All",
+    "article_one": "Article",
+    "article_other": "Articles",
+    "allArticles": "All articles",
+    "published": "Published",
+    "draft": "Draft",
+    "title": "Title",
+    "articleWithCount_one": "{{count}} article",
+    "articleWithCount_other": "{{count}} articles",
+    "category_one": "Category",
+    "category_other": "Categories",
+    "author": "Author",
+    "status": "status",
+    "lastPublished": "Last published at"
+  },
+  "button": {
+    "addEntity": "Add {{entity}}"
+  },
+  "placeholder": {
+    "searchArticles": "Search article titles"
+  },
+  "noData": {
+    "articleTitle": "There are no {{articles}}.",
+    "articleDescription": "You have not yet created an article. Create an article using the CTA given below"
+  },
+  "actions": {
+    "edit": "Edit",
+    "delete": "Delete"
+  }
+}
