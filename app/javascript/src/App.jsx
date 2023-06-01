@@ -4,11 +4,10 @@ import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import { setAuthHeaders } from "apis/axios";
+import "common/i18n";
 import { initializeLogger } from "common/logger";
 import Sidebar from "components/Common/Sidebar";
 import Articles from "components/Dashboard/Articles";
-
-import "./common/i18n";
 
 const App = () => {
   const [loading, setLoading] = useState(true);

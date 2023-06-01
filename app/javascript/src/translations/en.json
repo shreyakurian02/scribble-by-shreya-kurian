@@ -5,6 +5,7 @@
     "article_other": "Articles",
     "allArticles": "All articles",
     "published": "Published",
+    "publish": "Publish",
     "draft": "Draft",
     "title": "Title",
     "columns": "Columns",
@@ -14,10 +15,14 @@
     "category_other": "Categories",
     "author": "Author",
     "status": "status",
-    "lastPublished": "Last published at"
+    "lastPublished": "Last published at",
+    "selectedOf": "{{selectedCount}} {{resource}} selected of <span>{{articleCount}}</span>"
   },
   "button": {
-    "addEntity": "Add {{entity}}"
+    "addEntity": "Add {{entity}}",
+    "changeCategory": "Change category",
+    "changeStatus": "Change status",
+    "delete": "Delete"
   },
   "placeholder": {
     "searchArticles": "Search article titles"
