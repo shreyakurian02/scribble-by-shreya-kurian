@@ -15,6 +15,8 @@
     "category_other": "Categories",
     "author": "Author",
     "status": "status",
+    "settings": "Settings",
+    "preview": "Preview",
     "lastPublished": "Last published at",
     "selectedOf": "{{selectedCount}} {{resource}} selected of <span>{{articleCount}}</span>"
   },
