@@ -1,18 +1,21 @@
+import { t } from "i18next";
 import { Notes, Settings, ExternalLink } from "neetoicons";
+
+import { PLURAL } from "constants";
 
 export const NAV_LINKS = [
   {
-    label: "Notes",
+    label: t("common.article", PLURAL),
     to: "/",
     icon: Notes,
   },
   {
-    label: "Settings",
+    label: t("common.settings"),
     to: "/settings",
     icon: Settings,
   },
   {
-    label: "Preview",
+    label: t("common.preview"),
     to: "/preview",
     icon: ExternalLink,
   },

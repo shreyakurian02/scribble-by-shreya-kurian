@@ -3,16 +3,21 @@ import React, { useState } from "react";
 import { NoData } from "@bigbinary/neetoui";
 import classnames from "classnames";
 import EmptyStateImage from "images/EmptyState";
-import { Typography, Table } from "neetoui";
-import { SubHeader } from "neetoui/layouts";
+import { Table } from "neetoui";
+import { pluck } from "ramda";
 import { useTranslation } from "react-i18next";
 
 import { SINGULAR } from "constants";
 
+import { COLUMN_DATA } from "./constants";
+import SubHeader from "./SubHeader";
 import { buildColumnData } from "./utils";
 
 const List = ({ articles = [] }) => {
   const [selectedRowIds, setSelectedRowIds] = useState([]);
+  const [filteredColumns, setFilteredColumns] = useState(
+    pluck("dataIndex", COLUMN_DATA)
+  );
 
   const { t } = useTranslation();
 
@@ -36,16 +41,15 @@ const List = ({ articles = [] }) => {
   return (
     <>
       <SubHeader
-        leftActionBlock={
-          <Typography component="h4" style="h4">
-            {t("common.articleWithCount", { count: articles.length })}
-          </Typography>
-        }
+        articleCount={articles.length}
+        filteredColumns={filteredColumns}
+        selectedRowIds={selectedRowIds}
+        setFilteredColumns={setFilteredColumns}
       />
       <Table
         fixedHeight
         rowSelection
-        columnData={buildColumnData()}
+        columnData={buildColumnData(filteredColumns)}
         rowData={articles}
         selectedRowKeys={selectedRowIds}
         rowClassName={(_, index) =>
