@@ -111,48 +111,4 @@ export const ARTICLES = [
     lastPublished: "Jul 13, 2022, 11:13 AM",
     status: "Draft",
   },
-  {
-    id: 15,
-    title: "Welcome to scribble",
-    category: "Front End Articles",
-    author: "Oliver smith",
-    lastPublished: "Jul 13, 2022, 11:13 AM",
-    status: "Draft",
-  },
-  {
-    id: 16,
-    title: "Welcome to scribble",
-    category: "Front End Articles",
-    author: "Oliver smith",
-    lastPublished: "Jul 13, 2022, 11:13 AM",
-    status: "Draft",
-  },
-];
-
-export const COLUMN_DATA = [
-  {
-    dataIndex: "title",
-    title: "Title",
-    key: "title",
-  },
-  {
-    dataIndex: "category",
-    title: "Category",
-    key: "category",
-  },
-  {
-    dataIndex: "author",
-    title: "Author",
-    key: "author",
-  },
-  {
-    dataIndex: "lastPublished",
-    title: "Last Published At",
-    key: "lastPublished",
-  },
-  {
-    dataIndex: "status",
-    title: "Status",
-    key: "status",
-  },
 ];

@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import { setAuthHeaders } from "apis/axios";
 import { initializeLogger } from "common/logger";
 
+import "./common/i18n";
 import Sidebar from "./components/Common/Sidebar";
 import Articles from "./components/Dashboard/Articles";
 
