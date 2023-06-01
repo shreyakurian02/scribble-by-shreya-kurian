@@ -4,14 +4,14 @@ import { t } from "i18next";
 import { MenuHorizontal } from "neetoicons";
 import { Dropdown } from "neetoui";
 
-import { SINGULAR } from "constants";
+import { COLUMN_DATA } from "./constants";
 
 const {
   Menu,
   MenuItem: { Button },
 } = Dropdown;
 
-const renderAction = () => (
+export const renderAction = () => (
   <Dropdown buttonStyle="text" className="p-4" icon={MenuHorizontal}>
     <Menu>
       <Button>{t("actions.edit")}</Button>
@@ -20,32 +20,8 @@ const renderAction = () => (
   </Dropdown>
 );
 
-export const buildColumnData = () => [
-  {
-    dataIndex: "title",
-    title: t("common.title"),
-    key: "title",
-  },
-  {
-    dataIndex: "category",
-    title: t("common.category", SINGULAR),
-    key: "category",
-  },
-  {
-    dataIndex: "author",
-    title: t("common.author"),
-    key: "author",
-  },
-  {
-    dataIndex: "lastPublished",
-    title: t("common.lastPublished"),
-    key: "lastPublished",
-  },
-  {
-    dataIndex: "status",
-    title: t("common.status"),
-    key: "status",
-  },
+export const buildColumnData = filteredColumns => [
+  ...COLUMN_DATA.filter(column => filteredColumns.includes(column.dataIndex)),
   {
     dataIndex: "action",
     key: "action",

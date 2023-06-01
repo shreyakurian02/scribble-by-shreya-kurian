@@ -5,10 +5,10 @@ import { ToastContainer } from "react-toastify";
 
 import { setAuthHeaders } from "apis/axios";
 import { initializeLogger } from "common/logger";
+import Sidebar from "components/Common/Sidebar";
+import Articles from "components/Dashboard/Articles";
 
 import "./common/i18n";
-import Sidebar from "./components/Common/Sidebar";
-import Articles from "./components/Dashboard/Articles";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,6 @@ const App = () => {
         <Sidebar />
         <Switch>
           <Route exact component={Articles} path="/" />
-          <Route exact path="/about" render={() => <div>About</div>} />
         </Switch>
       </div>
     </Router>

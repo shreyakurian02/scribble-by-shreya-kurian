@@ -1,3 +1,7 @@
+import { t } from "i18next";
+
+import { SINGULAR } from "constants";
+
 export const ARTICLES = [
   {
     id: 1,
@@ -110,5 +114,33 @@ export const ARTICLES = [
     author: "Oliver smith",
     lastPublished: "Jul 13, 2022, 11:13 AM",
     status: "Draft",
+  },
+];
+
+export const COLUMN_DATA = [
+  {
+    dataIndex: "title",
+    title: t("common.title"),
+    key: "title",
+  },
+  {
+    dataIndex: "category",
+    title: t("common.category", SINGULAR),
+    key: "category",
+  },
+  {
+    dataIndex: "author",
+    title: t("common.author"),
+    key: "author",
+  },
+  {
+    dataIndex: "lastPublished",
+    title: t("common.lastPublished"),
+    key: "lastPublished",
+  },
+  {
+    dataIndex: "status",
+    title: t("common.status"),
+    key: "status",
   },
 ];
