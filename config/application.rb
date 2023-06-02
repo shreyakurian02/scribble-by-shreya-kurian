@@ -14,6 +14,8 @@ module ScribbleByShreyaKurian
     config.load_defaults 7.0
 
     config.generators do |g|
+      g.orm :active_record, primary_key_type: :uuid
+
       g.test_framework :test_unit, fixture: false
     end
     # Configuration for the application, engines, and railties goes here.
