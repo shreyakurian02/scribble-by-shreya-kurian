@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Article < ApplicationRecord
+  enum :status, { draft: "draft", published: "published" }, default: "draft"
+
   belongs_to :category
 
   validates :title, :description, presence: true

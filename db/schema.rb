@@ -19,9 +19,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_02_080313) do
     t.string "title", null: false
     t.string "slug", null: false
     t.text "description", null: false
+    t.datetime "last_published_at"
+    t.string "status", default: "draft", null: false
     t.uuid "category_id", null: false
+    t.uuid "author_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_articles_on_author_id"
     t.index ["category_id"], name: "index_articles_on_category_id"
     t.index ["slug"], name: "index_articles_on_slug", unique: true
   end
@@ -43,4 +47,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_02_080313) do
   end
 
   add_foreign_key "articles", "categories"
+  add_foreign_key "articles", "users", column: "author_id"
 end
