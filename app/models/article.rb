@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 class Article < ApplicationRecord
+  MAXIMUM_TITLE_LENGTH = 80
+
   enum :status, { draft: "draft", published: "published" }, default: "draft"
 
   belongs_to :category
   belongs_to :author, class_name: "User", foreign_key: :author_id
 
-  validates :title, :description, presence: true
+  validates :title, :description, presence: true, length: { maximum: MAXIMUM_TITLE_LENGTH }
   validates :slug, uniqueness: true
   validate :slug_not_changed
 
