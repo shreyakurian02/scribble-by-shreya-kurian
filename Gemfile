@@ -20,7 +20,6 @@ gem "puma", "~> 5.0"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-gem "byebug"
 # Use Redis adapter to run Action Cable in production
 gem "redis", "~> 4.0"
 
@@ -55,6 +54,8 @@ group :development, :test do
 
   # For auto-generating demo data
   gem "faker"
+
+  gem "byebug"
 end
 
 group :development do

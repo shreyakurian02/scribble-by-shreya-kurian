@@ -110,12 +110,12 @@ class ArticleTest < ActiveSupport::TestCase
   end
 
   def test_having_numbered_slug_substring_in_title_doesnt_affect_slug_generation
-    title_with_numbered_substring = "test article"
+    title_with_numbered_substring = "test 1 article"
 
     existing_article = create :article, title: title_with_numbered_substring
     assert_equal title_with_numbered_substring.parameterize, existing_article.slug
 
-    substring_of_existing_slug = "test"
+    substring_of_existing_slug = "test-1"
     new_article = create :article, title: substring_of_existing_slug
 
     assert_equal substring_of_existing_slug.parameterize, new_article.slug
