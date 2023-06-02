@@ -19,8 +19,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_02_080313) do
     t.string "title", null: false
     t.string "slug", null: false
     t.text "description", null: false
+    t.uuid "category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_articles_on_category_id"
     t.index ["slug"], name: "index_articles_on_slug", unique: true
   end
 
@@ -40,4 +42,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_02_080313) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "articles", "categories"
 end

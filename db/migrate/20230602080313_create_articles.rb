@@ -6,6 +6,7 @@ class CreateArticles < ActiveRecord::Migration[7.0]
       t.string :title, null: false
       t.string :slug, null: false, index: { unique: true }
       t.text :description, null: false
+      t.references :category, null: false, foreign_key: true, type: :uuid
       t.timestamps
     end
   end
