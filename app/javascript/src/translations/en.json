@@ -24,10 +24,15 @@
     "addEntity": "Add {{entity}}",
     "changeCategory": "Change category",
     "changeStatus": "Change status",
-    "delete": "Delete"
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "saveAsDraft": "Save as draft"
   },
   "placeholder": {
-    "searchArticles": "Search article titles"
+    "searchArticles": "Search article titles",
+    "addDescription": "Add description here",
+    "articleTitle": "Article title",
+    "searchCategory": "Search category"
   },
   "noData": {
     "articleTitle": "There are no articles.",

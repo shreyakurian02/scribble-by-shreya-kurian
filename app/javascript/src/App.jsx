@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import {
+  Route,
+  Switch,
+  BrowserRouter as Router,
+  Redirect,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import { setAuthHeaders } from "apis/axios";
@@ -8,6 +13,7 @@ import "common/i18n";
 import { initializeLogger } from "common/logger";
 import Sidebar from "components/Common/Sidebar";
 import Articles from "components/Dashboard/Articles";
+import CreateArticle from "components/Dashboard/Articles/Form/Create";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -27,7 +33,9 @@ const App = () => {
       <div className="flex h-screen w-full">
         <Sidebar />
         <Switch>
-          <Route exact component={Articles} path="/" />
+          <Route exact component={Articles} path="/articles" />
+          <Route exact component={CreateArticle} path="/article/create" />
+          <Redirect exact from="/" to="/articles" />
         </Switch>
       </div>
     </Router>

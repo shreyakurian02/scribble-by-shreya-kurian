@@ -42,6 +42,7 @@ const Articles = () => {
           title={t("common.allArticles")}
           actionBlock={
             <Button
+              to="/article/create"
               label={t("button.addEntity", {
                 entity: t("common.article", SINGULAR),
               })}

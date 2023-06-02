@@ -6,7 +6,7 @@ import { PLURAL } from "constants";
 export const NAV_LINKS = [
   {
     label: t("common.article", PLURAL),
-    to: "/",
+    to: "/articles",
     icon: Notes,
   },
   {
