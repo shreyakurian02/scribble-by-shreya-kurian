@@ -10,7 +10,7 @@ const SubHeader = ({
   selectedRowIds,
   filteredColumns,
   setFilteredColumns,
-  articleCount = 0,
+  articlesCount = 0,
 }) => {
   const selectedRowsCount = selectedRowIds.length;
 
@@ -19,7 +19,7 @@ const SubHeader = ({
       className="pl-2"
       leftActionBlock={
         <LeftActionBlock
-          articleCount={articleCount}
+          articlesCount={articlesCount}
           selectedRowsCount={selectedRowsCount}
         />
       }

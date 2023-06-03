@@ -4,7 +4,7 @@ import { ActionDropdown, Checkbox } from "neetoui";
 import { without } from "ramda";
 import { useTranslation } from "react-i18next";
 
-import { COLUMN_DATA } from "./constants";
+import { getColumnData } from "./utils";
 
 const {
   Menu,
@@ -27,7 +27,7 @@ const Columns = ({ filteredColumns, setFilteredColumns }) => {
       label={t("common.columns")}
     >
       <Menu>
-        {COLUMN_DATA.map(({ dataIndex, title }) => (
+        {getColumnData().map(({ dataIndex, title }) => (
           <MenuButtton key={dataIndex}>
             <Checkbox
               checked={filteredColumns.includes(dataIndex)}

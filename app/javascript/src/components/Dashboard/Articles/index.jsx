@@ -1,48 +1,82 @@
 import React, { useEffect, useState } from "react";
 
-import { Search, Plus } from "neetoicons";
-import { Typography, Button } from "neetoui";
-import { MenuBar, Header, Container } from "neetoui/layouts";
+import { PageLoader, Button } from "neetoui";
+import { Header, Container } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 
-import { PLURAL, SINGULAR } from "constants";
+import articlesApi from "apis/articles";
+import categoriesApi from "apis/categories";
+import { SINGULAR, NEW_ARTICLE_URL } from "constants";
 
-import { ARTICLES } from "./constants";
+import AddCategory from "./AddCategory";
+import { ARTICLES_DATA_INITIAL_VALUE } from "./constants";
 import List from "./List";
+import MenuBar from "./MenuBar";
 
 const Articles = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [articles, setArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+  const [isNewCategoryModalOpen, setIsNewCategoryModalOpen] = useState(false);
+  const [articlesData, setArticlesData] = useState(ARTICLES_DATA_INITIAL_VALUE);
 
   const { t } = useTranslation();
 
-  useEffect(() => setArticles(ARTICLES), []);
+  const fetchCategories = async () => {
+    try {
+      const {
+        data: { categories },
+      } = await categoriesApi.fetch();
+      setCategories(categories);
+    } catch (error) {
+      logger.error(error);
+    }
+  };
+
+  const fetchArticles = async () => {
+    try {
+      const {
+        data: { articles, articles_count: count },
+      } = await articlesApi.fetch();
+      setArticlesData({ articles, count });
+    } catch (error) {
+      logger.error(error);
+    }
+  };
+
+  const fetchArticlesAndCategories = async () => {
+    await Promise.all([fetchCategories(), fetchArticles()]);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchArticlesAndCategories();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="h-screen w-full">
+        <PageLoader />
+      </div>
+    );
+  }
 
   return (
     <>
-      <MenuBar showMenu={isMenuOpen} title={t("common.article", PLURAL)}>
-        <MenuBar.Block active count={0} label={t("common.all")} />
-        <MenuBar.Block count={0} label={t("common.published")} />
-        <MenuBar.Block count={0} label={t("common.draft")} />
-        <MenuBar.SubTitle iconProps={[{ icon: Search }, { icon: Plus }]}>
-          <Typography
-            component="h4"
-            style="h5"
-            textTransform="uppercase"
-            weight="bold"
-          >
-            {t("common.category", PLURAL)}
-          </Typography>
-        </MenuBar.SubTitle>
-      </MenuBar>
+      <MenuBar
+        articlesCount={articlesData.count}
+        categories={categories}
+        setIsNewCategoryModalOpen={setIsNewCategoryModalOpen}
+        showMenu={isMenuOpen}
+      />
       <Container>
         <Header
           menuBarToggle={() => setIsMenuOpen(isMenuOpen => !isMenuOpen)}
           title={t("common.allArticles")}
           actionBlock={
             <Button
-              to="/article/create"
+              to={NEW_ARTICLE_URL}
               label={t("button.addEntity", {
                 entity: t("common.article", SINGULAR),
               })}
@@ -54,7 +88,12 @@ const Articles = () => {
             value: searchTerm,
           }}
         />
-        <List articles={articles} />
+        <List articlesData={articlesData} />
+        <AddCategory
+          isOpen={isNewCategoryModalOpen}
+          refetchCategories={fetchCategories}
+          onClose={() => setIsNewCategoryModalOpen(false)}
+        />
       </Container>
     </>
   );

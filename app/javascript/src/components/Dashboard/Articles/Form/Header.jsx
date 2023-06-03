@@ -1,28 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { ActionDropdown, Button } from "neetoui";
 import { Select } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 
+import categoriesApi from "apis/categories";
+
 import { SUBMIT_OPTIONS } from "./constants";
+
+import { getCategoryOptions } from "../utils";
 
 const {
   Menu,
-  MenuItem: { MenuButton },
+  MenuItem: { Button: MenuButton },
 } = ActionDropdown;
 
-const Header = () => {
-  const [status, setStatus] = useState(SUBMIT_OPTIONS.draft);
+const Header = ({ status, setStatus }) => {
+  const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { t } = useTranslation();
+
+  const fetchCategories = async () => {
+    setIsLoading(true);
+    try {
+      const {
+        data: { categories },
+      } = await categoriesApi.fetch();
+      setCategories(categories);
+    } catch (error) {
+      logger.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   return (
     <div className="flex justify-between px-5">
       <div className="w-64">
         <Select
           className="flex grow-0"
+          isLoading={isLoading}
           name="category"
-          options={[]}
+          options={getCategoryOptions(categories)}
           placeholder={t("placeholder.searchCategory")}
         />
       </div>

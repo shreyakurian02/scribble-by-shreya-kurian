@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 
+import { PageLoader } from "neetoui";
 import {
   Route,
   Switch,
@@ -14,17 +15,22 @@ import { initializeLogger } from "common/logger";
 import Sidebar from "components/Common/Sidebar";
 import Articles from "components/Dashboard/Articles";
 import CreateArticle from "components/Dashboard/Articles/Form/Create";
+import { ARTICLES_URL, NEW_ARTICLE_URL } from "constants";
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     initializeLogger();
-    setAuthHeaders(setLoading);
+    setAuthHeaders(setIsLoading);
   }, []);
 
-  if (loading) {
-    return <h1>Loading...</h1>;
+  if (isLoading) {
+    return (
+      <div className="h-screen w-full">
+        <PageLoader />
+      </div>
+    );
   }
 
   return (
@@ -33,9 +39,9 @@ const App = () => {
       <div className="flex h-screen w-full">
         <Sidebar />
         <Switch>
-          <Route exact component={Articles} path="/articles" />
-          <Route exact component={CreateArticle} path="/article/create" />
-          <Redirect exact from="/" to="/articles" />
+          <Route exact component={Articles} path={ARTICLES_URL} />
+          <Route exact component={CreateArticle} path={NEW_ARTICLE_URL} />
+          <Redirect exact from="/" to={ARTICLES_URL} />
         </Switch>
       </div>
     </Router>

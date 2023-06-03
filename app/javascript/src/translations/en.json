@@ -17,8 +17,10 @@
     "status": "status",
     "settings": "Settings",
     "preview": "Preview",
+    "description": "Description",
     "lastPublished": "Last published at",
-    "selectedOf": "{{selectedCount}} {{resource}} selected of <span>{{articleCount}}</span>"
+    "selectedOf": "{{selectedCount}} {{resource}} selected of <span>{{articleCount}}</span>",
+    "addCategoryHeader": "New category"
   },
   "button": {
     "addEntity": "Add {{entity}}",
@@ -26,13 +28,15 @@
     "changeStatus": "Change status",
     "delete": "Delete",
     "cancel": "Cancel",
-    "saveAsDraft": "Save as draft"
+    "saveAsDraft": "Save as draft",
+    "add": "Add"
   },
   "placeholder": {
     "searchArticles": "Search article titles",
     "addDescription": "Add description here",
     "articleTitle": "Article title",
-    "searchCategory": "Search category"
+    "searchCategory": "Search category",
+    "addCategory": "Enter category title here."
   },
   "noData": {
     "articleTitle": "There are no articles.",
@@ -41,5 +45,14 @@
   "actions": {
     "edit": "Edit",
     "delete": "Delete"
+  },
+  "input": {
+    "categoryTitle": "Category title"
+  },
+  "validations": {
+    "required": "{{entity}} is required",
+    "minimum": "Atleast {{value}} {{entity}} is required",
+    "invalidEmail": "Email address must be valid",
+    "validAlphaNumeric": "Must contain at least one alphanumeric character"
   }
 }
