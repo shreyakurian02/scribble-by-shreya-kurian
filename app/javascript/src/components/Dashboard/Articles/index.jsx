@@ -10,12 +10,30 @@ import { PLURAL, SINGULAR } from "constants";
 import { ARTICLES } from "./constants";
 import List from "./List";
 
+import categoriesApi from "../../../apis/categories";
+
 const Articles = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [articles, setArticles] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const { t } = useTranslation();
+
+  const fetchCategories = async () => {
+    try {
+      const {
+        data: { categories },
+      } = await categoriesApi.fetch();
+      setCategories(categories);
+    } catch (error) {
+      logger.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   useEffect(() => setArticles(ARTICLES), []);
 
@@ -35,6 +53,9 @@ const Articles = () => {
             {t("common.category", PLURAL)}
           </Typography>
         </MenuBar.SubTitle>
+        {categories.map(({ name, id }) => (
+          <MenuBar.Block count={0} key={id} label={name} />
+        ))}
       </MenuBar>
       <Container>
         <Header
