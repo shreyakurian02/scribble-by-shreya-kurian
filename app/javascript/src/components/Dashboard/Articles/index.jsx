@@ -53,8 +53,8 @@ const Articles = () => {
             {t("common.category", PLURAL)}
           </Typography>
         </MenuBar.SubTitle>
-        {categories.map(({ name, id }) => (
-          <MenuBar.Block count={0} key={id} label={name} />
+        {categories.map(({ name, id, articles_count: articlesCount }) => (
+          <MenuBar.Block count={articlesCount} key={id} label={name} />
         ))}
       </MenuBar>
       <Container>
