@@ -14,9 +14,9 @@ class CategoryTest < ActiveSupport::TestCase
   end
 
   def test_category_should_not_be_valid_with_invalid_length
-    @category.name = "0" * 41
+    @category.name = "0" * (Category::MAXIMUM_NAME_LENGTH + 1)
     assert @category.invalid?
-    assert_includes @category.errors.full_messages, "Name is too long (maximum is 40 characters)"
+    assert_includes @category.errors.full_messages, "Name is too long (maximum is #{Category::MAXIMUM_NAME_LENGTH} characters)"
   end
 
   def test_category_should_not_be_vald_with_duplicate_name
