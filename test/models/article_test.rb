@@ -29,14 +29,17 @@ class ArticleTest < ActiveSupport::TestCase
     assert_raises ActiveRecord::RecordInvalid do
       @article.update!(slug: "modified-slug")
     end
+
     assert_includes @article.errors.full_messages, "Slug is immutable"
   end
 
   def test_article_should_not_be_valid_with_duplicate_slug
     new_article = build :article
+
     assert_raises ActiveRecord::RecordInvalid do
       new_article.update!(slug: @article.slug)
     end
+
     assert_includes new_article.errors.full_messages, "Slug has already been taken"
   end
 
@@ -63,25 +66,27 @@ class ArticleTest < ActiveSupport::TestCase
   end
 
   def test_article_should_not_be_valid_with_invalid_title_length
-    @article.title = "a" * 81
+    @article.title = "a" * (Article::MAXIMUM_TITLE_LENGTH + 1)
     assert @article.invalid?
-    assert_includes @article.errors.full_messages, "Title is too long (maximum is 80 characters)"
+    assert_includes @article.errors.full_messages, "Title is too long (maximum is #{Article::MAXIMUM_TITLE_LENGTH} characters)"
   end
 
   def test_incremental_slug_generation_for_articles_with_duplicate_titles
-    article_one = create :article, title: "test article"
-    article_two = create :article, title: "test article"
+    title = "test article"
+    article_one = create(:article, title:)
+    article_two = create(:article, title:)
 
-    assert_equal "test-article", article_one.slug
-    assert_equal "test-article-2", article_two.slug
+    assert_equal title.parameterize, article_one.slug
+    assert_equal "#{title.parameterize}-2", article_two.slug
   end
 
   def test_incremental_slug_generation_for_articles_with_duplicate_hyphenated_titles
-    article_one = create(:article, title: "test-article")
-    article_two = create(:article, title: "test-article")
+    title = "test-article"
+    article_one = create(:article, title:)
+    article_two = create(:article, title:)
 
-    assert_equal "test-article", article_one.slug
-    assert_equal "test-article-2", article_two.slug
+    assert_equal title.parameterize, article_one.slug
+    assert_equal "#{title.parameterize}-2", article_two.slug
   end
 
   def test_slug_suffix_is_maximum_slug_count_plus_one_if_two_or_more_slugs_already_exist
@@ -123,7 +128,7 @@ class ArticleTest < ActiveSupport::TestCase
 
   def test_updating_title_does_not_update_slug
     assert_no_changes "@article.slug" do
-      @article.update!(title: "updated article title")
+      @article.update!(title: Faker::Lorem.word)
     end
   end
 end

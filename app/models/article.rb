@@ -8,13 +8,19 @@ class Article < ApplicationRecord
   belongs_to :category
   belongs_to :author, class_name: "User", foreign_key: :author_id
 
-  validates :title, :description, presence: true, length: { maximum: MAXIMUM_TITLE_LENGTH }
+  validates :title, presence: true, length: { maximum: MAXIMUM_TITLE_LENGTH }
+  validates :description, presence: true
   validates :slug, uniqueness: true
   validate :slug_not_changed
 
   before_create :set_slug
+  before_save :set_last_published_at
 
   private
+
+    def set_last_published_at
+      self.last_published_at = Time.zone.now() if published?
+    end
 
     def set_slug
       title_slug = title.parameterize

@@ -13,4 +13,15 @@ class ActiveSupport::TestCase
   # fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  def response_json
+    response.parsed_body
+  end
+
+  def headers
+    {
+      Accept: "application/json",
+      "Content_Type" => "application/json"
+    }
+  end
 end
