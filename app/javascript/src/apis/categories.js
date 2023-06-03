@@ -1,7 +1,12 @@
 import axios from "axios";
 
-const fetch = () => axios.get("/api/v1/categories");
+import { CATEGORIES_BASE_URL } from "constants";
 
-const categoriesApi = { fetch };
+const fetch = () => axios.get(CATEGORIES_BASE_URL);
+
+const create = payload =>
+  axios.post(CATEGORIES_BASE_URL, { category: payload });
+
+const categoriesApi = { fetch, create };
 
 export default categoriesApi;

@@ -1,4 +1,5 @@
 import { t } from "i18next";
+import * as yup from "yup";
 
 import { SINGULAR } from "constants";
 
@@ -144,3 +145,11 @@ export const COLUMN_DATA = [
     key: "status",
   },
 ];
+
+export const NEW_CATEGORY_INITIAL_VALUES = { category: "" };
+
+export const CATEGORY_VALIDATION_SCHEMA = yup.object().shape({
+  category: yup
+    .string()
+    .required(t("validations.required", { entity: t("common.title") })),
+});

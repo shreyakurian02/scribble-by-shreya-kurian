@@ -1,5 +1,8 @@
 import { isEditorEmpty } from "@bigbinary/neeto-editor";
+import { t } from "i18next";
 import * as yup from "yup";
+
+import { SINGULAR } from "constants";
 
 export const INITIAL_VALUES = {
   category: null,
@@ -12,13 +15,17 @@ export const VALIDATION_SCHEMA = yup.object().shape({
     .object()
     .shape({ label: yup.string(), value: yup.string() })
     .nullable()
-    .required("Category is required"),
-  title: yup.string().required("Title is required"),
+    .required(
+      t("validations.required", { entity: t("common.category", SINGULAR) })
+    ),
+  title: yup
+    .string()
+    .required(t("validations.required", { entity: t("common.title") })),
   description: yup
     .string()
     .test(
       "description",
-      "Description is required",
+      t("validations.required", { entity: t("common.description") }),
       value => !isEditorEmpty(value)
     ),
 });

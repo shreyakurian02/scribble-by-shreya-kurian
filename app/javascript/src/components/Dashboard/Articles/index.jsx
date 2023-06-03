@@ -5,18 +5,19 @@ import { Typography, Button } from "neetoui";
 import { MenuBar, Header, Container } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 
-import { PLURAL, SINGULAR } from "constants";
+import categoriesApi from "apis/categories";
+import { PLURAL, SINGULAR, NEW_ARTICLE_URL } from "constants";
 
+import AddCategory from "./AddCategory";
 import { ARTICLES } from "./constants";
 import List from "./List";
-
-import categoriesApi from "../../../apis/categories";
 
 const Articles = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [articles, setArticles] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [isNewCategoryModalOpen, setIsNewCategoryModalOpen] = useState(false);
 
   const { t } = useTranslation();
 
@@ -43,7 +44,16 @@ const Articles = () => {
         <MenuBar.Block active count={0} label={t("common.all")} />
         <MenuBar.Block count={0} label={t("common.published")} />
         <MenuBar.Block count={0} label={t("common.draft")} />
-        <MenuBar.SubTitle iconProps={[{ icon: Search }, { icon: Plus }]}>
+        <MenuBar.SubTitle
+          iconProps={[
+            { icon: Search },
+            {
+              icon: Plus,
+              onClick: () =>
+                setIsNewCategoryModalOpen(isModalOpen => !isModalOpen),
+            },
+          ]}
+        >
           <Typography
             component="h4"
             style="h5"
@@ -63,7 +73,7 @@ const Articles = () => {
           title={t("common.allArticles")}
           actionBlock={
             <Button
-              to="/article/create"
+              to={NEW_ARTICLE_URL}
               label={t("button.addEntity", {
                 entity: t("common.article", SINGULAR),
               })}
@@ -76,6 +86,11 @@ const Articles = () => {
           }}
         />
         <List articles={articles} />
+        <AddCategory
+          isOpen={isNewCategoryModalOpen}
+          refetchCategories={fetchCategories}
+          onClose={() => setIsNewCategoryModalOpen(false)}
+        />
       </Container>
     </>
   );
