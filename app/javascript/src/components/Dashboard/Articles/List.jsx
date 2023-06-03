@@ -9,14 +9,13 @@ import { useTranslation } from "react-i18next";
 
 import { SINGULAR } from "constants";
 
-import { COLUMN_DATA } from "./constants";
 import SubHeader from "./SubHeader";
-import { buildColumnData } from "./utils";
+import { getAllowedColumns, getColumnData } from "./utils";
 
 const List = ({ articlesData }) => {
   const [selectedRowIds, setSelectedRowIds] = useState([]);
   const [filteredColumns, setFilteredColumns] = useState(
-    pluck("dataIndex", COLUMN_DATA)
+    pluck("dataIndex", getColumnData())
   );
 
   const { t } = useTranslation();
@@ -54,7 +53,7 @@ const List = ({ articlesData }) => {
       <Table
         fixedHeight
         rowSelection
-        columnData={buildColumnData(filteredColumns)}
+        columnData={getAllowedColumns(filteredColumns)}
         rowData={articles}
         scroll={{ x: 0 }}
         selectedRowKeys={selectedRowIds}

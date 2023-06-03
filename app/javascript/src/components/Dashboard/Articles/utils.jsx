@@ -34,45 +34,48 @@ export const renderTitle = title => (
   </Tooltip>
 );
 
-export const buildColumnData = filteredColumns => [
-  ...[
-    {
-      dataIndex: "title",
-      title: t("common.title"),
-      key: "title",
-      width: "15%",
-      ellipsis: true,
-      render: title => renderTitle(title),
-    },
-    {
-      dataIndex: "category",
-      title: t("common.category", SINGULAR),
-      key: "category",
-      width: "18%",
-    },
-    {
-      dataIndex: "author",
-      title: t("common.author"),
-      key: "author",
-      width: "18%",
-    },
-    {
-      dataIndex: "last_published_at",
-      title: t("common.lastPublished"),
-      key: "lastPublishedAt",
-      width: "25%",
-      render: date => (date ? formatDate(date) : "-"),
-    },
-    {
-      dataIndex: "status",
-      title: t("common.status"),
-      key: "status",
-      width: "15%",
-      render: status => renderStatus(status),
-    },
-  ].filter(column => filteredColumns.includes(column.dataIndex)),
+export const getColumnData = () => [
   {
-    dataIndex: "action",
+    dataIndex: "title",
+    title: t("common.title"),
+    key: "title",
+    width: "15%",
+    ellipsis: true,
+    render: title => renderTitle(title),
+  },
+  {
+    dataIndex: "category",
+    title: t("common.category", SINGULAR),
+    key: "category",
+    width: "18%",
+  },
+  {
+    dataIndex: "author",
+    title: t("common.author"),
+    key: "author",
+    width: "18%",
+  },
+  {
+    dataIndex: "last_published_at",
+    title: t("common.lastPublished"),
+    key: "lastPublishedAt",
+    width: "25%",
+    render: date => (date ? formatDate(date) : "-"),
+  },
+  {
+    dataIndex: "status",
+    title: t("common.status"),
+    key: "status",
+    width: "15%",
+    render: status => renderStatus(status),
+  },
+];
+
+export const getAllowedColumns = filteredColumns => [
+  ...getColumnData().filter(column =>
+    filteredColumns.includes(column.dataIndex)
+  ),
+  {
     key: "action",
     render: renderAction,
   },
