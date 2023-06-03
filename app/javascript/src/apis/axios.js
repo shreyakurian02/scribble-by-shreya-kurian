@@ -2,7 +2,7 @@ import axios from "axios";
 
 axios.defaults.baseURL = "/";
 
-export const setAuthHeaders = (setLoading = () => null) => {
+export const setAuthHeaders = (setIsLoading = () => null) => {
   axios.defaults.headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -10,5 +10,5 @@ export const setAuthHeaders = (setLoading = () => null) => {
       .querySelector('[name="csrf-token"]')
       .getAttribute("content"),
   };
-  setLoading(false);
+  setIsLoading(false);
 };

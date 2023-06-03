@@ -3,119 +3,12 @@ import * as yup from "yup";
 
 import { SINGULAR } from "constants";
 
-export const ARTICLES = [
-  {
-    id: 1,
-    title: "Welcome to scribble",
-    category: "Front End Articles",
-    author: "Oliver smith",
-    lastPublished: "Jul 13, 2022, 11:13 AM",
-    status: "Draft",
-  },
-  {
-    id: 2,
-    title: "Welcome to scribble",
-    category: "Front End Articles",
-    author: "Oliver smith",
-    lastPublished: "Jul 13, 2022, 11:13 AM",
-    status: "Draft",
-  },
-  {
-    id: 3,
-    title: "Welcome to scribble",
-    category: "Front End Articles",
-    author: "Oliver smith",
-    lastPublished: "Jul 13, 2022, 11:13 AM",
-    status: "Draft",
-  },
-  {
-    id: 4,
-    title: "Welcome to scribble",
-    category: "Front End Articles",
-    author: "Oliver smith",
-    lastPublished: "Jul 13, 2022, 11:13 AM",
-    status: "Draft",
-  },
-  {
-    id: 5,
-    title: "Welcome to scribble",
-    category: "Front End Articles",
-    author: "Oliver smith",
-    lastPublished: "Jul 13, 2022, 11:13 AM",
-    status: "Draft",
-  },
-  {
-    id: 6,
-    title: "Welcome to scribble",
-    category: "Front End Articles",
-    author: "Oliver smith",
-    lastPublished: "Jul 13, 2022, 11:13 AM",
-    status: "Draft",
-  },
-  {
-    id: 7,
-    title: "Welcome to scribble",
-    category: "Front End Articles",
-    author: "Oliver smith",
-    lastPublished: "Jul 13, 2022, 11:13 AM",
-    status: "Draft",
-  },
-  {
-    id: 8,
-    title: "Welcome to scribble",
-    category: "Front End Articles",
-    author: "Oliver smith",
-    lastPublished: "Jul 13, 2022, 11:13 AM",
-    status: "Draft",
-  },
-  {
-    id: 9,
-    title: "Welcome to scribble",
-    category: "Front End Articles",
-    author: "Oliver smith",
-    lastPublished: "Jul 13, 2022, 11:13 AM",
-    status: "Draft",
-  },
-  {
-    id: 10,
-    title: "Welcome to scribble",
-    category: "Front End Articles",
-    author: "Oliver smith",
-    lastPublished: "Jul 13, 2022, 11:13 AM",
-    status: "Draft",
-  },
-  {
-    id: 11,
-    title: "Welcome to scribble",
-    category: "Front End Articles",
-    author: "Oliver smith",
-    lastPublished: "Jul 13, 2022, 11:13 AM",
-    status: "Draft",
-  },
-  {
-    id: 12,
-    title: "Welcome to scribble",
-    category: "Front End Articles",
-    author: "Oliver smith",
-    lastPublished: "Jul 13, 2022, 11:13 AM",
-    status: "Draft",
-  },
-  {
-    id: 13,
-    title: "Welcome to scribble",
-    category: "Front End Articles",
-    author: "Oliver smith",
-    lastPublished: "Jul 13, 2022, 11:13 AM",
-    status: "Draft",
-  },
-  {
-    id: 14,
-    title: "Welcome to scribble",
-    category: "Front End Articles",
-    author: "Oliver smith",
-    lastPublished: "Jul 13, 2022, 11:13 AM",
-    status: "Draft",
-  },
+import { formatDate, renderStatus, renderTitle } from "./utils";
+
+export const STATUS_MENU_BLOCKS = [
+  { label: t("common.all"), value: "all" },
+  { label: t("common.published"), value: "published" },
+  { label: t("common.draft"), value: "draft" },
 ];
 
 export const COLUMN_DATA = [
@@ -123,26 +16,35 @@ export const COLUMN_DATA = [
     dataIndex: "title",
     title: t("common.title"),
     key: "title",
+    width: "15%",
+    ellipsis: true,
+    render: title => renderTitle(title),
   },
   {
     dataIndex: "category",
     title: t("common.category", SINGULAR),
     key: "category",
+    width: "18%",
   },
   {
     dataIndex: "author",
     title: t("common.author"),
     key: "author",
+    width: "18%",
   },
   {
-    dataIndex: "lastPublished",
+    dataIndex: "last_published_at",
     title: t("common.lastPublished"),
-    key: "lastPublished",
+    key: "lastPublishedAt",
+    width: "25%",
+    render: date => (date ? formatDate(date) : "-"),
   },
   {
     dataIndex: "status",
     title: t("common.status"),
     key: "status",
+    width: "15%",
+    render: status => renderStatus(status),
   },
 ];
 
@@ -153,3 +55,8 @@ export const CATEGORY_VALIDATION_SCHEMA = yup.object().shape({
     .string()
     .required(t("validations.required", { entity: t("common.title") })),
 });
+
+export const ARTICLES_DATA_INITIAL_VALUE = {
+  articles: [],
+  count: { all: 0, draft: 0, published: 0 },
+};

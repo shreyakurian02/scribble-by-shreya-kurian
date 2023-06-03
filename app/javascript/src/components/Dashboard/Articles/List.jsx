@@ -13,13 +13,18 @@ import { COLUMN_DATA } from "./constants";
 import SubHeader from "./SubHeader";
 import { buildColumnData } from "./utils";
 
-const List = ({ articles = [] }) => {
+const List = ({ articlesData }) => {
   const [selectedRowIds, setSelectedRowIds] = useState([]);
   const [filteredColumns, setFilteredColumns] = useState(
     pluck("dataIndex", COLUMN_DATA)
   );
 
   const { t } = useTranslation();
+
+  const {
+    articles,
+    count: { all: articlesCount },
+  } = articlesData;
 
   if (articles.length === 0) {
     return (
@@ -41,7 +46,7 @@ const List = ({ articles = [] }) => {
   return (
     <>
       <SubHeader
-        articleCount={articles.length}
+        articlesCount={articlesCount}
         filteredColumns={filteredColumns}
         selectedRowIds={selectedRowIds}
         setFilteredColumns={setFilteredColumns}
@@ -51,6 +56,7 @@ const List = ({ articles = [] }) => {
         rowSelection
         columnData={buildColumnData(filteredColumns)}
         rowData={articles}
+        scroll={{ x: 0 }}
         selectedRowKeys={selectedRowIds}
         rowClassName={(_, index) =>
           classnames({ "neeto-ui-bg-gray-200": index % 2 !== 0 })

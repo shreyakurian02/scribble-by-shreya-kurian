@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 
+import { PageLoader } from "neetoui";
 import {
   Route,
   Switch,
@@ -17,15 +18,19 @@ import CreateArticle from "components/Dashboard/Articles/Form/Create";
 import { ARTICLES_URL, NEW_ARTICLE_URL } from "constants";
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     initializeLogger();
-    setAuthHeaders(setLoading);
+    setAuthHeaders(setIsLoading);
   }, []);
 
-  if (loading) {
-    return <h1>Loading...</h1>;
+  if (isLoading) {
+    return (
+      <div className="h-screen w-full">
+        <PageLoader />
+      </div>
+    );
   }
 
   return (

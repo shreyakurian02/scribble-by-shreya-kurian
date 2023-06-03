@@ -8,13 +8,13 @@ const {
   MenuItem: { Button: MenuButton },
 } = Dropdown;
 
-const LeftActionBlock = ({ selectedRowsCount, articleCount = 0 }) => {
+const LeftActionBlock = ({ selectedRowsCount, articlesCount = 0 }) => {
   const { t } = useTranslation();
 
   if (selectedRowsCount === 0) {
     return (
       <Typography component="h4" style="h4">
-        {t("common.articleWithCount", { count: articleCount })}
+        {t("common.articleWithCount", { count: articlesCount })}
       </Typography>
     );
   }
@@ -30,7 +30,7 @@ const LeftActionBlock = ({ selectedRowsCount, articleCount = 0 }) => {
             resource: t("common.article", {
               count: selectedRowsCount,
             }).toLowerCase(),
-            articleCount,
+            articlesCount,
           }}
         />
       </Typography>

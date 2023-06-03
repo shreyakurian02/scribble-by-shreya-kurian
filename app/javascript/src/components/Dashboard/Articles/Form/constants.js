@@ -32,5 +32,5 @@ export const VALIDATION_SCHEMA = yup.object().shape({
 
 export const SUBMIT_OPTIONS = {
   draft: "draft",
-  publish: "publish",
+  publish: "published",
 };
