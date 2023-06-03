@@ -1,4 +1,9 @@
 en:
-  hello: "Hello world"
+  successfully_created: "%{entity} was successfully created!"
+  successfully_updated: "%{entity} was successfully updated!"
+  successfully_deleted: "%{entity} was successfully deleted!"
+  errors:
+    presence: "%{entity} can't be blank"
+    must_exist: "%{entity} must exist"
   slug:
     immutable: "is immutable"
