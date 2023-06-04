@@ -4,7 +4,7 @@ import { ActionDropdown, Checkbox } from "neetoui";
 import { without } from "ramda";
 import { useTranslation } from "react-i18next";
 
-import { getColumnData } from "./utils";
+import { getColumnData } from "../utils";
 
 const {
   Menu,

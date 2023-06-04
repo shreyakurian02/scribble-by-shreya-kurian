@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-import { PageLoader, Button } from "neetoui";
+import { Button } from "neetoui";
 import { Header, Container } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router";
 
 import articlesApi from "apis/articles";
 import categoriesApi from "apis/categories";
@@ -12,18 +13,24 @@ import AddCategory from "./AddCategory";
 import { ARTICLES_DATA_INITIAL_VALUE } from "./constants";
 import List from "./List";
 import MenuBar from "./MenuBar";
+import { pushURLSearchParams, getSearchParams } from "./utils";
 
 const Articles = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState([]);
+  const [isArticlesLoading, setIsArticlesLoading] = useState(true);
+  const [isCategoriesLoading, setIsCategoriesLoading] = useState(true);
   const [isNewCategoryModalOpen, setIsNewCategoryModalOpen] = useState(false);
   const [articlesData, setArticlesData] = useState(ARTICLES_DATA_INITIAL_VALUE);
 
   const { t } = useTranslation();
+  const history = useHistory();
+
+  const { status, categories: queryCategories, search } = getSearchParams();
 
   const fetchCategories = async () => {
+    setIsCategoriesLoading(true);
     try {
       const {
         data: { categories },
@@ -31,42 +38,48 @@ const Articles = () => {
       setCategories(categories);
     } catch (error) {
       logger.error(error);
+    } finally {
+      setIsCategoriesLoading(false);
     }
   };
 
   const fetchArticles = async () => {
+    setIsArticlesLoading(true);
     try {
       const {
         data: { articles, articles_count: count },
-      } = await articlesApi.fetch();
+      } = await articlesApi.fetch({
+        status,
+        categories: queryCategories,
+        search,
+      });
       setArticlesData({ articles, count });
     } catch (error) {
       logger.error(error);
+    } finally {
+      setIsArticlesLoading(false);
     }
   };
 
-  const fetchArticlesAndCategories = async () => {
-    await Promise.all([fetchCategories(), fetchArticles()]);
-    setIsLoading(false);
+  const handleSearch = ({ target: { value } }) => {
+    setSearchTerm(value);
+    pushURLSearchParams(history, "search", value);
   };
 
   useEffect(() => {
-    fetchArticlesAndCategories();
+    fetchCategories();
   }, []);
 
-  if (isLoading) {
-    return (
-      <div className="h-screen w-full">
-        <PageLoader />
-      </div>
-    );
-  }
+  useEffect(() => {
+    fetchArticles();
+  }, [window.location.search]);
 
   return (
     <>
       <MenuBar
         articlesCount={articlesData.count}
         categories={categories}
+        isCategoriesLoading={isCategoriesLoading}
         setIsNewCategoryModalOpen={setIsNewCategoryModalOpen}
         showMenu={isMenuOpen}
       />
@@ -84,11 +97,15 @@ const Articles = () => {
           }
           searchProps={{
             placeholder: t("placeholder.searchArticles"),
-            onChange: ({ target: { value } }) => setSearchTerm(value),
+            onChange: handleSearch,
             value: searchTerm,
           }}
         />
-        <List articlesData={articlesData} refetchArticles={fetchArticles} />
+        <List
+          articlesData={articlesData}
+          isArticlesLoading={isArticlesLoading}
+          refetchArticles={fetchArticles}
+        />
         <AddCategory
           isOpen={isNewCategoryModalOpen}
           refetchCategories={fetchCategories}

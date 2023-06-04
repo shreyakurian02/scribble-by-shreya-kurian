@@ -13,7 +13,7 @@ import { MANAGE_DELETE_ALERT_INITIAL_VALUE } from "./constants";
 import SubHeader from "./SubHeader";
 import { getAllowedColumns, getColumnData } from "./utils";
 
-const List = ({ articlesData, refetchArticles }) => {
+const List = ({ articlesData, refetchArticles, isArticlesLoading }) => {
   const [selectedRowIds, setSelectedRowIds] = useState([]);
   const [filteredColumns, setFilteredColumns] = useState(
     pluck("dataIndex", getColumnData())
@@ -27,10 +27,10 @@ const List = ({ articlesData, refetchArticles }) => {
 
   const {
     articles,
-    count: { all: articlesCount },
+    count: { filtered: articlesCount },
   } = articlesData;
 
-  if (articles.length === 0) {
+  if (articles.length === 0 && !isArticlesLoading) {
     return (
       <div className="flex h-full w-full items-center justify-center">
         <NoData
@@ -58,6 +58,7 @@ const List = ({ articlesData, refetchArticles }) => {
       <Table
         fixedHeight
         rowSelection
+        loading={isArticlesLoading}
         rowData={articles}
         scroll={{ x: 0 }}
         selectedRowKeys={selectedRowIds}

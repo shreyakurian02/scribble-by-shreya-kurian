@@ -17,7 +17,7 @@ export const CATEGORY_VALIDATION_SCHEMA = yup.object().shape({
 
 export const ARTICLES_DATA_INITIAL_VALUE = {
   articles: [],
-  count: { all: 0, draft: 0, published: 0 },
+  count: { all: 0, draft: 0, published: 0, filtered: 0 },
 };
 
 export const MANAGE_DELETE_ALERT_INITIAL_VALUE = {
