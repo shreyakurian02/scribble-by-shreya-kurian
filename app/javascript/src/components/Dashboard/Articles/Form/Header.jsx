@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import categoriesApi from "apis/categories";
 
-import { SUBMIT_OPTIONS } from "./constants";
+import { ARTICLE_STATUS } from "./constants";
 
 import { getCategoryOptions } from "../utils";
 
@@ -43,7 +43,6 @@ const Header = ({ status, setStatus }) => {
     <div className="flex justify-between px-5">
       <div className="w-64">
         <Select
-          className="flex grow-0"
           isLoading={isLoading}
           name="category"
           options={getCategoryOptions(categories)}
@@ -54,18 +53,17 @@ const Header = ({ status, setStatus }) => {
         <Button label={t("button.cancel")} style="secondary" type="reset" />
         <ActionDropdown
           buttonProps={{ type: "submit" }}
-          buttonStyle="primary"
           label={
-            status === SUBMIT_OPTIONS.draft
+            status === ARTICLE_STATUS.draft
               ? t("button.saveAsDraft")
               : t("common.publish")
           }
         >
           <Menu>
-            <MenuButton onClick={() => setStatus(SUBMIT_OPTIONS.publish)}>
+            <MenuButton onClick={() => setStatus(ARTICLE_STATUS.publish)}>
               {t("common.publish")}
             </MenuButton>
-            <MenuButton onClick={() => setStatus(SUBMIT_OPTIONS.draft)}>
+            <MenuButton onClick={() => setStatus(ARTICLE_STATUS.draft)}>
               {t("button.saveAsDraft")}
             </MenuButton>
           </Menu>

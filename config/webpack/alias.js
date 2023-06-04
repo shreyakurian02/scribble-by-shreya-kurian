@@ -6,6 +6,7 @@ module.exports = {
       components: "src/components",
       neetoui: "@bigbinary/neetoui",
       neetoicons: "@bigbinary/neeto-icons",
+      neetoeditor: "@bigbinary/neeto-editor",
       constants: "src/constants",
       utils: "src/utils",
     },

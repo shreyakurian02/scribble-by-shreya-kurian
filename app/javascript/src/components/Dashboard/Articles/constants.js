@@ -19,3 +19,8 @@ export const ARTICLES_DATA_INITIAL_VALUE = {
   articles: [],
   count: { all: 0, draft: 0, published: 0 },
 };
+
+export const MANAGE_DELETE_ALERT_INITIAL_VALUE = {
+  isOpen: false,
+  article: {},
+};

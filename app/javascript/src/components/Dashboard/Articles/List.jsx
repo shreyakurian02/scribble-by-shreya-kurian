@@ -1,21 +1,26 @@
 import React, { useState } from "react";
 
-import { NoData } from "@bigbinary/neetoui";
 import classnames from "classnames";
 import EmptyStateImage from "images/EmptyState";
-import { Table } from "neetoui";
+import { Table, NoData } from "neetoui";
 import { pluck } from "ramda";
 import { useTranslation } from "react-i18next";
 
 import { SINGULAR } from "constants";
 
+import Delete from "./Alert/Delete";
+import { MANAGE_DELETE_ALERT_INITIAL_VALUE } from "./constants";
 import SubHeader from "./SubHeader";
 import { getAllowedColumns, getColumnData } from "./utils";
 
-const List = ({ articlesData }) => {
+const List = ({ articlesData, refetchArticles }) => {
   const [selectedRowIds, setSelectedRowIds] = useState([]);
   const [filteredColumns, setFilteredColumns] = useState(
     pluck("dataIndex", getColumnData())
+  );
+
+  const [manageDeleteAlert, setManageDeleteAlert] = useState(
+    MANAGE_DELETE_ALERT_INITIAL_VALUE
   );
 
   const { t } = useTranslation();
@@ -53,14 +58,22 @@ const List = ({ articlesData }) => {
       <Table
         fixedHeight
         rowSelection
-        columnData={getAllowedColumns(filteredColumns)}
         rowData={articles}
         scroll={{ x: 0 }}
         selectedRowKeys={selectedRowIds}
+        columnData={getAllowedColumns({
+          filteredColumns,
+          setManageDeleteAlert,
+        })}
         rowClassName={(_, index) =>
           classnames({ "neeto-ui-bg-gray-200": index % 2 !== 0 })
         }
         onRowSelect={setSelectedRowIds}
+      />
+      <Delete
+        manageDeleteAlert={manageDeleteAlert}
+        refetchArticles={refetchArticles}
+        onClose={() => setManageDeleteAlert(MANAGE_DELETE_ALERT_INITIAL_VALUE)}
       />
     </>
   );

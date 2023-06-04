@@ -8,18 +8,31 @@ import { Link } from "react-router-dom";
 
 import { SINGULAR } from "constants";
 
+import { ARTICLE_STATUS } from "./Form/constants";
+
 const {
   Menu,
+  Divider,
   MenuItem: { Button },
 } = Dropdown;
 
 export const formatDate = date => dayjs(date).format("MMM DD, YYYY, hh:MM A");
 
-export const renderAction = () => (
-  <Dropdown buttonStyle="text" className="p-4" icon={MenuHorizontal}>
+export const renderAction = ({ article, setManageDeleteAlert }) => (
+  <Dropdown buttonStyle="text" icon={MenuHorizontal}>
     <Menu>
-      <Button>{t("actions.edit")}</Button>
-      <Button>{t("actions.delete")}</Button>
+      <Button>
+        {article.status === ARTICLE_STATUS.draft
+          ? t("common.publish")
+          : t("button.unpublish")}
+      </Button>
+      <Divider />
+      <Button
+        style="danger"
+        onClick={() => setManageDeleteAlert({ isOpen: true, article })}
+      >
+        {t("actions.delete")}
+      </Button>
     </Menu>
   </Dropdown>
 );
@@ -71,13 +84,16 @@ export const getColumnData = () => [
   },
 ];
 
-export const getAllowedColumns = filteredColumns => [
+export const getAllowedColumns = ({
+  filteredColumns,
+  setManageDeleteAlert,
+}) => [
   ...getColumnData().filter(column =>
     filteredColumns.includes(column.dataIndex)
   ),
   {
     key: "action",
-    render: renderAction,
+    render: (_, article) => renderAction({ article, setManageDeleteAlert }),
   },
 ];
 

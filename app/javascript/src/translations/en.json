@@ -19,7 +19,7 @@
     "preview": "Preview",
     "description": "Description",
     "lastPublished": "Last published at",
-    "selectedOf": "{{selectedCount}} {{resource}} selected of <span>{{articleCount}}</span>",
+    "selectedOf": "{{selectedCount}} {{resource}} selected of <span>{{articlesCount}}</span>",
     "addCategoryHeader": "New category"
   },
   "button": {
@@ -29,7 +29,9 @@
     "delete": "Delete",
     "cancel": "Cancel",
     "saveAsDraft": "Save as draft",
-    "add": "Add"
+    "add": "Add",
+    "unpublish": "Unpublish",
+    "proceed": "Proceed"
   },
   "placeholder": {
     "searchArticles": "Search article titles",
@@ -54,5 +56,9 @@
     "minimum": "Atleast {{value}} {{entity}} is required",
     "invalidEmail": "Email address must be valid",
     "validAlphaNumeric": "Must contain at least one alphanumeric character"
+  },
+  "alert": {
+    "deleteEntity": "Delete {{entity}}",
+    "deleteMessage": "You are permanently deleting <strong>{{title}}</strong>. This action cannot be undone. Do you sure you wish to continue?"
   }
 }

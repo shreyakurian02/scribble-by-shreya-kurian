@@ -1,7 +1,7 @@
 import React from "react";
 
-import { FormikEditor } from "@bigbinary/neeto-editor";
 import { ErrorMessage, useFormikContext } from "formik";
+import { FormikEditor } from "neetoeditor";
 import { Textarea } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 

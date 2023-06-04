@@ -1,5 +1,5 @@
-import { isEditorEmpty } from "@bigbinary/neeto-editor";
 import { t } from "i18next";
+import { isEditorEmpty } from "neetoeditor";
 import * as yup from "yup";
 
 import { SINGULAR } from "constants";
@@ -30,7 +30,7 @@ export const VALIDATION_SCHEMA = yup.object().shape({
     ),
 });
 
-export const SUBMIT_OPTIONS = {
+export const ARTICLE_STATUS = {
   draft: "draft",
   publish: "published",
 };
