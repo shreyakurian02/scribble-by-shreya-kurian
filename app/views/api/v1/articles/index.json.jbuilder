@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 json.articles @articles do |article|
+  json.category article.category.name
   json.partial! "api/v1/articles/article", article:
 end
 

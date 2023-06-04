@@ -6,12 +6,12 @@ import { useHistory } from "react-router";
 import articlesApi from "apis/articles";
 import { ARTICLES_URL } from "constants";
 
-import { SUBMIT_OPTIONS, INITIAL_VALUES, VALIDATION_SCHEMA } from "./constants";
+import { ARTICLE_STATUS, INITIAL_VALUES, VALIDATION_SCHEMA } from "./constants";
 import Editor from "./Editor";
 import Header from "./Header";
 
 const Create = () => {
-  const [status, setStatus] = useState(SUBMIT_OPTIONS.draft);
+  const [status, setStatus] = useState(ARTICLE_STATUS.draft);
 
   const editorRef = useRef(null);
   const history = useHistory();

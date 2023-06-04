@@ -88,7 +88,7 @@ const Articles = () => {
             value: searchTerm,
           }}
         />
-        <List articlesData={articlesData} />
+        <List articlesData={articlesData} refetchArticles={fetchArticles} />
         <AddCategory
           isOpen={isNewCategoryModalOpen}
           refetchCategories={fetchCategories}
