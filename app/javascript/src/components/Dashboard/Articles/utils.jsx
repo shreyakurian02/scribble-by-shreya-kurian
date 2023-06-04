@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { t } from "i18next";
 import { MenuHorizontal } from "neetoicons";
 import { Dropdown, Tooltip } from "neetoui";
+import { stringify, parse } from "qs";
 import { Link } from "react-router-dom";
 
 import { SINGULAR } from "constants";
@@ -102,3 +103,18 @@ export const getCategoryOptions = categories =>
     label: name,
     value: id,
   }));
+
+export const pushURLSearchParams = (history, param, value) => {
+  const queryParams = getSearchParams();
+  history.push({ search: stringify({ ...queryParams, [param]: value }) });
+};
+
+export const getSearchParams = () => {
+  const {
+    status = "all",
+    categories = [],
+    search = "",
+  } = parse(location.search, { ignoreQueryPrefix: true });
+
+  return { status, categories, search };
+};

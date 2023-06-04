@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 
 import classnames from "classnames";
-import EmptyStateImage from "images/EmptyState";
-import { Table, NoData } from "neetoui";
+import { Table } from "neetoui";
 import { pluck } from "ramda";
-import { useTranslation } from "react-i18next";
-
-import { SINGULAR } from "constants";
 
 import Delete from "./Alert/Delete";
 import { MANAGE_DELETE_ALERT_INITIAL_VALUE } from "./constants";
+import EmptyState from "./EmptyState";
 import SubHeader from "./SubHeader";
 import { getAllowedColumns, getColumnData } from "./utils";
 
-const List = ({ articlesData, refetchArticles }) => {
+const List = ({
+  articlesData,
+  refetchArticles,
+  isArticlesLoading,
+  setSearchTerm,
+}) => {
   const [selectedRowIds, setSelectedRowIds] = useState([]);
   const [filteredColumns, setFilteredColumns] = useState(
     pluck("dataIndex", getColumnData())
@@ -23,26 +25,15 @@ const List = ({ articlesData, refetchArticles }) => {
     MANAGE_DELETE_ALERT_INITIAL_VALUE
   );
 
-  const { t } = useTranslation();
-
   const {
     articles,
-    count: { all: articlesCount },
+    count: { filtered: articlesCount },
   } = articlesData;
 
-  if (articles.length === 0) {
+  if (articlesCount === 0 && !isArticlesLoading) {
     return (
       <div className="flex h-full w-full items-center justify-center">
-        <NoData
-          description={t("noData.articleDescription")}
-          image={EmptyStateImage}
-          title={t("noData.articleTitle")}
-          primaryButtonProps={{
-            label: t("button.addEntity", {
-              entity: t("common.article", SINGULAR),
-            }),
-          }}
-        />
+        <EmptyState setSearchTerm={setSearchTerm} />
       </div>
     );
   }
@@ -58,6 +49,7 @@ const List = ({ articlesData, refetchArticles }) => {
       <Table
         fixedHeight
         rowSelection
+        loading={isArticlesLoading}
         rowData={articles}
         scroll={{ x: 0 }}
         selectedRowKeys={selectedRowIds}

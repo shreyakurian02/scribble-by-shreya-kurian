@@ -2,9 +2,8 @@ import React from "react";
 
 import { SubHeader as NeetoUISubHeader } from "neetoui/layouts";
 
+import Columns from "./Columns";
 import LeftActionBlock from "./LeftActionBlock";
-
-import Columns from "../Columns";
 
 const SubHeader = ({
   selectedRowIds,

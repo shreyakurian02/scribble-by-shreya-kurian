@@ -1,7 +1,12 @@
 import React from "react";
 
-import { Typography, Button, Dropdown } from "neetoui";
+import { Typography, Button, Dropdown, Tag } from "neetoui";
+import { without, isEmpty } from "ramda";
 import { useTranslation, Trans } from "react-i18next";
+import { useHistory } from "react-router";
+import { uuid } from "uuidv4";
+
+import { getSearchParams, pushURLSearchParams } from "../utils";
 
 const {
   Menu,
@@ -10,12 +15,31 @@ const {
 
 const LeftActionBlock = ({ selectedRowsCount, articlesCount = 0 }) => {
   const { t } = useTranslation();
+  const history = useHistory();
+
+  const { search, categories } = getSearchParams();
 
   if (selectedRowsCount === 0) {
     return (
-      <Typography component="h4" style="h4">
-        {t("common.articleWithCount", { count: articlesCount })}
-      </Typography>
+      <div className="flex space-x-2">
+        <Typography component="h4" style="h4">
+          {isEmpty(search)
+            ? t("common.articleWithCount", { count: articlesCount })
+            : t("common.searchResult", { count: articlesCount, search })}
+        </Typography>
+        {categories?.map(category => (
+          <Tag
+            className="p-1"
+            key={uuid()}
+            label={category}
+            style="secondary"
+            onClose={() => {
+              const selectedCategories = without([category], categories);
+              pushURLSearchParams(history, "categories", selectedCategories);
+            }}
+          />
+        ))}
+      </div>
     );
   }
 

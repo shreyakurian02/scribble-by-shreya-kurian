@@ -4,7 +4,7 @@ class Api::V1::ArticlesController < ApplicationController
   before_action :load_article!, only: %i[show update destroy]
 
   def index
-    @articles = Article.includes([:author, :category]).all
+    @articles = Articles::FilterService.new(filter_params).process
   end
 
   def create
@@ -34,5 +34,9 @@ class Api::V1::ArticlesController < ApplicationController
 
     def load_article!
       @article = Article.find_by!(slug: params[:slug])
+    end
+
+    def filter_params
+      params.permit(:status, :search, categories: [])
     end
 end
