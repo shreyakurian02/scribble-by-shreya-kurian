@@ -4,8 +4,14 @@ Rails.application.routes.draw do
   constraints(lambda { |req| req.format == :json }) do
     namespace :api do
       namespace :v1 do
+
         resources :categories, only: %i[index create]
         resources :articles, except: %i[edit new], param: :slug
+
+        namespace :bulk do
+          resources :articles, only: %i[update destroy]
+        end
+
       end
     end
   end

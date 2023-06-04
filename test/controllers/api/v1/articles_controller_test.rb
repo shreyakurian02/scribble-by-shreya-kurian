@@ -67,7 +67,7 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  def test_shouldnt_create_article_without_invalid_params
+  def test_shouldnt_create_article_with_invalid_params
     assert_no_difference "Article.count" do
       post(api_v1_articles_path, params: article_params, headers:)
       assert_response :unprocessable_entity

@@ -5,5 +5,7 @@ en:
   errors:
     presence: "%{entity} can't be blank"
     must_exist: "%{entity} must exist"
+  article:
+    invalid_status: "'%{status}' is not a valid status"
   slug:
     immutable: "is immutable"

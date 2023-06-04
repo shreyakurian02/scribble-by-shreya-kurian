@@ -19,7 +19,7 @@ class Article < ApplicationRecord
   private
 
     def set_last_published_at
-      self.last_published_at = Time.zone.now() if published?
+      self.last_published_at = Time.zone.now() if published? && status_changed?
     end
 
     def set_slug
