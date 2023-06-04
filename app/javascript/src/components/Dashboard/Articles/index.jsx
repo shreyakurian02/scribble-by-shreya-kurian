@@ -10,7 +10,7 @@ import categoriesApi from "apis/categories";
 import { SINGULAR, NEW_ARTICLE_URL } from "constants";
 
 import AddCategory from "./AddCategory";
-import { ARTICLES_DATA_INITIAL_VALUE } from "./constants";
+import { ARTICLES_DATA_INITIAL_VALUE, HEADER_TITLE } from "./constants";
 import List from "./List";
 import MenuBar from "./MenuBar";
 import { pushURLSearchParams, getSearchParams } from "./utils";
@@ -86,7 +86,7 @@ const Articles = () => {
       <Container>
         <Header
           menuBarToggle={() => setIsMenuOpen(isMenuOpen => !isMenuOpen)}
-          title={t("common.allArticles")}
+          title={HEADER_TITLE[status]}
           actionBlock={
             <Button
               to={NEW_ARTICLE_URL}
@@ -105,6 +105,7 @@ const Articles = () => {
           articlesData={articlesData}
           isArticlesLoading={isArticlesLoading}
           refetchArticles={fetchArticles}
+          setSearchTerm={setSearchTerm}
         />
         <AddCategory
           isOpen={isNewCategoryModalOpen}

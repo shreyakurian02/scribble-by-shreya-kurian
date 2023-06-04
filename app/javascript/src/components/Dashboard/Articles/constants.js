@@ -24,3 +24,9 @@ export const MANAGE_DELETE_ALERT_INITIAL_VALUE = {
   isOpen: false,
   article: {},
 };
+
+export const HEADER_TITLE = {
+  all: t("common.allArticles"),
+  draft: t("common.draft"),
+  published: t("common.published"),
+};

@@ -20,7 +20,9 @@
     "description": "Description",
     "lastPublished": "Last published at",
     "selectedOf": "{{selectedCount}} {{resource}} selected of <span>{{articlesCount}}</span>",
-    "addCategoryHeader": "New category"
+    "addCategoryHeader": "New category",
+    "searchResult_one": "{{count}} result for \"{{search}}\"",
+    "searchResult_other": "{{count}} results for \"{{search}}\""
   },
   "button": {
     "addEntity": "Add {{entity}}",
@@ -31,7 +33,8 @@
     "saveAsDraft": "Save as draft",
     "add": "Add",
     "unpublish": "Unpublish",
-    "proceed": "Proceed"
+    "proceed": "Proceed",
+    "clearSearch": "Clear search"
   },
   "placeholder": {
     "searchArticles": "Search article titles",
@@ -42,7 +45,9 @@
   },
   "noData": {
     "articleTitle": "There are no articles.",
-    "articleDescription": "You have not yet created an article. Create an article using the CTA given below"
+    "articleDescription": "You have not yet created an article. Create an article using the CTA given below",
+    "searchResultTitle": "No results for \"{{searchTerm}}\"",
+    "searchResultDescription": "We could not find any articles based on your search term. Try a different keyword or add a new article."
   },
   "actions": {
     "edit": "Edit",
