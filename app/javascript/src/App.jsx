@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-import { setAuthHeaders } from "apis/axios";
+import { setAuthHeaders, registerIntercepts } from "apis/axios";
 import "common/i18n";
 import { initializeLogger } from "common/logger";
 import Sidebar from "components/Common/Sidebar";
@@ -22,6 +22,7 @@ const App = () => {
 
   useEffect(() => {
     initializeLogger();
+    registerIntercepts();
     setAuthHeaders(setIsLoading);
   }, []);
 

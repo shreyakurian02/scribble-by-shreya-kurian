@@ -12,6 +12,7 @@ module Articles
       filter_by_status
       filter_by_category
       filter_by_search
+      paginate
     end
 
     private
@@ -36,12 +37,24 @@ module Articles
         "all"
       end
 
+      def paginate
+        { articles: @articles.page(page_number).per(per_page), filtered_count: @articles.count }
+      end
+
       def categories
         options[:categories] || []
       end
 
       def search_term
         options[:search] || ""
+      end
+
+      def page_number
+        options[:page_number]
+      end
+
+      def per_page
+        options[:per_page]
       end
   end
 end

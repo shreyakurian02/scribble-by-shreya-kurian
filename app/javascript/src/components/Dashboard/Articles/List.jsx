@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 import classnames from "classnames";
-import { Table } from "neetoui";
-import { pluck } from "ramda";
+import { Table, PageLoader } from "neetoui";
+import { isEmpty, pluck } from "ramda";
 
 import Delete from "./Alert/Delete";
 import { MANAGE_DELETE_ALERT_INITIAL_VALUE } from "./constants";
@@ -17,6 +17,8 @@ const List = ({
   isArticlesLoading,
   setSearchTerm,
   categories,
+  setPageProperties,
+  pageProperties,
 }) => {
   const [selectedRowIds, setSelectedRowIds] = useState([]);
   const [filteredColumns, setFilteredColumns] = useState(
@@ -29,10 +31,18 @@ const List = ({
 
   const {
     articles,
-    count: { filtered: articlesCount },
+    count: { filtered: filteredArticlesCount, all: totalArticlesCount },
   } = articlesData;
 
-  if (articlesCount === 0 && !isArticlesLoading) {
+  if (isArticlesLoading) {
+    return (
+      <div className="h-full w-full">
+        <PageLoader />
+      </div>
+    );
+  }
+
+  if (isEmpty(articles)) {
     return (
       <div className="flex h-full w-full items-center justify-center">
         <EmptyState setSearchTerm={setSearchTerm} />
@@ -43,7 +53,7 @@ const List = ({
   return (
     <>
       <SubHeader
-        articlesCount={articlesCount}
+        articlesCount={filteredArticlesCount}
         categories={categories}
         filteredColumns={filteredColumns}
         refetchArticles={refetchArticles}
@@ -55,10 +65,15 @@ const List = ({
       <Table
         fixedHeight
         rowSelection
+        currentPageNumber={pageProperties.index}
+        defaultPageSize={pageProperties.size}
+        handlePageChange={(index, size) => setPageProperties({ index, size })}
         loading={isArticlesLoading}
         rowData={articles}
         scroll={{ x: 0 }}
         selectedRowKeys={selectedRowIds}
+        shouldDynamicallyRenderRowSize={false}
+        totalCount={totalArticlesCount}
         columnData={getAllowedColumns({
           filteredColumns,
           setManageDeleteAlert,

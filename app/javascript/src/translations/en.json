@@ -19,6 +19,7 @@
     "preview": "Preview",
     "description": "Description",
     "lastPublished": "Last published at",
+    "somethingWentWrong": "Something went wrong",
     "selectedOf": "{{selectedCount}} {{resource}} selected of <span>{{articlesCount}}</span>",
     "addCategoryHeader": "New category",
     "searchResult_one": "{{count}} result for \"{{search}}\"",
