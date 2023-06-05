@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { ARTICLES_BASE_URL } from "constants";
+import { ARTICLES_BASE_URL, BULK_ARTICLES_BASE_URL } from "constants";
 
 const fetch = params => axios.get(ARTICLES_BASE_URL, { params });
 
@@ -9,6 +9,11 @@ const create = payload => axios.post(ARTICLES_BASE_URL, { article: payload });
 const destroy = articleSlug =>
   axios.delete(`${ARTICLES_BASE_URL}/${articleSlug}`);
 
-const articlesApi = { fetch, create, destroy };
+const bulkDestroy = params => axios.delete(BULK_ARTICLES_BASE_URL, { params });
+
+const bulkUpdate = (ids, payload) =>
+  axios.put(BULK_ARTICLES_BASE_URL, { article: payload, ids });
+
+const articlesApi = { fetch, create, destroy, bulkDestroy, bulkUpdate };
 
 export default articlesApi;

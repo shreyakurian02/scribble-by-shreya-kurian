@@ -1,23 +1,49 @@
 import React from "react";
 
 import { Typography, Button, Dropdown, Tag } from "neetoui";
-import { without, isEmpty } from "ramda";
+import { isEmpty } from "ramda";
 import { useTranslation, Trans } from "react-i18next";
 import { useHistory } from "react-router";
 import { uuid } from "uuidv4";
 
-import { getSearchParams, pushURLSearchParams } from "../utils";
+import { ARTICLE_STATUS } from "../Form/constants";
+import {
+  getCategoryOptions,
+  getSearchParams,
+  handleFilterByCategories,
+} from "../utils";
 
 const {
   Menu,
   MenuItem: { Button: MenuButton },
 } = Dropdown;
 
-const LeftActionBlock = ({ selectedRowsCount, articlesCount = 0 }) => {
+const LeftActionBlock = ({
+  categories,
+  selectedRowsCount,
+  articlesCount = 0,
+  setBulkUpdateData,
+  setIsBulkDeleteAlertOpen,
+}) => {
   const { t } = useTranslation();
   const history = useHistory();
 
-  const { search, categories } = getSearchParams();
+  const { search, categories: queryCategories } = getSearchParams();
+
+  const categoryOptions = getCategoryOptions(categories);
+
+  const handleCategoryClose = category =>
+    handleFilterByCategories({
+      queryCategories,
+      history,
+      selectedCategory: category,
+    });
+
+  const handleUpdateCategory = payload =>
+    setBulkUpdateData({ isModalOpen: true, payload, type: "category" });
+
+  const handleUpdateStatus = payload =>
+    setBulkUpdateData({ isModalOpen: true, payload, type: "status" });
 
   if (selectedRowsCount === 0) {
     return (
@@ -27,16 +53,13 @@ const LeftActionBlock = ({ selectedRowsCount, articlesCount = 0 }) => {
             ? t("common.articleWithCount", { count: articlesCount })
             : t("common.searchResult", { count: articlesCount, search })}
         </Typography>
-        {categories?.map(category => (
+        {queryCategories?.map(category => (
           <Tag
             className="p-1"
             key={uuid()}
             label={category}
             style="secondary"
-            onClose={() => {
-              const selectedCategories = without([category], categories);
-              pushURLSearchParams(history, "categories", selectedCategories);
-            }}
+            onClose={() => handleCategoryClose(category)}
           />
         ))}
       </div>
@@ -58,14 +81,41 @@ const LeftActionBlock = ({ selectedRowsCount, articlesCount = 0 }) => {
           }}
         />
       </Typography>
-      <Dropdown buttonStyle="secondary" label={t("button.changeCategory")} />
-      <Dropdown buttonStyle="secondary" label={t("button.changeStatus")}>
+      <Dropdown buttonStyle="secondary" label={t("button.changeCategory")}>
         <Menu>
-          <MenuButton>{t("common.draft")}</MenuButton>
-          <MenuButton>{t("common.publish")}</MenuButton>
+          {categoryOptions.map(({ label, value }) => (
+            <MenuButton
+              key={value}
+              onClick={() =>
+                handleUpdateCategory({ categoryName: label, categoryId: value })
+              }
+            >
+              {label}
+            </MenuButton>
+          ))}
         </Menu>
       </Dropdown>
-      <Button label={t("button.delete")} style="danger" />
+      <Dropdown buttonStyle="secondary" label={t("button.changeStatus")}>
+        <Menu>
+          <MenuButton
+            onClick={() => handleUpdateStatus({ status: ARTICLE_STATUS.draft })}
+          >
+            {t("common.draft")}
+          </MenuButton>
+          <MenuButton
+            onClick={() =>
+              handleUpdateStatus({ status: ARTICLE_STATUS.publish })
+            }
+          >
+            {t("common.publish")}
+          </MenuButton>
+        </Menu>
+      </Dropdown>
+      <Button
+        label={t("button.delete")}
+        style="danger"
+        onClick={() => setIsBulkDeleteAlertOpen(true)}
+      />
     </div>
   );
 };

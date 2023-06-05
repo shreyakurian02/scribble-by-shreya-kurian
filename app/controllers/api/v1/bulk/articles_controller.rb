@@ -24,7 +24,7 @@ class Api::V1::Bulk::ArticlesController < ApplicationController
     end
 
     def load_articles
-      @articles = Article.where(id: article_params[:ids])
+      @articles = Article.where(id: params[:ids])
     end
 
     def update_params
