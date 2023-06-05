@@ -8,10 +8,11 @@ class Article < ApplicationRecord
   belongs_to :category, counter_cache: true
   belongs_to :author, class_name: "User", foreign_key: :author_id
 
-  validates :title, presence: true, length: { maximum: MAXIMUM_TITLE_LENGTH }
   validates :description, presence: true
   validates :slug, uniqueness: true
   validate :slug_not_changed
+  validates :title, presence: true, length: { maximum: MAXIMUM_TITLE_LENGTH },
+    format: { with: Constants::ALPHANUMERIC_FORMAT_REGEX, message: I18n.t("errors.alphanumeric") }
 
   before_create :set_slug
   before_save :set_last_published_at
