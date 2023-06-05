@@ -11,10 +11,12 @@ import SubHeader from "./SubHeader";
 import { getAllowedColumns, getColumnData } from "./utils";
 
 const List = ({
+  refetchCategories,
   articlesData,
   refetchArticles,
   isArticlesLoading,
   setSearchTerm,
+  categories,
 }) => {
   const [selectedRowIds, setSelectedRowIds] = useState([]);
   const [filteredColumns, setFilteredColumns] = useState(
@@ -42,9 +44,13 @@ const List = ({
     <>
       <SubHeader
         articlesCount={articlesCount}
+        categories={categories}
         filteredColumns={filteredColumns}
+        refetchArticles={refetchArticles}
+        refetchCategories={refetchCategories}
         selectedRowIds={selectedRowIds}
         setFilteredColumns={setFilteredColumns}
+        setSelectedRowIds={setSelectedRowIds}
       />
       <Table
         fixedHeight

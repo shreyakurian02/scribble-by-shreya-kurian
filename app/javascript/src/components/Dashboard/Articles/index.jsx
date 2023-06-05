@@ -103,8 +103,10 @@ const Articles = () => {
         />
         <List
           articlesData={articlesData}
+          categories={categories}
           isArticlesLoading={isArticlesLoading}
           refetchArticles={fetchArticles}
+          refetchCategories={fetchCategories}
           setSearchTerm={setSearchTerm}
         />
         <AddCategory

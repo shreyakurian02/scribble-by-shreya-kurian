@@ -64,6 +64,10 @@
   },
   "alert": {
     "deleteEntity": "Delete {{entity}}",
-    "deleteMessage": "You are permanently deleting <strong>{{title}}</strong>. This action cannot be undone. Do you sure you wish to continue?"
+    "deleteMessage": "You are permanently deleting <strong>{{title}}</strong>. This action cannot be undone. Do you wish to continue?"
+  },
+  "modal": {
+    "updateTitle": "Move articles to {{action}}",
+    "updateDescription": "You are changing the {{action}} of {{articleWithCount}} to {{type}}. Do you wish to continue?"
   }
 }

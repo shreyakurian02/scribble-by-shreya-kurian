@@ -9,3 +9,4 @@ export const NEW_ARTICLE_URL = "/article/create";
 
 export const CATEGORIES_BASE_URL = `${BASE_URL}/categories`;
 export const ARTICLES_BASE_URL = `${BASE_URL}/articles`;
+export const BULK_ARTICLES_BASE_URL = `${BASE_URL}/bulk/articles`;

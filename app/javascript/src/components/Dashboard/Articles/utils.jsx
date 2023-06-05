@@ -5,6 +5,7 @@ import { t } from "i18next";
 import { MenuHorizontal } from "neetoicons";
 import { Dropdown, Tooltip } from "neetoui";
 import { stringify, parse } from "qs";
+import { without } from "ramda";
 import { Link } from "react-router-dom";
 
 import { SINGULAR } from "constants";
@@ -18,6 +19,17 @@ const {
 } = Dropdown;
 
 export const formatDate = date => dayjs(date).format("MMM DD, YYYY, hh:MM A");
+
+export const handleFilterByCategories = ({
+  queryCategories,
+  history,
+  selectedCategory,
+}) => {
+  const selectedCategories = queryCategories?.includes(selectedCategory)
+    ? without([selectedCategory], queryCategories)
+    : [...queryCategories, selectedCategory];
+  pushURLSearchParams(history, "categories", selectedCategories);
+};
 
 export const renderAction = ({ article, setManageDeleteAlert }) => (
   <Dropdown buttonStyle="text" icon={MenuHorizontal}>

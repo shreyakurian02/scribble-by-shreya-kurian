@@ -9,7 +9,7 @@ Rails.application.routes.draw do
         resources :articles, except: %i[edit new], param: :slug
 
         namespace :bulk do
-          resources :articles, only: %i[update destroy]
+          resource :articles, only: %i[update destroy]
         end
 
       end

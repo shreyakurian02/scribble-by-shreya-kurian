@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Search, Plus } from "neetoicons";
 import { Typography, Spinner } from "neetoui";
 import { MenuBar as NeetoUIMenuBar } from "neetoui/layouts";
-import { without } from "ramda";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 import { v4 as uuid } from "uuid";
@@ -11,7 +10,11 @@ import { v4 as uuid } from "uuid";
 import { PLURAL } from "constants";
 
 import { STATUS_MENU_BLOCKS } from "./constants";
-import { pushURLSearchParams, getSearchParams } from "./utils";
+import {
+  pushURLSearchParams,
+  getSearchParams,
+  handleFilterByCategories,
+} from "./utils";
 
 const { Block, SubTitle, Search: MenuSearch } = NeetoUIMenuBar;
 
@@ -38,13 +41,6 @@ const MenuBar = ({
   const handleCollapse = () => {
     setSearchTerm("");
     setIsSearchCollapsed(true);
-  };
-
-  const handleFilterByCategory = name => {
-    const selectedCategories = queryCategories?.includes(name)
-      ? without([name], queryCategories)
-      : [...queryCategories, name];
-    pushURLSearchParams(history, "categories", selectedCategories);
   };
 
   return (
@@ -92,7 +88,13 @@ const MenuBar = ({
             count={articlesCount}
             key={id}
             label={name}
-            onClick={() => handleFilterByCategory(name)}
+            onClick={() =>
+              handleFilterByCategories({
+                queryCategories,
+                history,
+                selectedCategory: name,
+              })
+            }
           />
         ))
       )}
