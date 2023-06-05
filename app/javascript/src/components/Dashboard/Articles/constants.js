@@ -7,6 +7,11 @@ export const STATUS_MENU_BLOCKS = [
   { label: t("common.draft"), value: "draft" },
 ];
 
+export const DEFAULT_PAGE_PROPERTIES = {
+  size: 10,
+  index: 1,
+};
+
 export const NEW_CATEGORY_INITIAL_VALUES = { category: "" };
 
 export const CATEGORY_VALIDATION_SCHEMA = yup.object().shape({

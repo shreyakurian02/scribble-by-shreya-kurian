@@ -11,7 +11,11 @@ import { SINGULAR, NEW_ARTICLE_URL } from "constants";
 import useDebounce from "hooks/useDebounce";
 
 import AddCategory from "./AddCategory";
-import { ARTICLES_DATA_INITIAL_VALUE, HEADER_TITLE } from "./constants";
+import {
+  ARTICLES_DATA_INITIAL_VALUE,
+  DEFAULT_PAGE_PROPERTIES,
+  HEADER_TITLE,
+} from "./constants";
 import List from "./List";
 import MenuBar from "./MenuBar";
 import { pushURLSearchParams, getSearchParams } from "./utils";
@@ -21,6 +25,7 @@ const Articles = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [categorySearchTerm, setCategorySearchTerm] = useState("");
   const [categories, setCategories] = useState([]);
+  const [pageProperties, setPageProperties] = useState(DEFAULT_PAGE_PROPERTIES);
   const [isArticlesLoading, setIsArticlesLoading] = useState(true);
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(true);
   const [isNewCategoryModalOpen, setIsNewCategoryModalOpen] = useState(false);
@@ -56,6 +61,8 @@ const Articles = () => {
         status,
         categories: queryCategories,
         search,
+        per_page: pageProperties.size,
+        page_number: pageProperties.index,
       });
       setArticlesData({ articles, count });
     } catch (error) {
@@ -75,7 +82,7 @@ const Articles = () => {
 
   useEffect(() => {
     fetchArticles();
-  }, [window.location.search]);
+  }, [window.location.search, pageProperties]);
 
   return (
     <>
@@ -110,8 +117,10 @@ const Articles = () => {
           articlesData={articlesData}
           categories={categories}
           isArticlesLoading={isArticlesLoading}
+          pageProperties={pageProperties}
           refetchArticles={fetchArticles}
           refetchCategories={fetchCategories}
+          setPageProperties={setPageProperties}
           setSearchTerm={setSearchTerm}
         />
         <AddCategory

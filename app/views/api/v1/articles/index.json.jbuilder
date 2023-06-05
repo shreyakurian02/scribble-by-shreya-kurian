@@ -6,7 +6,7 @@ json.articles @articles do |article|
 end
 
 json.articles_count do
-  json.filtered @articles.count
+  json.filtered @filtered_count
   json.all Article.count
   json.draft Article.draft.size
   json.published Article.published.size
