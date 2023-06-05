@@ -2,7 +2,7 @@ import axios from "axios";
 
 import { CATEGORIES_BASE_URL } from "constants";
 
-const fetch = () => axios.get(CATEGORIES_BASE_URL);
+const fetch = params => axios.get(CATEGORIES_BASE_URL, { params });
 
 const create = payload =>
   axios.post(CATEGORIES_BASE_URL, { category: payload });

@@ -5,6 +5,7 @@ en:
   errors:
     presence: "%{entity} can't be blank"
     must_exist: "%{entity} must exist"
+    alphanumeric: "should have atleast one alphanumeric character"
   article:
     invalid_status: "'%{status}' is not a valid status"
   slug:
