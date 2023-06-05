@@ -8,6 +8,7 @@ import { useHistory } from "react-router";
 import articlesApi from "apis/articles";
 import categoriesApi from "apis/categories";
 import { SINGULAR, NEW_ARTICLE_URL } from "constants";
+import useDebounce from "hooks/useDebounce";
 
 import AddCategory from "./AddCategory";
 import { ARTICLES_DATA_INITIAL_VALUE, HEADER_TITLE } from "./constants";
@@ -27,6 +28,8 @@ const Articles = () => {
 
   const { t } = useTranslation();
   const history = useHistory();
+  const debouncedCategorySearchTerm = useDebounce(categorySearchTerm);
+  const debouncedArticleSearchTerm = useDebounce(searchTerm);
 
   const { status, categories: queryCategories, search } = getSearchParams();
 
@@ -62,14 +65,13 @@ const Articles = () => {
     }
   };
 
-  const handleSearch = ({ target: { value } }) => {
-    setSearchTerm(value);
-    pushURLSearchParams(history, "search", value);
-  };
+  useEffect(() => {
+    pushURLSearchParams(history, "search", debouncedArticleSearchTerm);
+  }, [debouncedArticleSearchTerm]);
 
   useEffect(() => {
     fetchCategories();
-  }, [categorySearchTerm]);
+  }, [debouncedCategorySearchTerm]);
 
   useEffect(() => {
     fetchArticles();
@@ -100,7 +102,7 @@ const Articles = () => {
           }
           searchProps={{
             placeholder: t("placeholder.searchArticles"),
-            onChange: handleSearch,
+            onChange: ({ target: { value } }) => setSearchTerm(value),
             value: searchTerm,
           }}
         />

@@ -4,7 +4,7 @@ import { Typography, Button, Dropdown, Tag } from "neetoui";
 import { isEmpty } from "ramda";
 import { useTranslation, Trans } from "react-i18next";
 import { useHistory } from "react-router";
-import { uuid } from "uuidv4";
+import { v4 as uuid } from "uuid";
 
 import { ARTICLE_STATUS } from "../Form/constants";
 import {
