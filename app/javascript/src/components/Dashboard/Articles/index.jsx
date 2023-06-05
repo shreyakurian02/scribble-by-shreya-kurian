@@ -18,6 +18,7 @@ import { pushURLSearchParams, getSearchParams } from "./utils";
 const Articles = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [categorySearchTerm, setCategorySearchTerm] = useState("");
   const [categories, setCategories] = useState([]);
   const [isArticlesLoading, setIsArticlesLoading] = useState(true);
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(true);
@@ -34,7 +35,7 @@ const Articles = () => {
     try {
       const {
         data: { categories },
-      } = await categoriesApi.fetch();
+      } = await categoriesApi.fetch({ search: categorySearchTerm });
       setCategories(categories);
     } catch (error) {
       logger.error(error);
@@ -68,7 +69,7 @@ const Articles = () => {
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [categorySearchTerm]);
 
   useEffect(() => {
     fetchArticles();
@@ -79,7 +80,9 @@ const Articles = () => {
       <MenuBar
         articlesCount={articlesData.count}
         categories={categories}
+        categorySearchTerm={categorySearchTerm}
         isCategoriesLoading={isCategoriesLoading}
+        setCategorySearchTerm={setCategorySearchTerm}
         setIsNewCategoryModalOpen={setIsNewCategoryModalOpen}
         showMenu={isMenuOpen}
       />

@@ -20,12 +20,13 @@ const { Block, SubTitle, Search: MenuSearch } = NeetoUIMenuBar;
 
 const MenuBar = ({
   articlesCount,
+  setCategorySearchTerm,
+  categorySearchTerm,
   categories,
   showMenu,
   isCategoriesLoading,
   setIsNewCategoryModalOpen,
 }) => {
-  const [searchTerm, setSearchTerm] = useState("");
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
 
   const history = useHistory();
@@ -39,7 +40,7 @@ const MenuBar = ({
   const handleSearch = () => setIsSearchCollapsed(false);
 
   const handleCollapse = () => {
-    setSearchTerm("");
+    setCategorySearchTerm("");
     setIsSearchCollapsed(true);
   };
 
@@ -73,8 +74,8 @@ const MenuBar = ({
         autoFocus
         collapse={isSearchCollapsed}
         placeholder={t("placeholder.searchCategory")}
-        value={searchTerm}
-        onChange={({ target: { value } }) => setSearchTerm(value)}
+        value={categorySearchTerm}
+        onChange={({ target: { value } }) => setCategorySearchTerm(value)}
         onCollapse={handleCollapse}
       />
       {isCategoriesLoading ? (

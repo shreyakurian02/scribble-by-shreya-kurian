@@ -2,7 +2,7 @@
 
 class Api::V1::CategoriesController < ApplicationController
   def index
-    @categories = Category.all
+    @categories = Categories::FilterService.new(filter_params).process
   end
 
   def create
@@ -14,5 +14,9 @@ class Api::V1::CategoriesController < ApplicationController
 
     def category_params
       params.require(:category).permit(:name)
+    end
+
+    def filter_params
+      params.permit(:search)
     end
 end
