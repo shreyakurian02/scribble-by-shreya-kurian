@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 
 import { Search, Plus } from "neetoicons";
-import { Typography, Spinner } from "neetoui";
+import { Typography } from "neetoui";
 import { MenuBar as NeetoUIMenuBar } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 import { v4 as uuid } from "uuid";
 
 import { PLURAL } from "constants";
+import { useCategoriesState } from "contexts/categories";
 
 import { STATUS_MENU_BLOCKS } from "./constants";
 import {
@@ -22,15 +23,15 @@ const MenuBar = ({
   articlesCount,
   setCategorySearchTerm,
   categorySearchTerm,
-  categories,
   showMenu,
-  isCategoriesLoading,
   setIsNewCategoryModalOpen,
 }) => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
 
   const history = useHistory();
   const { t } = useTranslation();
+
+  const categories = useCategoriesState();
 
   const { status, categories: queryCategories } = getSearchParams();
 
@@ -78,27 +79,21 @@ const MenuBar = ({
         onChange={({ target: { value } }) => setCategorySearchTerm(value)}
         onCollapse={handleCollapse}
       />
-      {isCategoriesLoading ? (
-        <div className="flex items-center justify-center">
-          <Spinner />
-        </div>
-      ) : (
-        categories?.map(({ name, id, articles_count: articlesCount }) => (
-          <Block
-            active={queryCategories?.includes(name)}
-            count={articlesCount}
-            key={id}
-            label={name}
-            onClick={() =>
-              handleFilterByCategories({
-                queryCategories,
-                history,
-                selectedCategory: name,
-              })
-            }
-          />
-        ))
-      )}
+      {categories?.map(({ name, id, articles_count: articlesCount }) => (
+        <Block
+          active={queryCategories?.includes(name)}
+          count={articlesCount}
+          key={id}
+          label={name}
+          onClick={() =>
+            handleFilterByCategories({
+              queryCategories,
+              history,
+              selectedCategory: name,
+            })
+          }
+        />
+      ))}
     </NeetoUIMenuBar>
   );
 };

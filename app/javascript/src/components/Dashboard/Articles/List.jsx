@@ -11,12 +11,10 @@ import SubHeader from "./SubHeader";
 import { getAllowedColumns, getColumnData } from "./utils";
 
 const List = ({
-  refetchCategories,
   articlesData,
   refetchArticles,
   isArticlesLoading,
   setSearchTerm,
-  categories,
   setPageProperties,
   pageProperties,
 }) => {
@@ -54,10 +52,8 @@ const List = ({
     <>
       <SubHeader
         articlesCount={filteredArticlesCount}
-        categories={categories}
         filteredColumns={filteredColumns}
         refetchArticles={refetchArticles}
-        refetchCategories={refetchCategories}
         selectedRowIds={selectedRowIds}
         setFilteredColumns={setFilteredColumns}
         setSelectedRowIds={setSelectedRowIds}

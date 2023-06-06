@@ -4,16 +4,18 @@ import { Typography, Modal, Button } from "neetoui";
 import { useTranslation } from "react-i18next";
 
 import articlesApi from "apis/articles";
+import { useCategoriesDispatch } from "contexts/categories";
 
 const BulkUpdate = ({
   selectedRowIds,
   bulkUpdateData,
   onClose,
   refetchArticles,
-  refetchCategories,
   setSelectedRowIds,
 }) => {
   const { t } = useTranslation();
+
+  const fetchCategories = useCategoriesDispatch();
 
   const {
     isModalOpen,
@@ -26,11 +28,13 @@ const BulkUpdate = ({
 
   const handleUpdate = async () => {
     try {
-      const updatePayload = shouldUpdateCategory ? { categoryId } : { status };
+      const updatePayload = shouldUpdateCategory
+        ? { category_id: categoryId }
+        : { status };
       await articlesApi.bulkUpdate(selectedRowIds, updatePayload);
       setSelectedRowIds([]);
       refetchArticles();
-      refetchCategories();
+      fetchCategories();
       onClose();
     } catch (error) {
       logger.error(error);

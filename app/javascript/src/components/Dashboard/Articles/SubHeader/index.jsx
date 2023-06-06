@@ -8,12 +8,10 @@ import Columns from "./Columns";
 import LeftActionBlock from "./LeftActionBlock";
 
 const SubHeader = ({
-  categories,
   selectedRowIds,
   filteredColumns,
   setFilteredColumns,
   articlesCount = 0,
-  refetchCategories,
   refetchArticles,
   setSelectedRowIds,
 }) => {
@@ -33,7 +31,6 @@ const SubHeader = ({
         leftActionBlock={
           <LeftActionBlock
             articlesCount={articlesCount}
-            categories={categories}
             refetchArticles={refetchArticles}
             selectedRowIds={selectedRowIds}
             selectedRowsCount={selectedRowsCount}
@@ -54,14 +51,12 @@ const SubHeader = ({
       <BulkDelete
         isOpen={isBulkDeleteAlertOpen}
         refetchArticles={refetchArticles}
-        refetchCategories={refetchCategories}
         selectedRowIds={selectedRowIds}
         onClose={() => setIsBulkDeleteAlertOpen(false)}
       />
       <BulkUpdate
         bulkUpdateData={bulkUpdateData}
         refetchArticles={refetchArticles}
-        refetchCategories={refetchCategories}
         selectedRowIds={selectedRowIds}
         setSelectedRowIds={setSelectedRowIds}
         onClose={() =>

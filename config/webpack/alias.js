@@ -3,6 +3,7 @@ module.exports = {
     alias: {
       apis: "src/apis",
       common: "src/common",
+      contexts: "src/contexts",
       components: "src/components",
       neetoui: "@bigbinary/neetoui",
       neetoicons: "@bigbinary/neeto-icons",

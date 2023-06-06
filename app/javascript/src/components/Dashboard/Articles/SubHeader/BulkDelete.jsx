@@ -5,21 +5,18 @@ import { useTranslation, Trans } from "react-i18next";
 
 import articlesApi from "apis/articles";
 import { SINGULAR } from "constants";
+import { useCategoriesDispatch } from "contexts/categories";
 
-const BulkDelete = ({
-  selectedRowIds,
-  isOpen,
-  onClose,
-  refetchArticles,
-  refetchCategories,
-}) => {
+const BulkDelete = ({ selectedRowIds, isOpen, onClose, refetchArticles }) => {
   const { t } = useTranslation();
+
+  const fetchCategories = useCategoriesDispatch();
 
   const handleDelete = async () => {
     try {
       await articlesApi.bulkDestroy({ ids: selectedRowIds });
       refetchArticles();
-      refetchCategories();
+      fetchCategories();
       onClose();
     } catch (error) {
       logger.error(error);

@@ -5,20 +5,23 @@ import { Form, Input } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 
 import categoriesApi from "apis/categories";
+import { useCategoriesDispatch } from "contexts/categories";
 
 import {
   CATEGORY_VALIDATION_SCHEMA,
   NEW_CATEGORY_INITIAL_VALUES,
 } from "./constants";
 
-const AddCategory = ({ isOpen, onClose, refetchCategories }) => {
+const AddCategory = ({ isOpen, onClose }) => {
   const { t } = useTranslation();
+
+  const fetchCategories = useCategoriesDispatch();
 
   const handleSubmit = async ({ category }) => {
     try {
       const payload = { name: category };
       await categoriesApi.create(payload);
-      refetchCategories();
+      fetchCategories();
       onClose();
     } catch (error) {
       logger.error(error);
