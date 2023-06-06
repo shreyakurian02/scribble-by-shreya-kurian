@@ -14,7 +14,7 @@ import { ARTICLE_STATUS } from "./constants";
 
 import Delete from "../Alert/Delete";
 import { MANAGE_DELETE_ALERT_INITIAL_VALUE } from "../constants";
-import { getCategoryOptions } from "../utils";
+import { getCategoryOptions, isArticleStatusDraft } from "../utils";
 
 const {
   Menu,
@@ -61,7 +61,7 @@ const Header = ({ status, setStatus, article = {}, isEdit = false }) => {
         <ActionDropdown
           buttonProps={{ type: "submit" }}
           label={
-            status === ARTICLE_STATUS.draft
+            isArticleStatusDraft(status)
               ? t("button.saveAsDraft")
               : t("common.publish")
           }

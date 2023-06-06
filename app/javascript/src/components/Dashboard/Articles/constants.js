@@ -31,6 +31,12 @@ export const MANAGE_DELETE_ALERT_INITIAL_VALUE = {
   article: {},
 };
 
+export const MANAGE_UPDATE_MODAL_INITIAL_VALUE = {
+  article: {},
+  isOpen: false,
+  newStatus: "",
+};
+
 export const HEADER_TITLE = {
   all: t("common.allArticles"),
   draft: t("common.draft"),

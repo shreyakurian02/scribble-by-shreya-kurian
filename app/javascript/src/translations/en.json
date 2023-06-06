@@ -14,7 +14,7 @@
     "category_one": "Category",
     "category_other": "Categories",
     "author": "Author",
-    "status": "status",
+    "status": "Status",
     "settings": "Settings",
     "preview": "Preview",
     "description": "Description",
@@ -69,6 +69,6 @@
   },
   "modal": {
     "updateTitle": "Move articles to {{action}}",
-    "updateDescription": "You are changing the {{action}} of {{articleWithCount}} to {{type}}. Do you wish to continue?"
+    "updateDescription": "You are changing the {{attribute}} of {{entity}} to {{attributeValue}}. Do you wish to continue?"
   }
 }
