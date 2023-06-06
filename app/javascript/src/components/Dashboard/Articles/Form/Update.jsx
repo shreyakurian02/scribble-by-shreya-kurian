@@ -22,7 +22,7 @@ const Update = () => {
   const { slug } = useParams();
 
   const handleSubmit = async values => {
-    const payload = { ...values, status, category_id: values.category.value };
+    const payload = { ...values, status, category_name: values.category.label };
     try {
       const response = await articlesApi.update({ slug, payload });
       response.data?.notice && history.goBack();
@@ -65,7 +65,12 @@ const Update = () => {
         onSubmit={handleSubmit}
       >
         <Form className="space-y-5">
-          <Header setStatus={setStatus} status={status} />
+          <Header
+            isEdit
+            article={article}
+            setStatus={setStatus}
+            status={status}
+          />
           <Editor editorRef={editorRef} />
         </Form>
       </Formik>

@@ -16,15 +16,11 @@ const Create = () => {
   const editorRef = useRef(null);
   const history = useHistory();
 
-  const handleSubmit = async ({
-    title,
-    description,
-    category: { value: categoryId },
-  }) => {
+  const handleSubmit = async ({ title, description, category: { label } }) => {
     const payload = {
       title,
       description,
-      category_id: categoryId,
+      category_name: label,
       status,
     };
     try {

@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
 
-import { ActionDropdown, Button } from "neetoui";
+import { MenuHorizontal } from "@bigbinary/neeto-icons";
+import { useFormikContext } from "formik";
+import { ActionDropdown, Button, Dropdown } from "neetoui";
 import { Select } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router";
 
-import categoriesApi from "apis/categories";
+import { ARTICLES_BASE_URL } from "constants";
+import { useCategoriesState } from "contexts/categories";
 
 import { ARTICLE_STATUS } from "./constants";
 
+import Delete from "../Alert/Delete";
+import { MANAGE_DELETE_ALERT_INITIAL_VALUE } from "../constants";
 import { getCategoryOptions } from "../utils";
 
 const {
@@ -15,41 +21,42 @@ const {
   MenuItem: { Button: MenuButton },
 } = ActionDropdown;
 
-const Header = ({ status, setStatus }) => {
-  const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+const Header = ({ status, setStatus, article = {}, isEdit = false }) => {
+  const [options, setOptions] = useState([]);
+  const [manageDeleteAlert, setManageDeleteAlert] = useState(
+    MANAGE_DELETE_ALERT_INITIAL_VALUE
+  );
 
   const { t } = useTranslation();
+  const history = useHistory();
+  const { setFieldValue } = useFormikContext();
 
-  const fetchCategories = async () => {
-    setIsLoading(true);
+  const categories = useCategoriesState();
+
+  const handleCreateCategory = async category => {
     try {
-      const {
-        data: { categories },
-      } = await categoriesApi.fetch();
-      setCategories(categories);
+      const newOption = { label: category, value: category };
+      setFieldValue("category", newOption);
+      setOptions([...options, newOption]);
     } catch (error) {
       logger.error(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+  useEffect(() => setOptions(getCategoryOptions(categories)), [categories]);
 
   return (
     <div className="flex justify-between px-5">
       <div className="w-64">
         <Select
-          isLoading={isLoading}
+          isCreateable
           name="category"
-          options={getCategoryOptions(categories)}
+          options={options}
           placeholder={t("placeholder.searchCategory")}
+          onCreateOption={handleCreateCategory}
         />
       </div>
-      <div className="space-x-3">
+      <div className="flex items-center  space-x-5 ">
         <Button label={t("button.cancel")} style="secondary" type="reset" />
         <ActionDropdown
           buttonProps={{ type: "submit" }}
@@ -68,7 +75,24 @@ const Header = ({ status, setStatus }) => {
             </MenuButton>
           </Menu>
         </ActionDropdown>
+        {isEdit && (
+          <Dropdown buttonStyle="text" icon={MenuHorizontal}>
+            <Dropdown.Menu>
+              <Dropdown.MenuItem.Button
+                style="danger"
+                onClick={() => setManageDeleteAlert({ isOpen: true, article })}
+              >
+                {t("button.delete")}
+              </Dropdown.MenuItem.Button>
+            </Dropdown.Menu>
+          </Dropdown>
+        )}
       </div>
+      <Delete
+        manageDeleteAlert={manageDeleteAlert}
+        refetchArticles={() => history.push(ARTICLES_BASE_URL)}
+        onClose={() => setManageDeleteAlert(MANAGE_DELETE_ALERT_INITIAL_VALUE)}
+      />
     </div>
   );
 };
