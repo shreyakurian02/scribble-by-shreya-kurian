@@ -10,6 +10,7 @@ export const DEFAULT_ERROR_NOTIFICATION = t("common.somethingWentWrong");
 
 export const ARTICLES_URL = "/articles";
 export const NEW_ARTICLE_URL = "/article/create";
+export const EDIT_ARTICLE_URL = "/article/:slug/edit";
 
 export const CATEGORIES_BASE_URL = `${BASE_URL}/categories`;
 export const ARTICLES_BASE_URL = `${BASE_URL}/articles`;
