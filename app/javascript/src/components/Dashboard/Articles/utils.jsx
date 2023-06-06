@@ -45,7 +45,7 @@ export const renderAction = ({
           setManageUpdateModal({
             isOpen: true,
             article,
-            status: isArticleStatusDraft(status)
+            status: isArticleStatusDraft(article.status)
               ? ARTICLE_STATUS.publish
               : ARTICLE_STATUS.draft,
           })

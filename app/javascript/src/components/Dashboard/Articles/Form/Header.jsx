@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { MenuHorizontal } from "@bigbinary/neeto-icons";
 import { useFormikContext } from "formik";
@@ -7,8 +7,9 @@ import { Select } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 
+import categoriesApi from "apis/categories";
 import { ARTICLES_BASE_URL } from "constants";
-import { useCategoriesState } from "contexts/categories";
+import { useCategories } from "contexts/categories";
 
 import { ARTICLE_STATUS } from "./constants";
 
@@ -22,7 +23,6 @@ const {
 } = ActionDropdown;
 
 const Header = ({ status, setStatus, article = {}, isEdit = false }) => {
-  const [options, setOptions] = useState([]);
   const [manageDeleteAlert, setManageDeleteAlert] = useState(
     MANAGE_DELETE_ALERT_INITIAL_VALUE
   );
@@ -31,19 +31,20 @@ const Header = ({ status, setStatus, article = {}, isEdit = false }) => {
   const history = useHistory();
   const { setFieldValue } = useFormikContext();
 
-  const categories = useCategoriesState();
+  const [categories, fetchCategories] = useCategories();
 
   const handleCreateCategory = async category => {
     try {
-      const newOption = { label: category, value: category };
-      setFieldValue("category", newOption);
-      setOptions([...options, newOption]);
+      const payload = { name: category };
+      const {
+        data: { category_id },
+      } = await categoriesApi.create(payload);
+      setFieldValue("category", { label: category, value: category_id });
+      fetchCategories();
     } catch (error) {
       logger.error(error);
     }
   };
-
-  useEffect(() => setOptions(getCategoryOptions(categories)), [categories]);
 
   return (
     <div className="flex justify-between px-5">
@@ -51,7 +52,7 @@ const Header = ({ status, setStatus, article = {}, isEdit = false }) => {
         <Select
           isCreateable
           name="category"
-          options={options}
+          options={getCategoryOptions(categories)}
           placeholder={t("placeholder.searchCategory")}
           onCreateOption={handleCreateCategory}
         />

@@ -2,7 +2,6 @@
 
 class Api::V1::ArticlesController < ApplicationController
   before_action :load_article!, only: %i[show update destroy]
-  before_action :load_category!, only: %i[create update]
 
   def index
     @articles, @filtered_count = Articles::FilterService.new(filter_params).process.values_at(
@@ -11,7 +10,7 @@ class Api::V1::ArticlesController < ApplicationController
   end
 
   def create
-    @current_user.articles.create!(create_update_params)
+    @current_user.articles.create!(article_params)
     render_notice(t("successfully_created", entity: "Article"))
   end
 
@@ -20,7 +19,7 @@ class Api::V1::ArticlesController < ApplicationController
   end
 
   def update
-    @article.update!(create_update_params)
+    @article.update!(article_params)
     render_notice(t("successfully_updated", entity: "Article"))
   end
 
@@ -31,12 +30,8 @@ class Api::V1::ArticlesController < ApplicationController
 
   private
 
-    def create_update_params
-      article_params.except(:category_name).merge!({ category_id: @category.id })
-    end
-
     def article_params
-      params.require(:article).permit(:title, :description, :status, :category_name)
+      params.require(:article).permit(:title, :description, :status, :category_id)
     end
 
     def load_article!

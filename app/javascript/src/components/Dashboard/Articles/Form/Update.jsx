@@ -22,7 +22,7 @@ const Update = () => {
   const { slug } = useParams();
 
   const handleSubmit = async values => {
-    const payload = { ...values, status, category_name: values.category.label };
+    const payload = { ...values, status, category_id: values.category.value };
     try {
       const response = await articlesApi.update({ slug, payload });
       response.data?.notice && history.goBack();
