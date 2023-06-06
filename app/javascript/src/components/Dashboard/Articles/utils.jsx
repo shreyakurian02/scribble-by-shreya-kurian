@@ -54,9 +54,11 @@ export const renderStatus = status => (
   <span className="capitalize">{status}</span>
 );
 
-export const renderTitle = title => (
+export const renderTitle = ({ title, slug }) => (
   <Tooltip content={title} followCursor="horizontal" position="bottom">
-    <Link className="neeto-ui-text-primary-500">{title}</Link>
+    <Link className="neeto-ui-text-primary-500" to={`article/${slug}/edit`}>
+      {title}
+    </Link>
   </Tooltip>
 );
 
@@ -67,7 +69,7 @@ export const getColumnData = () => [
     key: "title",
     width: "15%",
     ellipsis: true,
-    render: title => renderTitle(title),
+    render: (title, record) => renderTitle({ title, slug: record.slug }),
   },
   {
     dataIndex: "category",

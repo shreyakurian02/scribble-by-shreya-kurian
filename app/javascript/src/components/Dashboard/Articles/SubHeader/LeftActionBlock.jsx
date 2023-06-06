@@ -6,6 +6,8 @@ import { useTranslation, Trans } from "react-i18next";
 import { useHistory } from "react-router";
 import { v4 as uuid } from "uuid";
 
+import { useCategoriesState } from "contexts/categories";
+
 import { ARTICLE_STATUS } from "../Form/constants";
 import {
   getCategoryOptions,
@@ -19,7 +21,6 @@ const {
 } = Dropdown;
 
 const LeftActionBlock = ({
-  categories,
   selectedRowsCount,
   articlesCount = 0,
   setBulkUpdateData,
@@ -27,6 +28,8 @@ const LeftActionBlock = ({
 }) => {
   const { t } = useTranslation();
   const history = useHistory();
+
+  const categories = useCategoriesState();
 
   const { search, categories: queryCategories } = getSearchParams();
 
