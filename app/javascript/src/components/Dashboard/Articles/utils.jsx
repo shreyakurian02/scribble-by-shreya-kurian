@@ -18,7 +18,9 @@ const {
   MenuItem: { Button },
 } = Dropdown;
 
-export const formatDate = date => dayjs(date).format("MMM DD, YYYY, hh:MM A");
+export const isArticleStatusDraft = status => status === ARTICLE_STATUS.draft;
+
+export const formatDate = date => dayjs(date).format("MMM DD, YYYY, hh:mm A");
 
 export const handleFilterByCategories = ({
   queryCategories,
@@ -31,11 +33,25 @@ export const handleFilterByCategories = ({
   pushURLSearchParams(history, "categories", selectedCategories);
 };
 
-export const renderAction = ({ article, setManageDeleteAlert }) => (
+export const renderAction = ({
+  article,
+  setManageDeleteAlert,
+  setManageUpdateModal,
+}) => (
   <Dropdown buttonStyle="text" icon={MenuHorizontal}>
     <Menu>
-      <Button>
-        {article.status === ARTICLE_STATUS.draft
+      <Button
+        onClick={() =>
+          setManageUpdateModal({
+            isOpen: true,
+            article,
+            status: isArticleStatusDraft(article.status)
+              ? ARTICLE_STATUS.publish
+              : ARTICLE_STATUS.draft,
+          })
+        }
+      >
+        {isArticleStatusDraft(article.status)
           ? t("common.publish")
           : t("button.unpublish")}
       </Button>
@@ -56,7 +72,7 @@ export const renderStatus = status => (
 
 export const renderTitle = ({ title, slug }) => (
   <Tooltip content={title} followCursor="horizontal" position="bottom">
-    <Link className="neeto-ui-text-primary-500" to={`article/${slug}/edit`}>
+    <Link className="neeto-ui-text-primary-500" to={`articles/${slug}/edit`}>
       {title}
     </Link>
   </Tooltip>
@@ -102,13 +118,15 @@ export const getColumnData = () => [
 export const getAllowedColumns = ({
   filteredColumns,
   setManageDeleteAlert,
+  setManageUpdateModal,
 }) => [
   ...getColumnData().filter(column =>
     filteredColumns.includes(column.dataIndex)
   ),
   {
     key: "action",
-    render: (_, article) => renderAction({ article, setManageDeleteAlert }),
+    render: (_, article) =>
+      renderAction({ article, setManageDeleteAlert, setManageUpdateModal }),
   },
 ];
 

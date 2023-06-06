@@ -4,11 +4,15 @@ import classnames from "classnames";
 import { Table, PageLoader } from "neetoui";
 import { isEmpty, pluck } from "ramda";
 
-import Delete from "./Alert/Delete";
-import { MANAGE_DELETE_ALERT_INITIAL_VALUE } from "./constants";
-import EmptyState from "./EmptyState";
+import { Update, Delete } from "./Actions";
 import SubHeader from "./SubHeader";
-import { getAllowedColumns, getColumnData } from "./utils";
+
+import {
+  MANAGE_DELETE_ALERT_INITIAL_VALUE,
+  MANAGE_UPDATE_MODAL_INITIAL_VALUE,
+} from "../constants";
+import EmptyState from "../EmptyState";
+import { getAllowedColumns, getColumnData } from "../utils";
 
 const List = ({
   articlesData,
@@ -21,6 +25,10 @@ const List = ({
   const [selectedRowIds, setSelectedRowIds] = useState([]);
   const [filteredColumns, setFilteredColumns] = useState(
     pluck("dataIndex", getColumnData())
+  );
+
+  const [manageUpdateModal, setManageUpdateModal] = useState(
+    MANAGE_UPDATE_MODAL_INITIAL_VALUE
   );
 
   const [manageDeleteAlert, setManageDeleteAlert] = useState(
@@ -73,6 +81,7 @@ const List = ({
         columnData={getAllowedColumns({
           filteredColumns,
           setManageDeleteAlert,
+          setManageUpdateModal,
         })}
         rowClassName={(_, index) =>
           classnames({ "neeto-ui-bg-gray-200": index % 2 !== 0 })
@@ -83,6 +92,11 @@ const List = ({
         manageDeleteAlert={manageDeleteAlert}
         refetchArticles={refetchArticles}
         onClose={() => setManageDeleteAlert(MANAGE_DELETE_ALERT_INITIAL_VALUE)}
+      />
+      <Update
+        manageUpdateModal={manageUpdateModal}
+        refetchArticles={refetchArticles}
+        onClose={() => setManageUpdateModal(MANAGE_UPDATE_MODAL_INITIAL_VALUE)}
       />
     </>
   );

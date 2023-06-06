@@ -1,10 +1,11 @@
 import React from "react";
 
-import { Typography, Modal, Button } from "neetoui";
 import { useTranslation } from "react-i18next";
 
 import articlesApi from "apis/articles";
 import { useCategoriesDispatch } from "contexts/categories";
+
+import UpdateModal from "../../UpdateModal";
 
 const BulkUpdate = ({
   selectedRowIds,
@@ -24,7 +25,7 @@ const BulkUpdate = ({
   } = bulkUpdateData;
 
   const shouldUpdateCategory = type === "category";
-  const modalActionTitle = shouldUpdateCategory ? categoryName : status;
+  const modalTitle = shouldUpdateCategory ? categoryName : status;
 
   const handleUpdate = async () => {
     try {
@@ -42,28 +43,16 @@ const BulkUpdate = ({
   };
 
   return (
-    <Modal isOpen={isModalOpen} onClose={onClose}>
-      <Modal.Header>
-        <Typography style="h2">
-          {t("modal.updateTitle", { action: modalActionTitle })}
-        </Typography>
-      </Modal.Header>
-      <Modal.Body className="space-y-2">
-        <Typography lineHeight="normal" style="body2">
-          {t("modal.updateDescription", {
-            action: type,
-            type: modalActionTitle,
-            articleWithCount: t("common.articleWithCount", {
-              count: selectedRowIds.length,
-            }),
-          })}
-        </Typography>
-      </Modal.Body>
-      <Modal.Footer className="space-x-2">
-        <Button label={t("button.proceed")} onClick={handleUpdate} />
-        <Button label={t("button.cancel")} style="text" onClick={onClose} />
-      </Modal.Footer>
-    </Modal>
+    <UpdateModal
+      attribute={type}
+      handleUpdate={handleUpdate}
+      isOpen={isModalOpen}
+      modalTitle={modalTitle}
+      entity={t("common.articleWithCount", {
+        count: selectedRowIds.length,
+      })}
+      onClose={onClose}
+    />
   );
 };
 

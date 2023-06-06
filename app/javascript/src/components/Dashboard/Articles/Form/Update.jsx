@@ -65,7 +65,12 @@ const Update = () => {
         onSubmit={handleSubmit}
       >
         <Form className="space-y-5">
-          <Header setStatus={setStatus} status={status} />
+          <Header
+            isEdit
+            article={article}
+            setStatus={setStatus}
+            status={status}
+          />
           <Editor editorRef={editorRef} />
         </Form>
       </Formik>

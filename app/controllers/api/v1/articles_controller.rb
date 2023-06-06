@@ -41,4 +41,8 @@ class Api::V1::ArticlesController < ApplicationController
     def filter_params
       params.permit(:status, :search, :per_page, :page_number, categories: [])
     end
+
+    def load_category!
+      @category = Category.find_or_create_by!(name: article_params[:category_name])
+    end
 end

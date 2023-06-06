@@ -6,8 +6,8 @@ class Api::V1::CategoriesController < ApplicationController
   end
 
   def create
-    Category.create!(category_params)
-    render_notice(t("successfully_created", entity: "Category"))
+    category = Category.create!(category_params)
+    render_notice(t("successfully_created", entity: "Category"), :ok, { category_id: category.id })
   end
 
   private

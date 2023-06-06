@@ -8,12 +8,12 @@ import { v4 as uuid } from "uuid";
 
 import { useCategoriesState } from "contexts/categories";
 
-import { ARTICLE_STATUS } from "../Form/constants";
+import { ARTICLE_STATUS } from "../../Form/constants";
 import {
   getCategoryOptions,
   getSearchParams,
   handleFilterByCategories,
-} from "../utils";
+} from "../../utils";
 
 const {
   Menu,
