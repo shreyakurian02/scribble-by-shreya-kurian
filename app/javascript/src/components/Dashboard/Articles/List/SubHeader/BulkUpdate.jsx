@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import articlesApi from "apis/articles";
 import { useCategoriesDispatch } from "contexts/categories";
 
-import UpdateModal from "../UpdateModal";
+import UpdateModal from "../../UpdateModal";
 
 const BulkUpdate = ({
   selectedRowIds,

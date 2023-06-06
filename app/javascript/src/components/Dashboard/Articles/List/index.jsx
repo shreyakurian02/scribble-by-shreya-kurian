@@ -4,15 +4,15 @@ import classnames from "classnames";
 import { Table, PageLoader } from "neetoui";
 import { isEmpty, pluck } from "ramda";
 
-import Delete from "./Alert/Delete";
+import { Update, Delete } from "./Actions";
+import SubHeader from "./SubHeader";
+
 import {
   MANAGE_DELETE_ALERT_INITIAL_VALUE,
   MANAGE_UPDATE_MODAL_INITIAL_VALUE,
-} from "./constants";
-import EmptyState from "./EmptyState";
-import SubHeader from "./SubHeader";
-import Update from "./Update";
-import { getAllowedColumns, getColumnData } from "./utils";
+} from "../constants";
+import EmptyState from "../EmptyState";
+import { getAllowedColumns, getColumnData } from "../utils";
 
 const List = ({
   articlesData,

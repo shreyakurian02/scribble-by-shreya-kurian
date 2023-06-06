@@ -20,7 +20,7 @@ const {
 
 export const isArticleStatusDraft = status => status === ARTICLE_STATUS.draft;
 
-export const formatDate = date => dayjs(date).format("MMM DD, YYYY, hh:MM A");
+export const formatDate = date => dayjs(date).format("MMM DD, YYYY, hh:mm A");
 
 export const handleFilterByCategories = ({
   queryCategories,
