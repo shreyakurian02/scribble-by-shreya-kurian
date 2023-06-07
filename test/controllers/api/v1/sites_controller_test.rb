@@ -20,6 +20,8 @@ class Api::V1::SitesControllerTest < ActionDispatch::IntegrationTest
       put(api_v1_site_path, params: { site: { title: "" } }, headers:)
       assert_response :unprocessable_entity
     end
+
+    assert_includes response_json["error"], I18n.t("errors.presence", entity: "Title"), response_json["error"]
   end
 
   def test_should_show_site

@@ -31,4 +31,10 @@ class CategoryTest < ActiveSupport::TestCase
       create :category
     end
   end
+
+  def test_category_should_not_be_saved_with_invalid_name_format
+    @category.name = "*"
+    assert_not @category.valid?
+    assert_includes @category.errors.full_messages, "Name should have atleast one alphanumeric character"
+  end
 end

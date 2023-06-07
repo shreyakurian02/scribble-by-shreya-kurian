@@ -131,4 +131,24 @@ class ArticleTest < ActiveSupport::TestCase
       @article.update!(title: Faker::Lorem.word)
     end
   end
+
+  def test_article_should_not_be_saved_with_invalid_title_format
+    @article.title = "*"
+    assert_not @article.valid?
+    assert_includes @article.errors.full_messages, "Title should have atleast one alphanumeric character"
+  end
+
+  def test_last_published_at_updates_when_status_is_published
+    article = create(:article, status: "draft")
+    assert_nil article.last_published_at
+    article.update!(status: "published")
+    assert_not_nil article.last_published_at
+  end
+
+  def test_last_published_at_does_not_updates_when_status_was_already_published
+    article = create(:article, status: "published")
+    last_published_at = article.last_published_at
+    article.update!(status: "published")
+    assert_equal last_published_at, article.reload.last_published_at
+  end
 end
