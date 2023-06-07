@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
         resources :categories, only: %i[index create]
         resources :articles, except: %i[edit new], param: :slug
+        resource :site, only: %i[show update]
 
         namespace :bulk do
           resource :articles, only: %i[update destroy]
