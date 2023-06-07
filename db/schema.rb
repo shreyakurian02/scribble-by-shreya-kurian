@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_03_061547) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_07_083802) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -36,6 +36,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_03_061547) do
     t.datetime "updated_at", null: false
     t.integer "articles_count", default: 0
     t.index ["name"], name: "index_categories_on_name", unique: true
+  end
+
+  create_table "sites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title", default: "Spinkart", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["title"], name: "index_sites_on_title", unique: true
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

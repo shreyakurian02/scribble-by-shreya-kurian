@@ -2,6 +2,7 @@ en:
   successfully_created: "%{entity} was successfully created!"
   successfully_updated: "%{entity} was successfully updated!"
   successfully_deleted: "%{entity} was successfully deleted!"
+  not_found: "%{entity} not found"
   errors:
     presence: "%{entity} can't be blank"
     must_exist: "%{entity} must exist"
