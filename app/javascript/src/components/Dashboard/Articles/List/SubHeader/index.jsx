@@ -8,12 +8,12 @@ import Columns from "./Columns";
 import LeftActionBlock from "./LeftActionBlock";
 
 const SubHeader = ({
-  selectedRowIds,
   filteredColumns,
   setFilteredColumns,
   articlesCount = 0,
   refetchArticles,
-  setSelectedRowIds,
+  setSelectedArticles,
+  selectedArticles,
 }) => {
   const [isBulkDeleteAlertOpen, setIsBulkDeleteAlertOpen] = useState(false);
   const [bulkUpdateData, setBulkUpdateData] = useState({
@@ -22,7 +22,7 @@ const SubHeader = ({
     type: "",
   });
 
-  const selectedRowsCount = selectedRowIds.length;
+  const selectedRowsCount = selectedArticles.length;
 
   return (
     <>
@@ -31,12 +31,14 @@ const SubHeader = ({
         leftActionBlock={
           <LeftActionBlock
             articlesCount={articlesCount}
-            refetchArticles={refetchArticles}
-            selectedRowIds={selectedRowIds}
             selectedRowsCount={selectedRowsCount}
             setBulkUpdateData={setBulkUpdateData}
             setIsBulkDeleteAlertOpen={setIsBulkDeleteAlertOpen}
-            setSelectedRowIds={setSelectedRowIds}
+            // setSelectedArticles={setSelectedArticles}
+            // refetchArticles={refetchArticles}
+            // selectedArticles={selectedArticles}
+            // setSelectedArticles={setSelectedArticles}
+            // selectedArticles={selectedArticles}
           />
         }
         rightActionBlock={
@@ -51,14 +53,15 @@ const SubHeader = ({
       <BulkDelete
         isOpen={isBulkDeleteAlertOpen}
         refetchArticles={refetchArticles}
-        selectedRowIds={selectedRowIds}
+        selectedArticles={selectedArticles}
+        setSelectedArticles={setSelectedArticles}
         onClose={() => setIsBulkDeleteAlertOpen(false)}
       />
       <BulkUpdate
         bulkUpdateData={bulkUpdateData}
         refetchArticles={refetchArticles}
-        selectedRowIds={selectedRowIds}
-        setSelectedRowIds={setSelectedRowIds}
+        selectedArticles={selectedArticles}
+        setSelectedArticles={setSelectedArticles}
         onClose={() =>
           setBulkUpdateData({ isModalOpen: false, payload: {}, type: "" })
         }

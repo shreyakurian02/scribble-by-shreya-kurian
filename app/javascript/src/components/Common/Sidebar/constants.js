@@ -8,16 +8,19 @@ export const NAV_LINKS = [
     label: t("common.article", PLURAL),
     to: "/articles",
     icon: Notes,
+    description: t("sidebarDescription.articles"),
   },
   {
     label: t("common.settings"),
     to: "/settings",
     icon: Settings,
+    description: t("sidebarDescription.settings"),
   },
   {
     label: t("common.preview"),
     to: "/preview",
     icon: ExternalLink,
+    description: t("sidebarDescription.preview"),
   },
 ];
 

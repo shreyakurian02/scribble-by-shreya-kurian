@@ -22,7 +22,7 @@ const List = ({
   setPageProperties,
   pageProperties,
 }) => {
-  const [selectedRowIds, setSelectedRowIds] = useState([]);
+  const [selectedArticles, setSelectedArticles] = useState([]);
   const [filteredColumns, setFilteredColumns] = useState(
     pluck("dataIndex", getColumnData())
   );
@@ -62,9 +62,9 @@ const List = ({
         articlesCount={filteredArticlesCount}
         filteredColumns={filteredColumns}
         refetchArticles={refetchArticles}
-        selectedRowIds={selectedRowIds}
+        selectedArticles={selectedArticles}
         setFilteredColumns={setFilteredColumns}
-        setSelectedRowIds={setSelectedRowIds}
+        setSelectedArticles={setSelectedArticles}
       />
       <Table
         fixedHeight
@@ -75,7 +75,7 @@ const List = ({
         loading={isArticlesLoading}
         rowData={articles}
         scroll={{ x: 0 }}
-        selectedRowKeys={selectedRowIds}
+        selectedRowKeys={pluck("id", selectedArticles)}
         shouldDynamicallyRenderRowSize={false}
         totalCount={totalArticlesCount}
         columnData={getAllowedColumns({
@@ -86,7 +86,7 @@ const List = ({
         rowClassName={(_, index) =>
           classnames({ "neeto-ui-bg-gray-200": index % 2 !== 0 })
         }
-        onRowSelect={setSelectedRowIds}
+        onRowSelect={(_, selectedRows) => setSelectedArticles(selectedRows)}
       />
       <Delete
         manageDeleteAlert={manageDeleteAlert}

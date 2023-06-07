@@ -1,7 +1,7 @@
 .editor-content {
   width: 100% !important;
   border: none !important;
-  padding: 12px 10% 0 10% !important;
+  padding: 12px 10% 0 11% !important;
   overflow-y: scroll;
   max-height: calc(100vh - 200px);
 }
@@ -28,4 +28,5 @@
 
 .neeto-editor-fixed-menu__wrapper {
   background-color: rgb(var(--neeto-ui-gray-300));
+  padding: 0 10% !important;
 }

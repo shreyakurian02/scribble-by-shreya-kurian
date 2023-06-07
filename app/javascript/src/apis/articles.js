@@ -16,7 +16,7 @@ const destroy = articleSlug =>
 
 const bulkDestroy = params => axios.delete(BULK_ARTICLES_BASE_URL, { params });
 
-const bulkUpdate = (ids, payload) =>
+const bulkUpdate = ({ ids, payload }) =>
   axios.put(BULK_ARTICLES_BASE_URL, { article: payload, ids });
 
 const articlesApi = {

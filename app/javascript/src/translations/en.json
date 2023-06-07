@@ -88,5 +88,10 @@
     "generalTitle": "General Settings",
     "generalSubtitle": "Configure general attributes of knowledge base",
     "generalDescription": " Customize the site name which is used to show the site name in Open Graph Tags."
+  },
+  "sidebarDescription": {
+    "articles": "Manage and list all your KB articles",
+    "settings": "Configure KB settings",
+    "preview": "Launch your KB preview"
   }
 }
