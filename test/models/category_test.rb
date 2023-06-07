@@ -27,7 +27,7 @@ class CategoryTest < ActiveSupport::TestCase
   end
 
   def test_category_count_increases_on_saving
-    assert_difference ["Category.count"] do
+    assert_difference "Category.count" do
       create :category
     end
   end

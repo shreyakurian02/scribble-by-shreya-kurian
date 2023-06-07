@@ -27,5 +27,6 @@ class Api::V1::SitesControllerTest < ActionDispatch::IntegrationTest
   def test_should_show_site
     get(api_v1_site_path, headers:)
     assert_response :success
+    assert_equal ["title"], response_json["site"].keys.sort
   end
 end
