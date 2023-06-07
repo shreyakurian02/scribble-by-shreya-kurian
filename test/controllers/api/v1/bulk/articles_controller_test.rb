@@ -27,6 +27,7 @@ class Api::V1::Bulk::ArticlesControllerTest < ActionDispatch::IntegrationTest
       delete(api_v1_bulk_articles_path, params: article_params, headers:)
       assert_response :ok
     end
+
     assert_equal I18n.t("successfully_deleted", entity: "Articles"), response_json["notice"]
   end
 

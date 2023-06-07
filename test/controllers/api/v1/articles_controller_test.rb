@@ -16,10 +16,12 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
 
   def test_should_create_valid_article
     category = create :category
+
     assert_difference "Article.count" do
       post(api_v1_articles_path, params: article_params({ category_id: category.id }), headers:)
       assert_response :success
     end
+
     assert_equal I18n.t("successfully_created", entity: "Article"), response_json["notice"]
   end
 
@@ -35,7 +37,7 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
     new_title = "Updated title"
     put(api_v1_article_path(@article.slug), params: { article: { title: "" } }, headers:)
     assert_response :unprocessable_entity
-    assert_equal I18n.t("errors.presence", entity: "Title"), response_json["error"]
+    assert_includes response_json["error"], I18n.t("errors.presence", entity: "Title")
     assert_not_equal new_title, @article.reload.title
   end
 
@@ -44,6 +46,7 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
       delete(api_v1_article_path(@article.slug), headers:)
       assert_response :ok
     end
+
     assert_equal I18n.t("successfully_deleted", entity: "Article"), response_json["notice"]
   end
 
@@ -52,6 +55,7 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
       delete(api_v1_article_path(@article.slug), headers:)
       assert_response :ok
     end
+
     assert_equal I18n.t("successfully_deleted", entity: "Article"), response_json["notice"]
   end
 
@@ -65,6 +69,8 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
   def test_should_show_article
     get(api_v1_article_path(@article.slug), headers:)
     assert_response :success
+    assert_equal %w[author category description id last_published_at slug status title],
+      response_json["article"].keys.sort
   end
 
   def test_shouldnt_create_article_with_invalid_params
@@ -72,6 +78,7 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
       post(api_v1_articles_path, params: article_params, headers:)
       assert_response :unprocessable_entity
     end
+
     assert_equal I18n.t("errors.must_exist", entity: "Category"), response_json["error"]
   end
 

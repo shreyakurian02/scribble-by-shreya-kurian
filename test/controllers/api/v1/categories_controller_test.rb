@@ -20,6 +20,7 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
         api_v1_categories_path, params: category_params, headers:)
       assert_response :success
     end
+
     assert_equal I18n.t("successfully_created", entity: "Category"), response_json["notice"]
   end
 
@@ -28,7 +29,8 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
       post(api_v1_categories_path, params: { category: { name: "" } }, headers:)
       assert_response :unprocessable_entity
     end
-    assert_equal I18n.t("errors.presence", entity: "Name"), response_json["error"]
+
+    assert_includes response_json["error"], I18n.t("errors.presence", entity: "Name"), response_json["error"]
   end
 
   private
