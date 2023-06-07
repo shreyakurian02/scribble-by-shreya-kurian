@@ -23,7 +23,8 @@
     "selectedOf": "{{selectedCount}} {{resource}} selected of <span>{{articlesCount}}</span>",
     "addCategoryHeader": "New category",
     "searchResult_one": "{{count}} result for \"{{search}}\"",
-    "searchResult_other": "{{count}} results for \"{{search}}\""
+    "searchResult_other": "{{count}} results for \"{{search}}\"",
+    "siteTitle": "Site title"
   },
   "button": {
     "addEntity": "Add {{entity}}",
@@ -35,14 +36,16 @@
     "add": "Add",
     "unpublish": "Unpublish",
     "proceed": "Proceed",
-    "clearSearch": "Clear search"
+    "clearSearch": "Clear search",
+    "saveChanges": "Save changes"
   },
   "placeholder": {
     "searchArticles": "Search article titles",
     "addDescription": "Add description here",
     "articleTitle": "Article title",
     "searchCategory": "Search category",
-    "addCategory": "Enter category title here."
+    "addCategory": "Enter category title here.",
+    "addSiteTitle": "Enter site title here."
   },
   "noData": {
     "articleTitle": "There are no articles.",
@@ -70,5 +73,20 @@
   "modal": {
     "updateTitle": "Move articles to {{action}}",
     "updateDescription": "You are changing the {{attribute}} of {{entity}} to {{attributeValue}}. Do you wish to continue?"
+  },
+  "menubar": {
+    "general": "General",
+    "redirections": "Redirections",
+    "security": "Security",
+    "manageCategories": "Manage categories",
+    "generalDescription": "Configure general settings of your EUI.",
+    "redirectionsDescription": "Create and configure redirection rules.",
+    "securityDescription": "Secure knowledge base.",
+    "manageCategoriesDescription": "Edit and reorder KB structure."
+  },
+  "settings": {
+    "generalTitle": "General Settings",
+    "generalSubtitle": "Configure general attributes of knowledge base",
+    "generalDescription": " Customize the site name which is used to show the site name in Open Graph Tags."
   }
 }
