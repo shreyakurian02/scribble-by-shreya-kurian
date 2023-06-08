@@ -44,7 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_08_080532) do
     t.uuid "site_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["from_path"], name: "index_redirections_on_from_path", unique: true
+    t.index ["site_id", "from_path"], name: "index_redirections_on_site_id_and_from_path", unique: true
     t.index ["site_id"], name: "index_redirections_on_site_id"
   end
 

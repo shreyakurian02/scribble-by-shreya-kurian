@@ -6,6 +6,9 @@ en:
   errors:
     presence: "%{entity} can't be blank"
     must_exist: "%{entity} must exist"
+    loop: "Redirection cannot form a loop"
+    same_path: "To path cannot be same as from path"
+    chain_path: "cannot be same as %{path} path of another redirection"
     alphanumeric: "should have atleast one alphanumeric character"
   article:
     invalid_status: "'%{status}' is not a valid status"
