@@ -5,8 +5,12 @@ module.exports = {
   },
   purge: [],
   theme: {
+    maxHeight: {
+      "3/4": "75%",
+      90: "90%",
+    },
     extend: {},
   },
   variants: {},
   plugins: [],
-}
+};

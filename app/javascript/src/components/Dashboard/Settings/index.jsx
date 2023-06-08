@@ -30,7 +30,7 @@ const Settings = () => {
   }, [search]);
 
   return (
-    <div className="flex h-screen w-full items-center justify-center">
+    <div className="flex w-full">
       <MenuBar showMenu>
         <Typography style="h2">{t("common.settings")}</Typography>
         {MENUBAR_ITEMS.map(({ label, description, tabKey }) => (
@@ -43,7 +43,7 @@ const Settings = () => {
           />
         ))}
       </MenuBar>
-      <div className="flex h-full w-full justify-center py-16">
+      <div className="flex w-full justify-center py-16">
         {TAB_COMPONENTS[activeTab]}
       </div>
     </div>

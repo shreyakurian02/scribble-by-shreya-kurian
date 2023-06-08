@@ -53,11 +53,11 @@ const Redirections = () => {
         subTitle={t("settings.redirectionsSubtitle")}
         title={t("common.redirections")}
       />
-      <div className="neeto-ui-bg-pastel-blue space-y-3 rounded-md p-6">
+      <div className="neeto-ui-bg-pastel-blue max-h-3/4 space-y-3 rounded-md p-6">
         {!isLoading && !isEmpty(redirections) && (
           <>
             <TableHeader />
-            <div className="space-y-3">
+            <div className="max-h-90 space-y-3 overflow-y-scroll">
               {redirections?.map(redirection => (
                 <Item
                   isAddFormOpen={isAddFormOpen}
