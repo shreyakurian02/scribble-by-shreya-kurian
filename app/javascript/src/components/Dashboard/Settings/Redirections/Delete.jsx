@@ -17,6 +17,7 @@ const Delete = ({ manageRedirection, onClose }) => {
 
   return (
     <Alert
+      className="break-all"
       isOpen={action === ACTION.delete}
       submitButtonLabel={t("button.proceed")}
       message={

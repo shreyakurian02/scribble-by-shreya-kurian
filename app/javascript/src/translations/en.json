@@ -26,7 +26,9 @@
     "searchResult_other": "{{count}} results for \"{{search}}\"",
     "siteTitle": "Site title",
     "redirection_one": "Redirection",
-    "redirections": "Redirections"
+    "redirections": "Redirections",
+    "from": "From",
+    "to": "To"
   },
   "button": {
     "addEntity": "Add {{entity}}",
@@ -36,6 +38,7 @@
     "cancel": "Cancel",
     "saveAsDraft": "Save as draft",
     "add": "Add",
+    "addNewEntity": "Add new {{entity}}",
     "unpublish": "Unpublish",
     "proceed": "Proceed",
     "clearSearch": "Clear search",

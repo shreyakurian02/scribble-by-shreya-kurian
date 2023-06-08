@@ -11,6 +11,7 @@ import Form from "./Form";
 import Item from "./Item";
 import TableHeader from "./TableHeader";
 
+import { SINGULAR } from "../../../../constants";
 import Header from "../Header";
 
 const Redirections = () => {
@@ -48,8 +49,10 @@ const Redirections = () => {
           disabled={isAddButtonDisabled}
           icon={Plus}
           iconPosition="left"
-          label="Add new redirection"
           style="link"
+          label={t("button.addNewEntity", {
+            entity: t("common.redirection", SINGULAR),
+          })}
           onClick={() => setIsAddFormOpen(true)}
         />
       </div>
