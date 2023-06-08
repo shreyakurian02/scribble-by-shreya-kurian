@@ -3,6 +3,7 @@ import React from "react";
 import { t } from "i18next";
 
 import General from "./General";
+import Redirections from "./Redirections";
 
 export const DEFAULT_ACTIVE_TAB_KEY = "general";
 
@@ -31,7 +32,7 @@ export const MENUBAR_ITEMS = [
 
 export const TAB_COMPONENTS = {
   general: <General />,
-  redirections: null,
+  redirections: <Redirections />,
   security: null,
   "manage-categories": null,
 };

@@ -24,7 +24,11 @@
     "addCategoryHeader": "New category",
     "searchResult_one": "{{count}} result for \"{{search}}\"",
     "searchResult_other": "{{count}} results for \"{{search}}\"",
-    "siteTitle": "Site title"
+    "siteTitle": "Site title",
+    "redirection_one": "Redirection",
+    "redirections": "Redirections",
+    "from": "From",
+    "to": "To"
   },
   "button": {
     "addEntity": "Add {{entity}}",
@@ -34,6 +38,7 @@
     "cancel": "Cancel",
     "saveAsDraft": "Save as draft",
     "add": "Add",
+    "addNewEntity": "Add new {{entity}}",
     "unpublish": "Unpublish",
     "proceed": "Proceed",
     "clearSearch": "Clear search",
@@ -45,7 +50,9 @@
     "articleTitle": "Article title",
     "searchCategory": "Search category",
     "addCategory": "Enter category title here.",
-    "addSiteTitle": "Enter site title here."
+    "addSiteTitle": "Enter site title here.",
+    "addFromPath": "Enter from path",
+    "addToPath": "Add to path"
   },
   "noData": {
     "articleTitle": "There are no articles.",
@@ -58,7 +65,9 @@
     "delete": "Delete"
   },
   "input": {
-    "categoryTitle": "Category title"
+    "categoryTitle": "Category title",
+    "fromPath": "From path",
+    "toPath": "To path"
   },
   "validations": {
     "required": "{{entity}} is required",
@@ -68,11 +77,12 @@
   },
   "alert": {
     "deleteEntity": "Delete {{entity}}",
-    "deleteMessage": "You are permanently deleting <strong>{{title}}</strong>. This action cannot be undone. Do you wish to continue?"
+    "deleteMessage": "You are permanently deleting <strong>{{title}}</strong>. This action cannot be undone",
+    "deleteRedirectionMessage": "You are permanently deleting redirection from <strong>{{from}}</strong> to <strong>{{to}}</strong>. This action cannot be undone"
   },
   "modal": {
     "updateTitle": "Move articles to {{action}}",
-    "updateDescription": "You are changing the {{attribute}} of {{entity}} to {{attributeValue}}. Do you wish to continue?"
+    "updateDescription": "You are changing the {{attribute}} of {{entity}} to {{attributeValue}}"
   },
   "menubar": {
     "general": "General",
@@ -87,7 +97,8 @@
   "settings": {
     "generalTitle": "General Settings",
     "generalSubtitle": "Configure general attributes of knowledge base",
-    "generalDescription": " Customize the site name which is used to show the site name in Open Graph Tags."
+    "generalDescription": "Customize the site name which is used to show the site name in Open Graph Tags.",
+    "redirectionsSubtitle": "Create and configure redirection rules to send users from old links to new links. All redirections are performed with 301 status codes to be SEO friendly."
   },
   "sidebarDescription": {
     "articles": "Manage and list all your KB articles",
