@@ -5,17 +5,39 @@ import { Button } from "neetoui";
 import { Form as NeetoUIForm, Input } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 
-import { VALIDATION_SCHEMA } from "./constants";
+import redirectionsApi from "apis/redirections";
 
-const Form = ({ selectedRedirection = {}, isEdit = false, onClose }) => {
+import { INITIAL_VALUE, VALIDATION_SCHEMA } from "./constants";
+
+const Form = ({
+  selectedRedirection = {},
+  isEdit = false,
+  onClose,
+  refetchRedirections = () => {},
+}) => {
   const { t } = useTranslation();
 
-  const { from_path: from = "", to_path: to = "" } = selectedRedirection;
+  const {
+    from_path: fromPath = "",
+    to_path: toPath = "",
+    id: selectedRedirectionId,
+  } = selectedRedirection;
 
   const buildInitialValues = () =>
-    isEdit ? { from, to } : { from: "", to: "" };
+    isEdit ? { fromPath, toPath } : INITIAL_VALUE;
 
-  const handleSubmit = () => {};
+  const handleSubmit = async ({ fromPath, toPath }) => {
+    try {
+      const payload = { from_path: fromPath, to_path: toPath };
+      isEdit
+        ? await redirectionsApi.update({ id: selectedRedirectionId, payload })
+        : await redirectionsApi.create(payload);
+      refetchRedirections();
+      onClose();
+    } catch (error) {
+      logger.error(error);
+    }
+  };
 
   return (
     <NeetoUIForm
@@ -30,13 +52,13 @@ const Form = ({ selectedRedirection = {}, isEdit = false, onClose }) => {
         <div className="neeto-ui-bg-white flex p-4">
           <div className="grid w-full grid-cols-2 space-x-2">
             <Input
-              name="from"
+              name="fromPath"
               placeholder={t("placeholder.addFromPath")}
               size="large"
             />
             <div className="flex justify-between">
               <Input
-                name="to"
+                name="toPath"
                 placeholder={t("placeholder.addToPath")}
                 size="large"
               />

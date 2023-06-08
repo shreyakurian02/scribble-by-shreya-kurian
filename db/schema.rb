@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_07_083802) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_08_080532) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -38,6 +38,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_083802) do
     t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
+  create_table "redirections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "from_path", null: false
+    t.string "to_path", null: false
+    t.uuid "site_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["from_path"], name: "index_redirections_on_from_path", unique: true
+    t.index ["site_id"], name: "index_redirections_on_site_id"
+  end
+
   create_table "sites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", default: "Spinkart", null: false
     t.datetime "created_at", null: false
@@ -56,4 +66,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_07_083802) do
 
   add_foreign_key "articles", "categories"
   add_foreign_key "articles", "users", column: "author_id"
+  add_foreign_key "redirections", "sites"
 end

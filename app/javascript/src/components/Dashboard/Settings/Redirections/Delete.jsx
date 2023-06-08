@@ -3,17 +3,32 @@ import React from "react";
 import { Alert } from "neetoui";
 import { useTranslation, Trans } from "react-i18next";
 
+import redirectionsApi from "apis/redirections";
 import { SINGULAR } from "constants";
 
 import { ACTION } from "./constants";
 
-const Delete = ({ manageRedirection, onClose }) => {
+const Delete = ({ manageRedirection, onClose, refetchRedirections }) => {
   const { t } = useTranslation();
 
-  const { redirection: { from_path: fromPath, to_path: toPath } = {}, action } =
-    manageRedirection;
+  const {
+    redirection: {
+      from_path: fromPath,
+      to_path: toPath,
+      id: selectedRedirectionId,
+    } = {},
+    action,
+  } = manageRedirection;
 
-  const handleSubmit = () => {};
+  const handleSubmit = async () => {
+    try {
+      await redirectionsApi.destroy(selectedRedirectionId);
+      refetchRedirections();
+      onClose();
+    } catch (error) {
+      logger.error(error);
+    }
+  };
 
   return (
     <Alert
