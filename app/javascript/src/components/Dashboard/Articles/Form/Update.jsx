@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 
 import { Formik, Form } from "formik";
 import { PageLoader } from "neetoui";
-import { Container } from "neetoui/layouts";
 import { useEffect } from "react/cjs/react.development";
 import { useHistory, useParams } from "react-router";
 
@@ -56,9 +55,9 @@ const Update = () => {
 
   if (isLoading) {
     return (
-      <Container>
+      <div className="h-screen w-full">
         <PageLoader />
-      </Container>
+      </div>
     );
   }
 

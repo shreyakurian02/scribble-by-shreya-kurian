@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import classnames from "classnames";
 import { Table, PageLoader } from "neetoui";
-import { Container } from "neetoui/layouts";
 import { isEmpty, pluck } from "ramda";
 
 import { Update, Delete } from "./Actions";
@@ -43,15 +42,15 @@ const List = ({
 
   if (isArticlesLoading) {
     return (
-      <Container>
+      <div className="h-screen w-full">
         <PageLoader />
-      </Container>
+      </div>
     );
   }
 
   if (isEmpty(articles)) {
     return (
-      <div className="h-full flex w-full items-center justify-center">
+      <div className="flex h-full w-full items-center justify-center">
         <EmptyState setSearchTerm={setSearchTerm} />
       </div>
     );

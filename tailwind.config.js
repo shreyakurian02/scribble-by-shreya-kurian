@@ -9,9 +9,6 @@ module.exports = {
       "3/4": "75%",
       90: "90%",
     },
-    height: {
-      96: "80%",
-    },
     extend: {},
   },
   variants: {},
