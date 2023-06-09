@@ -53,7 +53,7 @@ const Header = ({ status, setStatus, article = {}, isEdit = false }) => {
           onCreateOption={handleCreateCategory}
         />
       </div>
-      <div className="flex items-center  space-x-5 ">
+      <div className="flex items-center  space-x-5">
         {isEdit && (
           <Typography className="titlize" style="body2">
             <Trans

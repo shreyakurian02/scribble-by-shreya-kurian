@@ -13,7 +13,7 @@ const Editor = ({ editorRef }) => {
   return (
     <FormikEditor
       required
-      className="space-y-3 "
+      className="space-y-3"
       contentClassName="editor-content"
       error=""
       menuType="fixed"

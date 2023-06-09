@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Spinner } from "@bigbinary/neetoui";
-import { Button, Typography } from "neetoui";
+import { Button, Typography, Spinner } from "neetoui";
 import { Form, Input } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 
@@ -50,7 +49,7 @@ const General = () => {
         title={t("settings.generalTitle")}
       />
       {isLoading ? (
-        <div className="h-20 flex w-1/2 items-center justify-center">
+        <div className="flex h-20 w-1/2 items-center justify-center">
           <Spinner />
         </div>
       ) : (
