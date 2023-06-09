@@ -17,6 +17,7 @@ const Item = ({
   isAddFormOpen,
   manageRedirection,
   setManageRedirection,
+  refetchRedirections,
 }) => {
   const { t } = useTranslation();
 
@@ -29,6 +30,7 @@ const Item = ({
     return (
       <Form
         isEdit
+        refetchRedirections={refetchRedirections}
         selectedRedirection={manageRedirection.redirection}
         onClose={() => setManageRedirection(DEFAULT_REDIRECTION_VALUE)}
       />
@@ -40,6 +42,9 @@ const Item = ({
       <div className="grid w-full grid-cols-2">
         <Tooltip className="break-all" content={fromPath} position="bottom">
           <Typography className="truncate" style="body1">
+            <span className="neeto-ui-text-gray-500">
+              {window.location.origin}
+            </span>
             {fromPath}
           </Typography>
         </Tooltip>

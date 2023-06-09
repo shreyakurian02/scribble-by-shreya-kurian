@@ -34,20 +34,11 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_shouldnt_update_article_with_invalid_params
-    new_title = "Updated title"
+    existing_title = @article.title
     put(api_v1_article_path(@article.slug), params: { article: { title: "" } }, headers:)
     assert_response :unprocessable_entity
     assert_includes response_json["error"], I18n.t("errors.presence", entity: "Title")
-    assert_not_equal new_title, @article.reload.title
-  end
-
-  def test_destroy_article
-    assert_difference "Article.count", -1 do
-      delete(api_v1_article_path(@article.slug), headers:)
-      assert_response :ok
-    end
-
-    assert_equal I18n.t("successfully_deleted", entity: "Article"), response_json["notice"]
+    assert_equal existing_title, @article.reload.title
   end
 
   def test_destroy_article

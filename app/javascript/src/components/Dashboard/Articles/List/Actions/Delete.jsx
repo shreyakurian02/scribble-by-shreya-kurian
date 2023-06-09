@@ -14,7 +14,7 @@ const Delete = ({ manageDeleteAlert, onClose, refetchArticles }) => {
     article: { slug, title },
   } = manageDeleteAlert;
 
-  const handleDelete = async () => {
+  const handleSubmit = async () => {
     try {
       await articlesApi.destroy(slug);
       refetchArticles();
@@ -33,7 +33,7 @@ const Delete = ({ manageDeleteAlert, onClose, refetchArticles }) => {
         entity: t("common.article", SINGULAR).toLowerCase(),
       })}
       onClose={onClose}
-      onSubmit={handleDelete}
+      onSubmit={handleSubmit}
     />
   );
 };

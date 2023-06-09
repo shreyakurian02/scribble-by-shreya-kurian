@@ -16,3 +16,5 @@ export const SETTINGS_URL = "/settings";
 export const CATEGORIES_BASE_URL = `${BASE_URL}/categories`;
 export const ARTICLES_BASE_URL = `${BASE_URL}/articles`;
 export const BULK_ARTICLES_BASE_URL = `${BASE_URL}/bulk/articles`;
+export const SITE_BASE_URL = `${BASE_URL}/site`;
+export const REDIRECTIONS_BASE_URL = `${BASE_URL}/redirections`;

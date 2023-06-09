@@ -1,10 +1,10 @@
 import axios from "axios";
 
-// import { SITE_BASE_URL } from "constants";
+import { SITE_BASE_URL } from "constants";
 
-const show = () => axios.get(`api/v1/site`);
+const show = () => axios.get(SITE_BASE_URL);
 
-const update = payload => axios.put(`api/v1/site`, { site: payload });
+const update = payload => axios.put(SITE_BASE_URL, { site: payload });
 
 const siteApi = { show, update };
 

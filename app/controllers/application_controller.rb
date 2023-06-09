@@ -3,6 +3,7 @@
 class ApplicationController < ActionController::Base
   include ApiResponders
   include ApiExceptions
+  include LoadSite
 
   before_action :set_current_user
 
