@@ -5,9 +5,10 @@ import { Button, Typography } from "neetoui";
 import { Form, Input } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 
+import siteApi from "apis/site";
+
 import { VALIDATION_SCHEMA } from "./constants";
 
-import siteApi from "../../../../apis/site";
 import Header from "../Header";
 
 const General = () => {

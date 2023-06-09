@@ -42,7 +42,8 @@
     "unpublish": "Unpublish",
     "proceed": "Proceed",
     "clearSearch": "Clear search",
-    "saveChanges": "Save changes"
+    "saveChanges": "Save changes",
+    "changePassword": "Change password"
   },
   "placeholder": {
     "searchArticles": "Search article titles",
@@ -52,7 +53,8 @@
     "addCategory": "Enter category title here.",
     "addSiteTitle": "Enter site title here.",
     "addFromPath": "Enter from path",
-    "addToPath": "Add to path"
+    "addToPath": "Add to path",
+    "enterPassword": "Enter password"
   },
   "noData": {
     "articleTitle": "There are no articles.",
@@ -67,13 +69,19 @@
   "input": {
     "categoryTitle": "Category title",
     "fromPath": "From path",
-    "toPath": "To path"
+    "toPath": "To path",
+    "password": "Password"
+  },
+  "labels": {
+    "passwordProtect": "Password protect your site"
   },
   "validations": {
     "required": "{{entity}} is required",
     "minimum": "Atleast {{value}} {{entity}} is required",
     "invalidEmail": "Email address must be valid",
-    "validAlphaNumeric": "Must contain at least one alphanumeric character"
+    "validAlphaNumeric": "Must contain at least one alphanumeric character",
+    "minimumPasswordLength": "Have at least 6 characters",
+    "passwordFormat": "Include at least 1 letter and 1 number"
   },
   "alert": {
     "deleteEntity": "Delete {{entity}}",
@@ -98,7 +106,9 @@
     "generalTitle": "General Settings",
     "generalSubtitle": "Configure general attributes of knowledge base",
     "generalDescription": "Customize the site name which is used to show the site name in Open Graph Tags.",
-    "redirectionsSubtitle": "Create and configure redirection rules to send users from old links to new links. All redirections are performed with 301 status codes to be SEO friendly."
+    "redirectionsSubtitle": "Create and configure redirection rules to send users from old links to new links. All redirections are performed with 301 status codes to be SEO friendly.",
+    "securitySubtitle": "Configure security related settings for your site.",
+    "securityTitle": "Security"
   },
   "sidebarDescription": {
     "articles": "Manage and list all your KB articles",

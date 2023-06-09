@@ -40,7 +40,11 @@ const Item = ({
   return (
     <div className="neeto-ui-bg-white flex justify-between p-5">
       <div className="grid w-full grid-cols-2">
-        <Tooltip className="break-all" content={fromPath} position="bottom">
+        <Tooltip
+          className="break-all"
+          content={`${window.location.origin}${fromPath}`}
+          position="bottom"
+        >
           <Typography className="truncate" style="body1">
             <span className="neeto-ui-text-gray-500">
               {window.location.origin}

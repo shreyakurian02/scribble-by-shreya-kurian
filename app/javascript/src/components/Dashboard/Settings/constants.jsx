@@ -4,6 +4,7 @@ import { t } from "i18next";
 
 import General from "./General";
 import Redirections from "./Redirections";
+import Security from "./Security";
 
 export const DEFAULT_ACTIVE_TAB_KEY = "general";
 
@@ -33,6 +34,6 @@ export const MENUBAR_ITEMS = [
 export const TAB_COMPONENTS = {
   general: <General />,
   redirections: <Redirections />,
-  security: null,
+  security: <Security />,
   "manage-categories": null,
 };
