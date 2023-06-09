@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :site do
-    title { Faker::Lorem.sentence(word_count: 1) }
+    title { Faker::Lorem.sentence(word_count: 2) }
   end
 end
