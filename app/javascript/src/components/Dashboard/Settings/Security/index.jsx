@@ -40,7 +40,7 @@ const Security = () => {
   }, []);
 
   return (
-    <div className="w-1/2 space-y-5">
+    <div className="mx-auto w-1/2 space-y-5 py-16">
       <Header
         subTitle={t("settings.securitySubtitle")}
         title={t("settings.securityTitle")}

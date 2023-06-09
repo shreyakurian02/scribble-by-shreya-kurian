@@ -49,7 +49,7 @@ const Form = ({
       }}
     >
       {({ dirty }) => (
-        <div className="neeto-ui-bg-white flex p-4">
+        <div className="neeto-ui-bg-white border neeto-ui-border-primary-500 flex p-4">
           <div className="grid w-full grid-cols-2 space-x-2">
             <Input
               name="fromPath"
@@ -62,7 +62,7 @@ const Form = ({
                 placeholder={t("placeholder.addToPath")}
                 size="large"
               />
-              <div className="flex h-10">
+              <div className="h-10 flex">
                 <Button
                   disabled={!dirty}
                   icon={() => <Check color="#268E6C" />}

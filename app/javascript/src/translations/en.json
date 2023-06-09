@@ -73,7 +73,8 @@
     "password": "Password"
   },
   "labels": {
-    "passwordProtect": "Password protect your site"
+    "passwordProtect": "Password protect your site",
+    "articleSavedDate": "{{status}} saved at <strong>{{date}}</strong>"
   },
   "validations": {
     "required": "{{entity}} is required",

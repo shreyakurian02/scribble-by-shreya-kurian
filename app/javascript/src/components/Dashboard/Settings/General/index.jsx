@@ -44,13 +44,13 @@ const General = () => {
   }, []);
 
   return (
-    <div className="flex w-1/2 flex-col space-y-5">
+    <div className="mx-auto w-1/2 space-y-5 py-16">
       <Header
         subTitle={t("settings.generalSubtitle")}
         title={t("settings.generalTitle")}
       />
       {isLoading ? (
-        <div className="flex h-20 w-1/2 items-center justify-center">
+        <div className="h-20 flex w-1/2 items-center justify-center">
           <Spinner />
         </div>
       ) : (

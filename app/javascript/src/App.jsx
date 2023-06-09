@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { PageLoader } from "neetoui";
+import { Container } from "neetoui/layouts";
 import {
   Route,
   Switch,
@@ -36,9 +37,9 @@ const App = () => {
 
   if (isLoading) {
     return (
-      <div className="h-screen w-full">
+      <Container>
         <PageLoader />
-      </div>
+      </Container>
     );
   }
 
@@ -46,7 +47,7 @@ const App = () => {
     <Router>
       <ToastContainer />
       <CategoriesProvider>
-        <div className="flex h-screen w-full">
+        <div className="h-screen flex w-full">
           <Sidebar />
           <Switch>
             <Route exact component={Articles} path={ARTICLES_URL} />

@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
 
-import { PageLoader } from "@bigbinary/neetoui";
 import { Formik, Form } from "formik";
+import { PageLoader } from "neetoui";
+import { Container } from "neetoui/layouts";
 import { useEffect } from "react/cjs/react.development";
 import { useHistory, useParams } from "react-router";
 
@@ -53,7 +54,13 @@ const Update = () => {
     fetchArticle();
   }, []);
 
-  if (isLoading) return <PageLoader />;
+  if (isLoading) {
+    return (
+      <Container>
+        <PageLoader />
+      </Container>
+    );
+  }
 
   return (
     <div className="w-full pt-5">
