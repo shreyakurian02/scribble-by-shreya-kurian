@@ -5,7 +5,10 @@ Rails.application.routes.draw do
     namespace :api do
       namespace :v1 do
 
-        resources :categories, only: %i[index create]
+        resources :categories, only: %i[index create] do
+          patch :reorder, on: :member
+        end
+
         resources :articles, except: %i[edit new], param: :slug
         resources :redirections, except: %i[new show edit]
         resource :site, only: %i[show update]
