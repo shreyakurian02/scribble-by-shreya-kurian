@@ -48,16 +48,18 @@ const Redirections = () => {
   }, []);
 
   return (
-    <div className="flex w-3/4 flex-col space-y-5">
-      <Header
-        subTitle={t("settings.redirectionsSubtitle")}
-        title={t("common.redirections")}
-      />
-      <div className="neeto-ui-bg-pastel-blue max-h-3/4 space-y-3 rounded-md p-6">
+    <div className="mx-auto w-3/4 space-y-5 py-16">
+      <div className="fixed top-0 z-10 w-full bg-white pb-3 pt-16">
+        <Header
+          subTitle={t("settings.redirectionsSubtitle")}
+          title={t("common.redirections")}
+        />
+      </div>
+      <div className="neeto-ui-bg-pastel-blue space-y-3 rounded-md px-6 pb-6 pt-16">
         {!isLoading && !isEmpty(redirections) && (
           <>
             <TableHeader />
-            <div className="max-h-90 space-y-3 overflow-y-scroll">
+            <div className="max-h-3/4 space-y-3 overflow-y-auto">
               {redirections?.map(redirection => (
                 <Item
                   isAddFormOpen={isAddFormOpen}
@@ -78,6 +80,7 @@ const Redirections = () => {
           />
         )}
         <Button
+          className="flex pt-3"
           disabled={isAddButtonDisabled}
           icon={Plus}
           iconPosition="left"

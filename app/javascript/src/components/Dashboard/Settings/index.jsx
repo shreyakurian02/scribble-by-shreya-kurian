@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { Typography } from "neetoui";
-import { MenuBar } from "neetoui/layouts";
+import { MenuBar, Container } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router-dom";
 
@@ -43,9 +43,7 @@ const Settings = () => {
           />
         ))}
       </MenuBar>
-      <div className="flex w-full justify-center py-16">
-        {TAB_COMPONENTS[activeTab]}
-      </div>
+      <Container>{TAB_COMPONENTS[activeTab]}</Container>
     </div>
   );
 };

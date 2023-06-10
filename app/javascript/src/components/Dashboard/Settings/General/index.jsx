@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-import { Spinner } from "@bigbinary/neetoui";
-import { Button, Typography } from "neetoui";
+import { Button, Typography, Spinner } from "neetoui";
 import { Form, Input } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 
+import siteApi from "apis/site";
+
 import { VALIDATION_SCHEMA } from "./constants";
 
-import siteApi from "../../../../apis/site";
 import Header from "../Header";
 
 const General = () => {
@@ -43,7 +43,7 @@ const General = () => {
   }, []);
 
   return (
-    <div className="flex w-1/2 flex-col space-y-5">
+    <div className="mx-auto w-1/2 space-y-5 py-16">
       <Header
         subTitle={t("settings.generalSubtitle")}
         title={t("settings.generalTitle")}
