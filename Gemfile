@@ -40,6 +40,9 @@ gem "dotenv-rails"
 # Pagination
 gem "kaminari"
 
+# For reordering list
+gem "acts_as_list"
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 
