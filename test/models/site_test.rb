@@ -26,8 +26,19 @@ class SiteTest < ActiveSupport::TestCase
     assert_includes @site.errors.full_messages, "Title should have atleast one alphanumeric character"
   end
 
-  def test_title_sit_should_besaved_with_valid_title_format
+  def test_title_sit_should_be_be_saved_with_valid_title_format
     @site.title = "****a"
+    assert @site.valid?
+  end
+
+  def test_password_shouldnt_be_saved_with_invalid_length
+    @site.password = "a" * (Site::MINIMUM_PASSWORD_LENGTH - 1)
+    assert_not @site.valid?
+    assert_includes @site.errors.full_messages, "Password is too short (minimum is #{Site::MINIMUM_PASSWORD_LENGTH} characters)"
+  end
+
+  def test_valid_password_is_saved
+    @site.password = "a" * (Site::MINIMUM_PASSWORD_LENGTH)
     assert @site.valid?
   end
 end

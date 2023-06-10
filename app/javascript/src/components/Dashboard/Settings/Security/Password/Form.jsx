@@ -4,6 +4,8 @@ import { Button } from "neetoui";
 import { Form as NeetoUIForm, Input } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 
+import siteApi from "apis/site";
+
 import {
   VALIDATION_SCHEMA,
   MINIMUM_PASSWORD_LENGTH,
@@ -14,13 +16,22 @@ import {
 import { renderPasswordVisibilityIcon } from "./utils";
 import Validation from "./Validation";
 
-const Form = () => {
+const Form = ({ fetchSecurityDetails, setIsChangePasswordEnabled }) => {
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [inputType, setInputType] = useState(INPUT_TYPE.password);
 
   const { t } = useTranslation();
 
-  const handleSubmit = () => {};
+  const handleSubmit = async ({ password }) => {
+    try {
+      await siteApi.update({ password });
+      fetchSecurityDetails();
+    } catch (error) {
+      logger.error(error);
+    }
+  };
+
+  const handleReset = () => setIsChangePasswordEnabled(false);
 
   return (
     <NeetoUIForm
@@ -28,6 +39,7 @@ const Form = () => {
         onSubmit: handleSubmit,
         initialValues: INITIAL_FORM_VALUES,
         validationSchema: VALIDATION_SCHEMA,
+        onReset: handleReset,
       }}
     >
       {({ dirty, errors, values: { password: passwordValue } }) => (

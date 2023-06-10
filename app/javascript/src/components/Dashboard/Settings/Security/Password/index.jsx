@@ -6,14 +6,20 @@ import { useTranslation } from "react-i18next";
 import Form from "./Form";
 
 const Password = ({
-  siteSettings,
+  isSitePasswordProtected,
   setIsChangePasswordEnabled,
   isChangePasswordEnabled,
+  fetchSecurityDetails,
 }) => {
   const { t } = useTranslation();
 
-  if (isChangePasswordEnabled || !siteSettings.isPasswordPresent) {
-    return <Form />;
+  if (isChangePasswordEnabled || !isSitePasswordProtected) {
+    return (
+      <Form
+        fetchSecurityDetails={fetchSecurityDetails}
+        setIsChangePasswordEnabled={setIsChangePasswordEnabled}
+      />
+    );
   }
 
   return (
