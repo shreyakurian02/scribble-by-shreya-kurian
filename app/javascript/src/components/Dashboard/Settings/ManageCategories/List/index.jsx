@@ -8,9 +8,10 @@ import { useCategories } from "contexts/categories";
 
 import Item from "./Item";
 
-const ManageCategories = () => {
-  const [categories, fetchCategories] = useCategories();
+const List = () => {
   const [isLoading, setIsLoading] = useState(false);
+
+  const [categories, fetchCategories] = useCategories();
 
   const reorderCategories = async ({ draggableId, position }) => {
     setIsLoading(true);
@@ -78,4 +79,4 @@ const ManageCategories = () => {
   );
 };
 
-export default ManageCategories;
+export default List;
