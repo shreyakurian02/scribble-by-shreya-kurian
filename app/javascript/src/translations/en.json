@@ -11,6 +11,8 @@
     "columns": "Columns",
     "articleWithCount_one": "{{count}} article",
     "articleWithCount_other": "{{count}} articles",
+    "categoryWithCount_one": "{{count}} category",
+    "categoryWithCount_other": "{{count}} categories",
     "category_one": "Category",
     "category_other": "Categories",
     "author": "Author",
@@ -43,7 +45,8 @@
     "proceed": "Proceed",
     "clearSearch": "Clear search",
     "saveChanges": "Save changes",
-    "changePassword": "Change password"
+    "changePassword": "Change password",
+    "edit": "Edit"
   },
   "placeholder": {
     "searchArticles": "Search article titles",
@@ -104,12 +107,14 @@
     "manageCategoriesDescription": "Edit and reorder KB structure."
   },
   "settings": {
-    "generalTitle": "General Settings",
+    "general": "General Settings",
     "generalSubtitle": "Configure general attributes of knowledge base",
     "generalDescription": "Customize the site name which is used to show the site name in Open Graph Tags.",
     "redirectionsSubtitle": "Create and configure redirection rules to send users from old links to new links. All redirections are performed with 301 status codes to be SEO friendly.",
     "securitySubtitle": "Configure security related settings for your site.",
-    "securityTitle": "Security"
+    "security": "Security",
+    "manageCategories": "Manage categories",
+    "manageCategoriesSubtitle": "Create and configure the categories inside your scribble."
   },
   "sidebarDescription": {
     "articles": "Manage and list all your KB articles",

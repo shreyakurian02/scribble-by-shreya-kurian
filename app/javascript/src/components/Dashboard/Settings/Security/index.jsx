@@ -55,8 +55,8 @@ const Security = () => {
   return (
     <div className="mx-auto w-1/2 space-y-5 py-16">
       <Header
-        subTitle={t("settings.securitySubtitle")}
-        title={t("settings.securityTitle")}
+        subtitle={t("settings.securitySubtitle")}
+        title={t("settings.security")}
       />
       {isLoading ? (
         <div className="flex w-1/2 justify-center">

@@ -45,8 +45,8 @@ const General = () => {
   return (
     <div className="mx-auto w-1/2 space-y-5 py-16">
       <Header
-        subTitle={t("settings.generalSubtitle")}
-        title={t("settings.generalTitle")}
+        subtitle={t("settings.generalSubtitle")}
+        title={t("settings.general")}
       />
       {isLoading ? (
         <div className="flex h-20 w-1/2 items-center justify-center">
