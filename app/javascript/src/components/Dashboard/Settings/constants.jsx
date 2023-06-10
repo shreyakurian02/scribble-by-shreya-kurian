@@ -3,6 +3,7 @@ import React from "react";
 import { t } from "i18next";
 
 import General from "./General";
+import ManageCategories from "./ManageCategories";
 import Redirections from "./Redirections";
 import Security from "./Security";
 
@@ -35,5 +36,5 @@ export const TAB_COMPONENTS = {
   general: <General />,
   redirections: <Redirections />,
   security: <Security />,
-  "manage-categories": null,
+  "manage-categories": <ManageCategories />,
 };

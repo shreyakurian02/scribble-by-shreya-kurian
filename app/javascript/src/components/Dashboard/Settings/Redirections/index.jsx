@@ -51,7 +51,7 @@ const Redirections = () => {
     <div className="mx-auto w-3/4 space-y-5 py-16">
       <div className="fixed top-0 z-10 w-full bg-white pb-3 pt-16">
         <Header
-          subTitle={t("settings.redirectionsSubtitle")}
+          subtitle={t("settings.redirectionsSubtitle")}
           title={t("common.redirections")}
         />
       </div>
