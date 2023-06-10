@@ -15,7 +15,7 @@ const Editor = ({ editorRef }) => {
       required
       className="space-y-3"
       contentClassName="editor-content"
-      error=""
+      error={null}
       menuType="fixed"
       name="description"
       placeholder={t("placeholder.addDescription")}

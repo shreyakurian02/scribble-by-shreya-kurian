@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Label, Switch, Spinner } from "neetoui";
 import { useTranslation } from "react-i18next";
 
+import siteApi from "apis/site";
+
 import Password from "./Password";
 
 import Header from "../Header";
@@ -11,23 +13,34 @@ const Security = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSecurityEnabled, setIsSecurityEnabled] = useState(false);
   const [isChangePasswordEnabled, setIsChangePasswordEnabled] = useState(false);
-  const [siteSettings, setSiteSettings] = useState({
-    isPasswordPresent: false,
-  });
+  const [siteSettings, setSiteSettings] = useState({});
 
   const { t } = useTranslation();
 
-  const handleSecurityToggle = () => {
-    setIsSecurityEnabled(isSecurityEnabled => !isSecurityEnabled);
-    setIsChangePasswordEnabled(false);
+  const { is_password_protected: isSitePasswordProtected } = siteSettings;
+
+  const handlePasswordChange = async () => {
+    try {
+      await siteApi.update({ password: null });
+      fetchSecurityDetails();
+    } catch (error) {
+      logger.error(error);
+    }
   };
 
-  const fetchSecurityDetails = () => {
+  const handleSecurityToggle = () => {
+    setIsSecurityEnabled(isSecurityEnabled => !isSecurityEnabled);
+    isSitePasswordProtected && handlePasswordChange();
+  };
+
+  const fetchSecurityDetails = async () => {
     setIsLoading(true);
     try {
-      const { is_secured } = { is_secured: true };
-      setSiteSettings({ isPasswordPresent: is_secured });
-      is_secured && setIsSecurityEnabled(true);
+      const {
+        data: { site },
+      } = await siteApi.show();
+      setSiteSettings(site);
+      site.is_password_protected && setIsSecurityEnabled(true);
     } catch (error) {
       logger.error(error);
     } finally {
@@ -62,9 +75,11 @@ const Security = () => {
           </div>
           {isSecurityEnabled && (
             <Password
+              fetchSecurityDetails={fetchSecurityDetails}
               isChangePasswordEnabled={isChangePasswordEnabled}
+              isSecurityEnabled={isSecurityEnabled}
+              isSitePasswordProtected={isSitePasswordProtected}
               setIsChangePasswordEnabled={setIsChangePasswordEnabled}
-              siteSettings={siteSettings}
             />
           )}
         </>
