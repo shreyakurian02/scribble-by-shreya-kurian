@@ -7,6 +7,9 @@
       "required": true,
       "value": "true"
     },
+    "NODE_OPTIONS": {
+      "value": "--openssl-legacy-provider"
+    },
     "RACK_ENV": {
       "value": "heroku"
     },
