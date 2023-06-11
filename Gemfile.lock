@@ -252,6 +252,8 @@ GEM
     timeout (0.3.2)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    uglifier (4.2.0)
+      execjs (>= 0.3.0, < 3)
     unicode-display_width (2.4.2)
     web-console (4.2.0)
       actionview (>= 6.0.0)
@@ -293,6 +295,7 @@ DEPENDENCIES
   rubocop-rails
   sprockets-rails
   tzinfo-data
+  uglifier
   web-console
   webpacker
 
