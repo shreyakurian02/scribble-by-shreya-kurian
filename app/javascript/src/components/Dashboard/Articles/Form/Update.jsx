@@ -1,8 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 
 import { Formik, Form } from "formik";
 import { PageLoader } from "neetoui";
-import { useEffect } from "react/cjs/react.development";
 import { useHistory, useParams } from "react-router";
 
 import articlesApi from "apis/articles";
