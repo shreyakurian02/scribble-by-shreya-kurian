@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Search, Plus } from "neetoicons";
 import { Typography } from "neetoui";
 import { MenuBar as NeetoUIMenuBar } from "neetoui/layouts";
+import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 import { v4 as uuid } from "uuid";
@@ -35,15 +36,21 @@ const MenuBar = ({
 
   const { status, categories: queryCategories } = getSearchParams();
 
+  const isSearchedCategoryResultEmpty =
+    isEmpty(categories) && !isEmpty(categorySearchTerm);
+
   const handleAddCategory = () =>
     setIsNewCategoryModalOpen(isModalOpen => !isModalOpen);
 
-  const handleSearch = () => setIsSearchCollapsed(false);
+  const handleSearchCollapse = () =>
+    setIsSearchCollapsed(isSearchCollapsed => !isSearchCollapsed);
 
   const handleCollapse = () => {
     setCategorySearchTerm("");
     setIsSearchCollapsed(true);
   };
+
+  const handleEsc = ({ keyCode }) => keyCode === 27 && handleCollapse();
 
   return (
     <NeetoUIMenuBar showMenu={showMenu} title={t("common.article", PLURAL)}>
@@ -58,7 +65,7 @@ const MenuBar = ({
       ))}
       <SubTitle
         iconProps={[
-          { icon: Search, onClick: handleSearch },
+          { icon: Search, onClick: handleSearchCollapse },
           { icon: Plus, onClick: handleAddCategory },
         ]}
       >
@@ -78,22 +85,27 @@ const MenuBar = ({
         value={categorySearchTerm}
         onChange={({ target: { value } }) => setCategorySearchTerm(value)}
         onCollapse={handleCollapse}
+        onKeyDown={handleEsc}
       />
-      {categories?.map(({ name, id, articles_count: articlesCount }) => (
-        <Block
-          active={queryCategories?.includes(name)}
-          count={articlesCount}
-          key={id}
-          label={name}
-          onClick={() =>
-            handleFilterByCategories({
-              queryCategories,
-              history,
-              selectedCategory: name,
-            })
-          }
-        />
-      ))}
+      {isSearchedCategoryResultEmpty ? (
+        <Typography style="body2">{t("noData.categories")}</Typography>
+      ) : (
+        categories?.map(({ name, id, articles_count: articlesCount }) => (
+          <Block
+            active={queryCategories?.includes(name)}
+            count={articlesCount}
+            key={id}
+            label={name}
+            onClick={() =>
+              handleFilterByCategories({
+                queryCategories,
+                history,
+                selectedCategory: name,
+              })
+            }
+          />
+        ))
+      )}
     </NeetoUIMenuBar>
   );
 };

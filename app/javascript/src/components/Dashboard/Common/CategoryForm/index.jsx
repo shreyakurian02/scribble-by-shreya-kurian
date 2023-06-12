@@ -7,20 +7,33 @@ import { useTranslation } from "react-i18next";
 import categoriesApi from "apis/categories";
 import { useCategoriesDispatch } from "contexts/categories";
 
-import {
-  CATEGORY_VALIDATION_SCHEMA,
-  NEW_CATEGORY_INITIAL_VALUES,
-} from "./constants";
+import { VALIDATION_SCHEMA, INITIAL_VALUES } from "./constants";
 
-const AddCategory = ({ isOpen, onClose }) => {
+const CategoryForm = ({
+  isOpen,
+  onClose,
+  selectedCategory = {},
+  isEdit = false,
+}) => {
   const { t } = useTranslation();
 
   const fetchCategories = useCategoriesDispatch();
 
+  const { name: selectedCategoryName, id: selectedCategoryId } =
+    selectedCategory;
+
+  const initialValues = isEdit
+    ? { category: selectedCategoryName }
+    : INITIAL_VALUES;
+
+  const handleReset = () => onClose();
+
   const handleSubmit = async ({ category }) => {
     try {
       const payload = { name: category };
-      await categoriesApi.create(payload);
+      isEdit
+        ? await categoriesApi.update({ id: selectedCategoryId, payload })
+        : await categoriesApi.create(payload);
       fetchCategories();
       onClose();
     } catch (error) {
@@ -35,9 +48,10 @@ const AddCategory = ({ isOpen, onClose }) => {
       </Modal.Header>
       <Form
         formikProps={{
+          initialValues,
           onSubmit: handleSubmit,
-          initialValues: NEW_CATEGORY_INITIAL_VALUES,
-          validationSchema: CATEGORY_VALIDATION_SCHEMA,
+          onReset: handleReset,
+          validationSchema: VALIDATION_SCHEMA,
         }}
       >
         {({ dirty }) => (
@@ -60,4 +74,4 @@ const AddCategory = ({ isOpen, onClose }) => {
   );
 };
 
-export default AddCategory;
+export default CategoryForm;

@@ -60,6 +60,7 @@
     "enterPassword": "Enter password"
   },
   "noData": {
+    "categories": "There are no such categories",
     "articleTitle": "There are no articles.",
     "articleDescription": "You have not yet created an article. Create an article using the CTA given below",
     "searchResultTitle": "No results for \"{{searchTerm}}\"",

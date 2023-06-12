@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Plus } from "neetoicons";
 import { Button, Typography } from "neetoui";
 import { useTranslation } from "react-i18next";
 
+import AddCategory from "components/Dashboard/Common/CategoryForm";
 import { useCategoriesState } from "contexts/categories";
 
 import List from "./List";
@@ -11,6 +12,8 @@ import List from "./List";
 import Header from "../Header";
 
 const ManageCategories = () => {
+  const [isAddCategoryModalOpen, setIsAddCategoryModalOpen] = useState(false);
+
   const { t } = useTranslation();
 
   const categories = useCategoriesState();
@@ -31,10 +34,15 @@ const ManageCategories = () => {
             iconPosition="left"
             label={t("common.addCategoryHeader")}
             style="link"
+            onClick={() => setIsAddCategoryModalOpen(true)}
           />
         </div>
       </div>
       <List />
+      <AddCategory
+        isOpen={isAddCategoryModalOpen}
+        onClose={() => setIsAddCategoryModalOpen(false)}
+      />
     </div>
   );
 };

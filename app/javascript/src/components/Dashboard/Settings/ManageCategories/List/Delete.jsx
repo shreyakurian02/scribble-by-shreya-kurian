@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 import { Warning } from "neetoicons";
 import { Alert, Callout, Select, Typography } from "neetoui";
@@ -10,22 +10,25 @@ import { SINGULAR } from "constants";
 import { useCategories } from "contexts/categories";
 
 const Delete = ({ isOpen, onClose, category }) => {
-  const { t } = useTranslation();
+  const [selectedCategory, setSelectedCategory] = useState({});
 
+  const { t } = useTranslation();
   const [categories, fetchCategories] = useCategories();
 
   const { name, articles_count: articlesCount, id: categoryId } = category;
+  const isLastCategory = categories.length === 1;
 
-  const moveToCategories = categories.filter(
-    category => category.id !== categoryId
+  const moveToCategories = useMemo(
+    () => categories.filter(category => category.id !== categoryId),
+    [categories]
   );
 
-  const [selectedCategory, setSelectedCategory] = useState({
-    label: moveToCategories?.[0]?.name,
-    value: moveToCategories?.[0]?.id,
-  });
-
-  const isLastCategory = categories.length === 1;
+  useEffect(() => {
+    setSelectedCategory({
+      label: moveToCategories?.[0]?.name,
+      value: moveToCategories?.[0]?.id,
+    });
+  }, [moveToCategories]);
 
   const handleSubmit = async () => {
     try {
