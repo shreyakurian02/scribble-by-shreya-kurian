@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::CategoriesController < ApplicationController
-  before_action :load_category!, only: %i[destroy reorder]
+  before_action :load_category!, only: %i[update destroy reorder]
 
   def index
     @categories = Categories::FilterService.new(filter_params).process.order(:position)
@@ -10,6 +10,11 @@ class Api::V1::CategoriesController < ApplicationController
   def create
     category = Category.create!(category_params)
     render_notice(t("successfully_created", entity: "Category"), :ok, { category_id: category.id })
+  end
+
+  def update
+    @category.update!(category_params)
+    render_notice(t("successfully_updated", entity: "Category"))
   end
 
   def destroy

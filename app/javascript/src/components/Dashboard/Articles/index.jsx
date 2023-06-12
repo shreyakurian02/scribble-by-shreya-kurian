@@ -6,11 +6,11 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
 
 import articlesApi from "apis/articles";
+import AddCategory from "components/Dashboard/Common/CategoryForm";
 import { SINGULAR, NEW_ARTICLE_URL } from "constants";
 import { useCategoriesDispatch } from "contexts/categories";
 import useDebounce from "hooks/useDebounce";
 
-import AddCategory from "./AddCategory";
 import {
   ARTICLES_DATA_INITIAL_VALUE,
   DEFAULT_PAGE_PROPERTIES,

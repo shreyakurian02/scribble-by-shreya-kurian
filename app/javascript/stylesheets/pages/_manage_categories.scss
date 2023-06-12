@@ -1,0 +1,11 @@
+.reorder-item {
+  padding-left: 20px;
+
+  &:hover {
+    padding-left: 0px;
+  }
+
+  &:hover .reorder-icon {
+    display: block;
+  }
+}
