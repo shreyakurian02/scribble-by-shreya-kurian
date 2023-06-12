@@ -130,12 +130,6 @@ export const getAllowedColumns = ({
   },
 ];
 
-export const getCategoryOptions = categories =>
-  categories.map(({ name, id }) => ({
-    label: name,
-    value: id,
-  }));
-
 export const pushURLSearchParams = (history, param, value) => {
   const queryParams = getSearchParams();
   history.push({ search: stringify({ ...queryParams, [param]: value }) });

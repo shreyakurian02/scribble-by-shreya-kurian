@@ -66,7 +66,10 @@ const List = () => {
                     {...draggableProps}
                     {...dragHandleProps}
                   >
-                    <Item category={category} />
+                    <Item
+                      categoriesCount={categories.length}
+                      category={category}
+                    />
                   </div>
                 )}
               </Draggable>

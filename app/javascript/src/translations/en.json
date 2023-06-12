@@ -73,7 +73,8 @@
     "categoryTitle": "Category title",
     "fromPath": "From path",
     "toPath": "To path",
-    "password": "Password"
+    "password": "Password",
+    "selectCategory": "Select a category to move this articles into"
   },
   "labels": {
     "passwordProtect": "Password protect your site",
@@ -89,12 +90,14 @@
   },
   "alert": {
     "deleteEntity": "Delete {{entity}}",
-    "deleteMessage": "You are permanently deleting <strong>{{title}}</strong>. This action cannot be undone",
-    "deleteRedirectionMessage": "You are permanently deleting redirection from <strong>{{from}}</strong> to <strong>{{to}}</strong>. This action cannot be undone"
+    "deleteMessage": "You are permanently deleting <strong>{{title}}</strong>. This action cannot be undone.",
+    "deleteRedirectionMessage": "You are permanently deleting redirection from <strong>{{from}}</strong> to <strong>{{to}}</strong>. This action cannot be undone.",
+    "deleteCategoryWarning": "Category <strong>{{name}}</strong> has {{articleWithCount}}. Before this category can be deleted, these articles need to be moved to another category.",
+    "deleteLastCategoryWarning": "Category <strong>{{name}}</strong> has {{articleWithCount}}. These articles will be moved to a default category called <strong>general</strong>."
   },
   "modal": {
     "updateTitle": "Move articles to {{action}}",
-    "updateDescription": "You are changing the {{attribute}} of {{entity}} to {{attributeValue}}"
+    "updateDescription": "You are changing the {{attribute}} of {{entity}} to {{attributeValue}}."
   },
   "menubar": {
     "general": "General",

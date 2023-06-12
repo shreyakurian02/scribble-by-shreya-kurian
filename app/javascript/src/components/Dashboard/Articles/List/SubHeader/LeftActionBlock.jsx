@@ -6,14 +6,11 @@ import { useTranslation, Trans } from "react-i18next";
 import { useHistory } from "react-router";
 import { v4 as uuid } from "uuid";
 
+import { getCategoryOptions } from "components/Dashboard/utils";
 import { useCategoriesState } from "contexts/categories";
 
 import { ARTICLE_STATUS } from "../../Form/constants";
-import {
-  getCategoryOptions,
-  getSearchParams,
-  handleFilterByCategories,
-} from "../../utils";
+import { getSearchParams, handleFilterByCategories } from "../../utils";
 
 const {
   Menu,

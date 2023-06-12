@@ -8,6 +8,7 @@ import { useTranslation, Trans } from "react-i18next";
 import { useHistory } from "react-router";
 
 import categoriesApi from "apis/categories";
+import { getCategoryOptions } from "components/Dashboard/utils";
 import { ARTICLES_BASE_URL } from "constants";
 import { useCategories } from "contexts/categories";
 
@@ -15,7 +16,6 @@ import SaveButton from "./SaveButton";
 
 import { MANAGE_DELETE_ALERT_INITIAL_VALUE } from "../../constants";
 import { Delete } from "../../List/Actions";
-import { getCategoryOptions } from "../../utils";
 import { formatDate, titlize } from "../utils";
 
 const Header = ({ status, setStatus, article = {}, isEdit = false }) => {
