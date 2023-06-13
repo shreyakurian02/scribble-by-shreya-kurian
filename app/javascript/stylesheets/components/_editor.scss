@@ -6,6 +6,12 @@
   max-height: calc(100vh - 200px);
 }
 
+.editor-preview__wrapper {
+  padding: 5px 50px !important;
+  overflow-y: scroll;
+  max-height: calc(100vh - 80px);
+}
+
 .neeto-editor-fixed-menu {
   border: none !important;
 }

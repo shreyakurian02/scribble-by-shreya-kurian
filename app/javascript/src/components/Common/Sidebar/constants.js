@@ -18,7 +18,7 @@ export const NAV_LINKS = [
   },
   {
     label: t("common.preview"),
-    to: "/preview",
+    to: "/public",
     icon: ExternalLink,
     description: t("sidebarDescription.preview"),
   },
