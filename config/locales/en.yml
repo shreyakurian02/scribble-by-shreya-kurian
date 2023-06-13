@@ -3,6 +3,8 @@ en:
   successfully_updated: "%{entity} was successfully updated!"
   successfully_deleted: "%{entity} was successfully deleted!"
   not_found: "%{entity} not found"
+  session:
+    incorrect_credentials: "Incorrect credentials, try again."
   errors:
     presence: "%{entity} can't be blank"
     default_category_deletion: "Default category general cannot be deleted"

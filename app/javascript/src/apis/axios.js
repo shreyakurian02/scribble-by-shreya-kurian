@@ -3,6 +3,8 @@ import { Toastr } from "neetoui";
 
 import { DEFAULT_ERROR_NOTIFICATION } from "constants";
 
+import { getFromSessionStorage } from "../utils/storage";
+
 axios.defaults.baseURL = "/";
 
 const setAuthHeaders = (setIsLoading = () => null) => {
@@ -13,6 +15,10 @@ const setAuthHeaders = (setIsLoading = () => null) => {
       .querySelector('[name="csrf-token"]')
       .getAttribute("content"),
   };
+  const token = getFromSessionStorage("authToken");
+  if (token) {
+    axios.defaults.headers["X-Auth-Token"] = token;
+  }
   setIsLoading(false);
 };
 
