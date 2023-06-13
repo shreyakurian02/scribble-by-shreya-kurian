@@ -53,12 +53,14 @@ const EUI = () => {
         condition={(isPasswordProtected && isLoggedIn) || !isPasswordProtected}
         path="/public/:slug"
         redirectRoute="/public/login"
+        site={site}
       />
       <PrivateRoute
         component={Preview}
         condition={(isPasswordProtected && isLoggedIn) || !isPasswordProtected}
         path={PREVIEW_URL}
         redirectRoute="/public/login"
+        site={site}
       />
     </Switch>
   );

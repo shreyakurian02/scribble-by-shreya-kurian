@@ -9,10 +9,14 @@ import { setAuthHeaders } from "apis/axios";
 import sessionsApi from "apis/public/sessions";
 import { setToSessionStorage } from "utils/storage";
 
-const Authentication = () => {
+const Authentication = ({ location }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { t } = useTranslation();
+
+  const {
+    site: { title },
+  } = location.state;
 
   const handleSubmit = async ({ password }) => {
     setIsLoading(true);
@@ -33,9 +37,11 @@ const Authentication = () => {
   return (
     <div className="flex h-screen flex-col items-center justify-center">
       <div className="w-1/3">
-        <Typography style="h2">{t("headers.siteProtected")}</Typography>
+        <Typography style="h2">
+          {t("headers.siteProtected", { site: title })}
+        </Typography>
         <Typography className="neeto-ui-text-gray-500" style="body1">
-          {t("headers.enterPassword")}
+          {t("headers.enterPassword", { site: title })}
         </Typography>
         <Form
           formikProps={{

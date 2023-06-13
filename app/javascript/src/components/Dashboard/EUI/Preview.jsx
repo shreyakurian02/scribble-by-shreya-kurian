@@ -9,11 +9,13 @@ import categoriesApi from "apis/public/categories";
 import AccordianItem from "./AccordianItem";
 import Article from "./Article";
 
-const Preview = () => {
+const Preview = ({ site }) => {
   const [categories, setCategories] = useState([]);
   const [article, setArticle] = useState({});
 
   const history = useHistory();
+
+  const { title } = site;
 
   const fetchCategories = async () => {
     try {
@@ -42,7 +44,7 @@ const Preview = () => {
     <>
       <div className="border-b sticky z-10 flex h-16 w-full items-center justify-center px-6 py-4">
         <Typography className="neeto-ui-text-gray-800" style="h4">
-          Spinkart
+          {title}
         </Typography>
       </div>
       <div className="flex w-full">

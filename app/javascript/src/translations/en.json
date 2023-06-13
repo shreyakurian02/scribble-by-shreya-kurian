@@ -114,7 +114,7 @@
     "manageCategoriesDescription": "Edit and reorder KB structure."
   },
   "settings": {
-    "general": "General Settings",
+    "general": "General settings",
     "generalSubtitle": "Configure general attributes of knowledge base",
     "generalDescription": "Customize the site name which is used to show the site name in Open Graph Tags.",
     "redirectionsSubtitle": "Create and configure redirection rules to send users from old links to new links. All redirections are performed with 301 status codes to be SEO friendly.",
@@ -129,7 +129,7 @@
     "preview": "Launch your KB preview"
   },
   "headers": {
-    "siteProtected": "Spinkart is password protected!",
-    "enterPassword": "Enter the password to gain access to spinkart."
+    "siteProtected": "{{site}} is password protected!",
+    "enterPassword": "Enter the password to gain access to {{site}}."
   }
 }
