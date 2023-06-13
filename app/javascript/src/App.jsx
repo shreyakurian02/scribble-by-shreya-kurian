@@ -1,29 +1,17 @@
 import React, { useState, useEffect } from "react";
 
 import { PageLoader } from "neetoui";
-import {
-  Route,
-  Switch,
-  BrowserRouter as Router,
-  Redirect,
-} from "react-router-dom";
+import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import { setAuthHeaders, registerIntercepts } from "apis/axios";
 import "common/i18n";
 import { initializeLogger } from "common/logger";
-import Sidebar from "components/Common/Sidebar";
-import Articles from "components/Dashboard/Articles";
-import CreateArticle from "components/Dashboard/Articles/Form/Create";
-import UpdateArticle from "components/Dashboard/Articles/Form/Update";
-import Settings from "components/Dashboard/Settings";
-import {
-  ARTICLES_URL,
-  NEW_ARTICLE_URL,
-  EDIT_ARTICLE_URL,
-  SETTINGS_URL,
-} from "constants";
 import { CategoriesProvider } from "contexts/categories";
+
+import EUI from "./components/Dashboard/EUI";
+import { PREVIEW_URL } from "./constants";
+import Main from "./Main";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -46,16 +34,10 @@ const App = () => {
     <Router>
       <ToastContainer />
       <CategoriesProvider>
-        <div className="flex h-screen w-full">
-          <Sidebar />
-          <Switch>
-            <Route exact component={Articles} path={ARTICLES_URL} />
-            <Route exact component={CreateArticle} path={NEW_ARTICLE_URL} />
-            <Route exact component={UpdateArticle} path={EDIT_ARTICLE_URL} />
-            <Route exact component={Settings} path={SETTINGS_URL} />
-            <Redirect exact from="/" to={ARTICLES_URL} />
-          </Switch>
-        </div>
+        <Switch>
+          <Route component={EUI} path={PREVIEW_URL} />
+          <Route component={Main} path="/" />
+        </Switch>
       </CategoriesProvider>
     </Router>
   );

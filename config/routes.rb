@@ -9,14 +9,18 @@ Rails.application.routes.draw do
           patch :reorder, on: :member
         end
 
-        resources :articles, except: %i[edit new], param: :slug
-        resources :redirections, except: %i[new show edit]
-        resource :site, only: %i[show update]
-
         namespace :bulk do
           resource :articles, only: %i[update destroy]
         end
 
+        namespace :public do
+          resources :categories, only: :index
+          resources :articles, only: :show, param: :slug
+        end
+
+        resources :articles, except: %i[edit new], param: :slug
+        resources :redirections, except: %i[new show edit]
+        resource :site, only: %i[show update]
       end
     end
   end
