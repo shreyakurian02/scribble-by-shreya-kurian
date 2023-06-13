@@ -14,6 +14,7 @@ Rails.application.routes.draw do
         end
 
         namespace :public do
+          resource :session, only: :create
           resources :categories, only: :index
           resources :articles, only: :show, param: :slug
         end
