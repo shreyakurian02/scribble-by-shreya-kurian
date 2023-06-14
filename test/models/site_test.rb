@@ -4,7 +4,7 @@ require "test_helper"
 
 class SiteTest < ActiveSupport::TestCase
   def setup
-    @site = build(:site)
+    @site = create(:site)
   end
 
   def test_site_should_not_be_valid_without_title
@@ -13,7 +13,7 @@ class SiteTest < ActiveSupport::TestCase
     assert_includes @site.errors.full_messages, "Title can't be blank"
   end
 
-  def test_category_should_not_be_vald_with_duplicate_title
+  def test_site_should_not_be_vald_with_duplicate_title
     @site.save!
     new_site = @site.dup
     assert_not new_site.valid?
@@ -37,8 +37,24 @@ class SiteTest < ActiveSupport::TestCase
     assert_includes @site.errors.full_messages, "Password is too short (minimum is #{Site::MINIMUM_PASSWORD_LENGTH} characters)"
   end
 
+  def test_password_shouldnt_be_saved_with_invalid_format
+    passwords = ["aaaaaa", "111111"]
+
+    passwords.each do |password|
+      @site.password = password
+      assert_not @site.valid?
+      assert_includes @site.errors.full_messages, "Password is invalid"
+    end
+  end
+
   def test_valid_password_is_saved
-    @site.password = "a" * (Site::MINIMUM_PASSWORD_LENGTH)
+    @site.password = "a" * (Site::MINIMUM_PASSWORD_LENGTH) + "2"
     assert @site.valid?
+  end
+
+  def test_authentication_token_regenerates_when_password_is_updated
+    old_authentication_token = @site.authentication_token
+    @site.update!(password: "new_password@2")
+    assert_not_equal old_authentication_token, @site.reload.authentication_token
   end
 end

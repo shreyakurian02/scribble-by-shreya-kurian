@@ -2,7 +2,7 @@
 
 class Category < ApplicationRecord
   MAXIMUM_NAME_LENGTH = 40
-  DEFAULT_CATGEORY_NAME = "General"
+  DEFAULT_CATEGORY_NAME = "General"
 
   has_many :articles
 

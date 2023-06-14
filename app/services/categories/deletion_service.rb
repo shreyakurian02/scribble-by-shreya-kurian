@@ -24,7 +24,7 @@
       end
 
       def default_category_deletion?
-        category.name == Category::DEFAULT_CATGEORY_NAME && last_category?
+        category.name == Category::DEFAULT_CATEGORY_NAME && last_category?
       end
 
       def last_category?
@@ -49,6 +49,6 @@
       end
 
       def create_default_category!
-        Category.create!(name: Category::DEFAULT_CATGEORY_NAME)
+        Category.create!(name: Category::DEFAULT_CATEGORY_NAME)
       end
   end
