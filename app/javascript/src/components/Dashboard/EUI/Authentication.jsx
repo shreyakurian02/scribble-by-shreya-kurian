@@ -3,11 +3,12 @@ import React, { useState } from "react";
 import { Button, Typography } from "neetoui";
 import { Form, Input } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
-import * as yup from "yup";
 
 import { setAuthHeaders } from "apis/axios";
 import sessionsApi from "apis/public/sessions";
 import { setToSessionStorage } from "utils/storage";
+
+import { LOGIN_INTIAL_VALUES, LOGIN_VALIDATION_SCHEMA } from "./constants";
 
 const Authentication = ({ location }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,10 +22,10 @@ const Authentication = ({ location }) => {
   const handleSubmit = async ({ password }) => {
     setIsLoading(true);
     try {
-      const response = await sessionsApi.login({ password });
-      setToSessionStorage({
-        authToken: response.data.authentication_token,
-      });
+      const {
+        data: { authentication_token },
+      } = await sessionsApi.login({ password });
+      setToSessionStorage(authentication_token);
       setAuthHeaders();
       window.location.href = "/public";
     } catch (error) {
@@ -45,17 +46,15 @@ const Authentication = ({ location }) => {
         </Typography>
         <Form
           formikProps={{
-            initialValues: { password: "" },
-            validationSchema: yup.object().shape({
-              password: yup.string().required("Required"),
-            }),
+            initialValues: LOGIN_INTIAL_VALUES,
+            validationSchema: LOGIN_VALIDATION_SCHEMA,
             onSubmit: handleSubmit,
           }}
         >
           <div className="mt-3 space-y-5 text-center">
             <Input
               required
-              label="Password"
+              label={t("input.password")}
               name="password"
               placeholder={t("placeholder.enterPassword")}
             />

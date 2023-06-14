@@ -63,7 +63,6 @@ const General = () => {
           {({ dirty, isSubmitting }) => (
             <div className="space-y-3">
               <Input
-                loading
                 label={t("common.siteTitle")}
                 name="siteTitle"
                 placeholder={t("placeholder.addSiteTitle")}

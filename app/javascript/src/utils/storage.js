@@ -1,4 +1,4 @@
-const setToSessionStorage = ({ authToken }) => {
+const setToSessionStorage = authToken => {
   sessionStorage.setItem("authToken", JSON.stringify(authToken));
 };
 
