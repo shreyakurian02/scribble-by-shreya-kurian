@@ -14,7 +14,7 @@ const PrivateRoute = ({
     return <Redirect to={{ pathname: redirectRoute }} />;
   }
 
-  return <Route exact path={path} render={() => <Component site={site} />} />;
+  return <Route path={path} render={() => <Component site={site} />} />;
 };
 
 PrivateRoute.propTypes = {

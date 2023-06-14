@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import { useHistory } from "react-router";
 
 import articlesApi from "apis/articles";
-import { ARTICLES_URL } from "constants";
+import { ARTICLES_URL } from "constants/urls";
 
 import { ARTICLE_STATUS, INITIAL_VALUES, VALIDATION_SCHEMA } from "./constants";
 import Editor from "./Editor";

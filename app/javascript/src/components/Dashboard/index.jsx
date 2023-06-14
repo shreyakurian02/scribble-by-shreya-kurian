@@ -14,9 +14,9 @@ import {
   NEW_ARTICLE_URL,
   EDIT_ARTICLE_URL,
   SETTINGS_URL,
-} from "constants";
+} from "constants/urls";
 
-const Main = ({ notFoundError, setNotFoundError }) => {
+const Dashboard = ({ notFoundError, setNotFoundError }) => {
   const { show: show404Error } = notFoundError;
 
   if (show404Error) {
@@ -37,11 +37,11 @@ const Main = ({ notFoundError, setNotFoundError }) => {
         <Route exact component={UpdateArticle} path={EDIT_ARTICLE_URL} />
         <Route exact component={Settings} path={SETTINGS_URL} />
         <Route exact component={Articles} path={ARTICLES_URL} />
-        <Redirect exact from="/" to={ARTICLES_URL} />
+        <Redirect exact from="/admin" to={ARTICLES_URL} />
         <Route path="*" render={() => <ErrorPage homeUrl={ARTICLES_URL} />} />
       </Switch>
     </div>
   );
 };
 
-export default Main;
+export default Dashboard;

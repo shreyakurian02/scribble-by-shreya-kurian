@@ -6,7 +6,12 @@ import { Route, Switch } from "react-router";
 
 import siteApi from "apis/site";
 import ErrorPage from "components/Common/ErrorPage";
-import { PREVIEW_URL } from "constants";
+import {
+  PREVIEW_URL,
+  EUI_LOGIN,
+  EUI_ARTICLE,
+  EUI_INVALID_ROUTE,
+} from "constants/urls";
 import { getFromSessionStorage } from "utils/storage";
 
 import Authentication from "./Authentication";
@@ -62,26 +67,25 @@ const UserInterface = ({ notFoundError, setNotFoundError }) => {
     <Switch>
       <Route
         exact
-        path="/public/login"
+        path={EUI_LOGIN}
         render={() => <Authentication site={site} />}
       />
       <Route
-        exact
-        path="/public/:slug/*"
+        path={EUI_INVALID_ROUTE}
         render={() => <ErrorPage homeUrl={PREVIEW_URL} />}
       />
       <PrivateRoute
         component={Preview}
         condition={hasAccess}
-        path="/public/:slug"
-        redirectRoute="/public/login"
+        path={EUI_ARTICLE}
+        redirectRoute={EUI_LOGIN}
         site={site}
       />
       <PrivateRoute
         component={Preview}
         condition={hasAccess}
         path={PREVIEW_URL}
-        redirectRoute="/public/login"
+        redirectRoute={EUI_LOGIN}
         site={site}
       />
     </Switch>

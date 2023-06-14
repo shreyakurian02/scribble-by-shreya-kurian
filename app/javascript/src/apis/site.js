@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { SITE_BASE_URL } from "constants";
+import { SITE_BASE_URL } from "constants/routes";
 
 const show = () => axios.get(SITE_BASE_URL);
 

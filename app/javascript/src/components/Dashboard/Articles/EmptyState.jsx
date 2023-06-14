@@ -1,3 +1,5 @@
+import { SINGULAR } from "constants";
+
 import React from "react";
 
 import EmptyStateImage from "images/EmptyState";
@@ -6,7 +8,7 @@ import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 
-import { NEW_ARTICLE_URL, SINGULAR } from "constants";
+import { NEW_ARTICLE_URL } from "constants/urls";
 
 import { getSearchParams, pushURLSearchParams } from "./utils";
 

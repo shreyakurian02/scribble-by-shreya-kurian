@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 
 import { EditorContent } from "neetoeditor";
 import { Typography } from "neetoui";
-import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
 
 import articlesApi from "apis/public/articles";
 
 const Article = ({ article, setArticle }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const { slug } = useParams();
   const { t } = useTranslation();
@@ -36,7 +35,7 @@ const Article = ({ article, setArticle }) => {
     }
   }, [slug]);
 
-  if (!isLoading && isEmpty(article)) {
+  if (!isLoading && !slug) {
     return (
       <div className="flex h-screen w-full items-center justify-center">
         <Typography style="h5">{t("noData.publishedArticles")}</Typography>

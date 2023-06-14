@@ -8,11 +8,10 @@ import { ToastContainer } from "react-toastify";
 import { setAuthHeaders, registerIntercepts } from "apis/axios";
 import "common/i18n";
 import { initializeLogger } from "common/logger";
-import UserInterface from "components/Dashboard/UserInterface";
+import Dashboard from "components/Dashboard";
+import UserInterface from "components/UserInterface";
+import { PREVIEW_URL, ADMIN_URL } from "constants/urls";
 import { CategoriesProvider } from "contexts/categories";
-
-import { PREVIEW_URL } from "./constants";
-import Main from "./Main";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -44,18 +43,18 @@ const App = () => {
       <CategoriesProvider>
         <Switch>
           <Route
-            path={PREVIEW_URL}
+            path={ADMIN_URL}
             render={() => (
-              <UserInterface
+              <Dashboard
                 notFoundError={notFoundError}
                 setNotFoundError={setNotFoundError}
               />
             )}
           />
           <Route
-            path="/"
+            path={PREVIEW_URL}
             render={() => (
-              <Main
+              <UserInterface
                 notFoundError={notFoundError}
                 setNotFoundError={setNotFoundError}
               />

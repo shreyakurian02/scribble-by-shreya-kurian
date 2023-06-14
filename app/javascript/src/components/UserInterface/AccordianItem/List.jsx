@@ -21,7 +21,7 @@ const List = ({ articles }) => {
       activeStyle={{ color: "#5e5ce6" }}
       className="neeto-ui-text-gray-500"
       key={id}
-      to={`/public/${slug}`}
+      to={`/articles/${slug}`}
     >
       <Typography className="ml-8 font-medium" style="body2">
         {title}

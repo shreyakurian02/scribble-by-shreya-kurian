@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 
 import { setAuthHeaders } from "apis/axios";
 import sessionApi from "apis/public/session";
+import { PREVIEW_URL } from "constants/urls";
 import { setToSessionStorage } from "utils/storage";
 
 import { LOGIN_INTIAL_VALUES, LOGIN_VALIDATION_SCHEMA } from "./constants";
@@ -25,7 +26,7 @@ const Authentication = ({ site }) => {
       } = await sessionApi.login({ password });
       setToSessionStorage(authentication_token);
       setAuthHeaders();
-      window.location.href = "/public";
+      window.location.href = PREVIEW_URL;
     } catch (error) {
       logger.error(error);
     } finally {
