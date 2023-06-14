@@ -7,7 +7,7 @@ en:
     incorrect_credentials: "Incorrect credentials, try again."
   errors:
     presence: "%{entity} can't be blank"
-    default_category_deletion: "Default category general cannot be deleted"
+    default_category_deletion: "Default category cannot be deleted"
     must_exist: "%{entity} must exist"
     loop: "forms a loop with existing redirection"
     same_path: "cannot be same as from path"

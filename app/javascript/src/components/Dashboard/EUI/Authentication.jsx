@@ -5,7 +5,7 @@ import { Form, Input } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 
 import { setAuthHeaders } from "apis/axios";
-import sessionsApi from "apis/public/sessions";
+import sessionApi from "apis/public/session";
 import { setToSessionStorage } from "utils/storage";
 
 import { LOGIN_INTIAL_VALUES, LOGIN_VALIDATION_SCHEMA } from "./constants";
@@ -24,7 +24,7 @@ const Authentication = ({ location }) => {
     try {
       const {
         data: { authentication_token },
-      } = await sessionsApi.login({ password });
+      } = await sessionApi.login({ password });
       setToSessionStorage(authentication_token);
       setAuthHeaders();
       window.location.href = "/public";
