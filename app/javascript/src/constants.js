@@ -22,3 +22,4 @@ export const SITE_BASE_URL = `${BASE_URL}/site`;
 export const REDIRECTIONS_BASE_URL = `${BASE_URL}/redirections`;
 export const PUBLIC_CATEGORIES_BASE_URL = `${PUBLIC_BASE_URL}/categories`;
 export const PUBLIC_ARTICLES_BASE_URL = `${PUBLIC_BASE_URL}/articles`;
+export const SESSIONS_BASE_URL = `${PUBLIC_BASE_URL}/session`;

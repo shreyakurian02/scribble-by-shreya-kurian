@@ -5,7 +5,7 @@ import { Typography } from "neetoui";
 
 import List from "./List";
 
-const AccordionItem = ({ category, isCategoryExpanded = false }) => {
+const AccordianItem = ({ category, isCategoryExpanded = false }) => {
   const [isExpanded, setIsExpanded] = useState(isCategoryExpanded);
 
   const { name, articles } = category;
@@ -32,4 +32,4 @@ const AccordionItem = ({ category, isCategoryExpanded = false }) => {
   );
 };
 
-export default AccordionItem;
+export default AccordianItem;

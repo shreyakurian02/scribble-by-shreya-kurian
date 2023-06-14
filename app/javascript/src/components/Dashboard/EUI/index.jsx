@@ -1,67 +1,68 @@
 import React, { useState, useEffect } from "react";
 
-import { Typography } from "neetoui";
-import { isEmpty } from "ramda";
-import { useHistory } from "react-router";
-import { Route } from "react-router-dom";
+import { PageLoader } from "neetoui";
+import { isEmpty, isNil, either } from "ramda";
+import { Route, Switch } from "react-router";
 
-import categoriesApi from "apis/public/categories";
+import siteApi from "apis/site";
+import { PREVIEW_URL } from "constants";
+import { getFromSessionStorage } from "utils/storage";
 
-import AccordionItem from "./AccordionItem";
+import Authentication from "./Authentication";
 import Preview from "./Preview";
+import PrivateRoute from "./PrivateRoute";
 
 const EUI = () => {
-  const [categories, setCategories] = useState([]);
-  const [article, setArticle] = useState({});
+  const [site, setSite] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
-  const history = useHistory();
+  const authToken = getFromSessionStorage("authToken");
+  const isLoggedIn = !either(isNil, isEmpty)(authToken) && authToken !== "null";
 
-  const fetchCategories = async () => {
+  const { is_password_protected: isPasswordProtected = false } = site;
+
+  const fetchSite = async () => {
+    setIsLoading(true);
     try {
       const {
-        data: { categories },
-      } = await categoriesApi.fetch();
-      setCategories(categories);
-
-      const firstCategoryWithArticles = categories.find(
-        category => !isEmpty(category.articles)
-      );
-
-      if (firstCategoryWithArticles) {
-        history.push(`/public/${firstCategoryWithArticles.articles[0].slug}`);
-      }
-    } catch (error) {
-      logger.error(error);
+        data: { site },
+      } = await siteApi.show();
+      setSite(site);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchCategories();
+    fetchSite();
   }, []);
 
+  if (isLoading) {
+    return (
+      <div className="h-screen w-full">
+        <PageLoader />
+      </div>
+    );
+  }
+
   return (
-    <>
-      <div className="border-b sticky z-10 flex h-16 w-full items-center justify-center px-6 py-4">
-        <Typography className="neeto-ui-text-gray-800" style="h4">
-          Spinkart
-        </Typography>
-      </div>
-      <div className="flex w-full">
-        <div className="border-r accordian_container w-1/4">
-          {categories.map(category => (
-            <AccordionItem
-              category={category}
-              isCategoryExpanded={article.category_id === category.id}
-              key={category.id}
-            />
-          ))}
-        </div>
-        <Route
-          path="/public/:slug"
-          render={() => <Preview article={article} setArticle={setArticle} />}
-        />
-      </div>
-    </>
+    <Switch>
+      <Route exact component={Authentication} path="/public/login" />
+      <PrivateRoute
+        component={Preview}
+        condition={(isPasswordProtected && isLoggedIn) || !isPasswordProtected}
+        path="/public/:slug"
+        redirectRoute="/public/login"
+        site={site}
+      />
+      <PrivateRoute
+        component={Preview}
+        condition={(isPasswordProtected && isLoggedIn) || !isPasswordProtected}
+        path={PREVIEW_URL}
+        redirectRoute="/public/login"
+        site={site}
+      />
+    </Switch>
   );
 };
 

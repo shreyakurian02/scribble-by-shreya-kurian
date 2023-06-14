@@ -46,7 +46,8 @@
     "clearSearch": "Clear search",
     "saveChanges": "Save changes",
     "changePassword": "Change password",
-    "edit": "Edit"
+    "edit": "Edit",
+    "continue": "Continue"
   },
   "placeholder": {
     "searchArticles": "Search article titles",
@@ -65,7 +66,8 @@
     "articleDescription": "You have not yet created an article. Create an article using the CTA given below",
     "searchResultTitle": "No results for \"{{searchTerm}}\"",
     "searchResultDescription": "We could not find any articles based on your search term. Try a different keyword or add a new article.",
-    "categorySpecificArticles": "No articles in this category."
+    "categorySpecificArticles": "No articles in this category.",
+    "publishedArticles": "There are no published articles yet."
   },
   "actions": {
     "edit": "Edit",
@@ -112,7 +114,7 @@
     "manageCategoriesDescription": "Edit and reorder KB structure."
   },
   "settings": {
-    "general": "General Settings",
+    "general": "General settings",
     "generalSubtitle": "Configure general attributes of knowledge base",
     "generalDescription": "Customize the site name which is used to show the site name in Open Graph Tags.",
     "redirectionsSubtitle": "Create and configure redirection rules to send users from old links to new links. All redirections are performed with 301 status codes to be SEO friendly.",
@@ -125,5 +127,9 @@
     "articles": "Manage and list all your KB articles",
     "settings": "Configure KB settings",
     "preview": "Launch your KB preview"
+  },
+  "headers": {
+    "siteProtected": "{{site}} is password protected!",
+    "enterPassword": "Enter the password to gain access to {{site}}."
   }
 }

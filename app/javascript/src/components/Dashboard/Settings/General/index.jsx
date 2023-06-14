@@ -17,7 +17,6 @@ const General = () => {
   const { t } = useTranslation();
 
   const fetchSite = async () => {
-    setIsLoading(true);
     try {
       const {
         data: { site },
@@ -61,10 +60,9 @@ const General = () => {
             enableReinitialize: true,
           }}
         >
-          {({ dirty }) => (
+          {({ dirty, isSubmitting }) => (
             <div className="space-y-3">
               <Input
-                isLoading={isLoading}
                 label={t("common.siteTitle")}
                 name="siteTitle"
                 placeholder={t("placeholder.addSiteTitle")}
@@ -76,6 +74,7 @@ const General = () => {
                 <Button
                   disabled={!dirty}
                   label={t("button.saveChanges")}
+                  loading={isSubmitting}
                   type="submit"
                 />
                 <Button label={t("button.cancel")} style="text" type="reset" />

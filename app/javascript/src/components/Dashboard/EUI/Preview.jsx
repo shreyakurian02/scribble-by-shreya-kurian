@@ -1,38 +1,65 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
-import { EditorContent } from "neetoeditor";
 import { Typography } from "neetoui";
-import { useParams } from "react-router";
+import { isEmpty } from "ramda";
+import { useHistory } from "react-router";
 
-import articlesApi from "apis/public/articles";
+import categoriesApi from "apis/public/categories";
 
-const Preview = ({ article, setArticle }) => {
-  const { slug } = useParams();
+import AccordianItem from "./AccordianItem";
+import Article from "./Article";
 
-  const { title, description } = article;
+const Preview = ({ site }) => {
+  const [categories, setCategories] = useState([]);
+  const [article, setArticle] = useState({});
 
-  const fetchArticle = async () => {
+  const history = useHistory();
+
+  const { title } = site;
+
+  const fetchCategories = async () => {
     try {
       const {
-        data: { article },
-      } = await articlesApi.show(slug);
-      setArticle(article);
+        data: { categories },
+      } = await categoriesApi.fetch();
+      setCategories(categories);
+
+      const firstCategoryWithArticles = categories.find(
+        category => !isEmpty(category.articles)
+      );
+
+      if (firstCategoryWithArticles) {
+        history.push(`/public/${firstCategoryWithArticles.articles[0].slug}`);
+      }
     } catch (error) {
       logger.error(error);
     }
   };
 
   useEffect(() => {
-    fetchArticle();
-  }, [slug]);
+    fetchCategories();
+  }, []);
 
   return (
-    <div className="editor-preview__wrapper w-3/4 space-y-5">
-      <Typography className="" style="h1">
-        {title}
-      </Typography>
-      <EditorContent content={description} />
-    </div>
+    <>
+      <div className="border-b sticky z-10 flex h-16 w-full items-center justify-center px-6 py-4">
+        <Typography className="neeto-ui-text-gray-800" style="h4">
+          {title}
+        </Typography>
+      </div>
+      <div className="flex w-full">
+        <div className="border-r accodrian_container w-1/4">
+          {categories.map(category => (
+            <AccordianItem
+              category={category}
+              isCategoryExpanded={article.category_id === category.id}
+              key={category.id}
+            />
+          ))}
+        </div>
+        <Article article={article} setArticle={setArticle} />
+      </div>
+    </>
   );
 };
 
