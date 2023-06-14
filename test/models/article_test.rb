@@ -34,12 +34,8 @@ class ArticleTest < ActiveSupport::TestCase
   end
 
   def test_article_should_not_be_valid_with_duplicate_slug
-    new_article = build :article
-
-    assert_raises ActiveRecord::RecordInvalid do
-      new_article.update!(slug: @article.slug)
-    end
-
+    new_article = build :article, slug: @article.slug
+    assert_not new_article.valid?
     assert_includes new_article.errors.full_messages, "Slug has already been taken"
   end
 

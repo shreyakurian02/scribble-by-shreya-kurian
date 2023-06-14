@@ -42,4 +42,8 @@ class UserTest < ActiveSupport::TestCase
     @user.update!(email: uppercase_email)
     assert_equal uppercase_email.downcase, @user.email
   end
+
+  def test_name_returns_concatenated_first_and_last_name
+    assert_equal @user.name, [@user.first_name, @user.last_name].join(" ").strip
+  end
 end

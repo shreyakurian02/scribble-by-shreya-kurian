@@ -4,7 +4,7 @@ require "test_helper"
 
 class CategoryTest < ActiveSupport::TestCase
   def setup
-    @category = build(:category)
+    @category = create(:category)
   end
 
   def test_category_should_not_be_valid_without_name
@@ -20,7 +20,6 @@ class CategoryTest < ActiveSupport::TestCase
   end
 
   def test_category_should_not_be_vald_with_duplicate_name
-    @category.save!
     new_category = build :category, name: @category.name
     assert new_category.invalid?
     assert_includes new_category.errors.full_messages, "Name has already been taken"

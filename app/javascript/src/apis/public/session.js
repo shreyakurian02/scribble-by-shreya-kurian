@@ -4,6 +4,6 @@ import { SESSIONS_BASE_URL } from "constants";
 
 const login = params => axios.post(SESSIONS_BASE_URL, { login: params });
 
-const sessionsApi = { login };
+const sessionApi = { login };
 
-export default sessionsApi;
+export default sessionApi;

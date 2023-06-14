@@ -55,12 +55,14 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
       delete(api_v1_article_path("invalid-slug"), headers:)
       assert_response :not_found
     end
+
+    assert_includes response_json["error"], "Article not found"
   end
 
   def test_should_show_article
     get(api_v1_article_path(@article.slug), headers:)
     assert_response :success
-    assert_equal %w[author category description id last_published_at slug status title],
+    assert_equal %w[author category description id last_published_at slug status title updated_at],
       response_json["article"].keys.sort
   end
 
