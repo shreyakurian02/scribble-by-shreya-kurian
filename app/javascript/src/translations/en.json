@@ -131,5 +131,8 @@
   "headers": {
     "siteProtected": "{{site}} is password protected!",
     "enterPassword": "Enter the password to gain access to {{site}}."
+  },
+  "errors": {
+    "pageNotFound": "The page you're looking for can't be found."
   }
 }

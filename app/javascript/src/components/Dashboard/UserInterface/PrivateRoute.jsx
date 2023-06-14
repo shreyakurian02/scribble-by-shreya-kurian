@@ -9,22 +9,12 @@ const PrivateRoute = ({
   path,
   site,
   redirectRoute,
-  ...props
 }) => {
   if (!condition) {
-    return (
-      <Redirect
-        to={{
-          pathname: redirectRoute,
-          state: { site },
-        }}
-      />
-    );
+    return <Redirect to={{ pathname: redirectRoute }} />;
   }
 
-  return (
-    <Route path={path} render={() => <Component site={site} />} {...props} />
-  );
+  return <Route exact path={path} render={() => <Component site={site} />} />;
 };
 
 PrivateRoute.propTypes = {
@@ -32,7 +22,6 @@ PrivateRoute.propTypes = {
   condition: PropTypes.bool,
   path: PropTypes.string,
   redirectRoute: PropTypes.string,
-  location: PropTypes.object,
 };
 
 export default PrivateRoute;

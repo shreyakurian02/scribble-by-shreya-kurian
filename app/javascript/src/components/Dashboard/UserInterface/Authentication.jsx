@@ -10,14 +10,12 @@ import { setToSessionStorage } from "utils/storage";
 
 import { LOGIN_INTIAL_VALUES, LOGIN_VALIDATION_SCHEMA } from "./constants";
 
-const Authentication = ({ location }) => {
+const Authentication = ({ site }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { t } = useTranslation();
 
-  const {
-    site: { title },
-  } = location.state;
+  const { title } = site;
 
   const handleSubmit = async ({ password }) => {
     setIsLoading(true);

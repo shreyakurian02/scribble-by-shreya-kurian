@@ -9,7 +9,7 @@ import { useParams } from "react-router";
 import articlesApi from "apis/public/articles";
 
 const Article = ({ article, setArticle }) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { slug } = useParams();
   const { t } = useTranslation();
