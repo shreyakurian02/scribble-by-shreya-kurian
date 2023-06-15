@@ -1,3 +1,5 @@
+import { DEFAULT_ERROR_VALUES } from "constants";
+
 import React from "react";
 
 import { Typography, Button } from "neetoui";
@@ -16,11 +18,9 @@ const ErrorPage = ({
     <div className="flex h-screen w-full flex-col items-center justify-center space-y-2">
       <Typography style="h2">{message}</Typography>
       <Button
-        label="Go home"
+        label={t("button.goHome")}
         to={homeUrl}
-        onClick={() =>
-          setNotFoundError({ show: false, message: t("errors.pageNotFound") })
-        }
+        onClick={() => setNotFoundError(DEFAULT_ERROR_VALUES)}
       />
     </div>
   );

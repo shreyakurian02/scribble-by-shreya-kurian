@@ -47,7 +47,8 @@
     "saveChanges": "Save changes",
     "changePassword": "Change password",
     "edit": "Edit",
-    "continue": "Continue"
+    "continue": "Continue",
+    "goHome": "Go home"
   },
   "placeholder": {
     "searchArticles": "Search article titles",

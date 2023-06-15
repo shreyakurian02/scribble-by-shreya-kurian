@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::Public::ArticlesController < ApplicationController
+class Api::V1::Public::ArticlesController < Api::V1::Public::BaseController
   before_action :load_article!, only: :show
 
   def show

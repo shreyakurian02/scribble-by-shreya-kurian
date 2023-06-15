@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 
 import { PageLoader } from "neetoui";
-import { useTranslation } from "react-i18next";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -13,15 +12,11 @@ import UserInterface from "components/UserInterface";
 import { PREVIEW_URL, ADMIN_URL } from "constants/urls";
 import { CategoriesProvider } from "contexts/categories";
 
+import { DEFAULT_ERROR_VALUES } from "./constants";
+
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
-
-  const { t } = useTranslation();
-
-  const [notFoundError, setNotFoundError] = useState({
-    show: false,
-    message: t("errors.pageNotFound"),
-  });
+  const [notFoundError, setNotFoundError] = useState(DEFAULT_ERROR_VALUES);
 
   useEffect(() => {
     initializeLogger();
