@@ -14,4 +14,6 @@ export const EUI_LOGIN = "/login";
 
 export const EUI_ARTICLE = "/articles/:slug";
 
-export const EUI_INVALID_ROUTE = "/articles/:slug/*";
+export const EUI_INVALID_URL = "/articles/:slug/*";
+
+export const PUBLIC_ARTICLES_URL = "/articles";

@@ -57,7 +57,7 @@ const Preview = ({ site }) => {
         </div>
       ) : (
         <div className="flex w-full">
-          <div className="border-r h-screen w-1/4 pl-5">
+          <div className="border-r accordian-wrapper w-1/4 overflow-hidden pl-5">
             {categories.map(category => (
               <AccordianItem
                 category={category}
