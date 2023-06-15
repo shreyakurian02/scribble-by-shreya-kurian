@@ -2,6 +2,7 @@
 
 class Api::V1::ArticlesController < ApplicationController
   before_action :load_article!, only: %i[show update destroy]
+  before_action :load_current_user, only: :create
 
   def index
     @articles, @filtered_count = Articles::FilterService.new(filter_params).process.values_at(
@@ -40,5 +41,9 @@ class Api::V1::ArticlesController < ApplicationController
 
     def filter_params
       params.permit(:status, :search, :per_page, :page_number, categories: [])
+    end
+
+    def load_current_user
+      @current_user = User.first
     end
 end

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import { PageLoader } from "neetoui";
 import { isEmpty, isNil, either } from "ramda";
-import { Route, Switch } from "react-router";
+import { Route, Switch, Redirect } from "react-router";
 
 import siteApi from "apis/site";
 import ErrorPage from "components/Common/ErrorPage";
@@ -10,7 +10,8 @@ import {
   PREVIEW_URL,
   EUI_LOGIN,
   EUI_ARTICLE,
-  EUI_INVALID_ROUTE,
+  EUI_INVALID_URL,
+  PUBLIC_ARTICLES_URL,
 } from "constants/urls";
 import { getFromSessionStorage } from "utils/storage";
 
@@ -65,14 +66,16 @@ const UserInterface = ({ notFoundError, setNotFoundError }) => {
 
   return (
     <Switch>
+      <Redirect exact from={PREVIEW_URL} to={PUBLIC_ARTICLES_URL} />
+      {hasAccess && <Redirect exact from={EUI_LOGIN} to={PREVIEW_URL} />}
+      <Route
+        path={EUI_INVALID_URL}
+        render={() => <ErrorPage homeUrl={PREVIEW_URL} />}
+      />
       <Route
         exact
         path={EUI_LOGIN}
         render={() => <Authentication site={site} />}
-      />
-      <Route
-        path={EUI_INVALID_ROUTE}
-        render={() => <ErrorPage homeUrl={PREVIEW_URL} />}
       />
       <PrivateRoute
         component={Preview}
@@ -84,10 +87,11 @@ const UserInterface = ({ notFoundError, setNotFoundError }) => {
       <PrivateRoute
         component={Preview}
         condition={hasAccess}
-        path={PREVIEW_URL}
+        path={PUBLIC_ARTICLES_URL}
         redirectRoute={EUI_LOGIN}
         site={site}
       />
+      <Route path="*" render={() => <ErrorPage homeUrl={PREVIEW_URL} />} />
     </Switch>
   );
 };

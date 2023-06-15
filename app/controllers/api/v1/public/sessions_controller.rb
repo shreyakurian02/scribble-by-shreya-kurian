@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class Api::V1::Public::SessionsController < ApplicationController
-  before_action :load_site, only: :create
+class Api::V1::Public::SessionsController < Api::V1::Public::BaseController
+  skip_before_action :authenticate_using_x_auth_token
 
   def create
     unless @site.authenticate(login_params[:password])

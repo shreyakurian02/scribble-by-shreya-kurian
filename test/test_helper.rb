@@ -35,4 +35,8 @@ class ActiveSupport::TestCase
       "Content_Type" => "application/json"
     }
   end
+
+  def public_headers(site)
+    headers.merge({ "X-Auth-Token": site.authentication_token })
+  end
 end
