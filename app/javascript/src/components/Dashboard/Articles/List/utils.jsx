@@ -1,5 +1,3 @@
-import { SINGULAR } from "constants";
-
 import React from "react";
 
 import dayjs from "dayjs";
@@ -7,6 +5,7 @@ import { t } from "i18next";
 import { MenuHorizontal } from "neetoicons";
 import { Dropdown, Tooltip } from "neetoui";
 import { Link } from "react-router-dom";
+import { SINGULAR } from "src/constants";
 
 import { ARTICLE_STATUS } from "../constants";
 

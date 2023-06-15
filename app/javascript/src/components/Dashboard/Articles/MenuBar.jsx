@@ -1,5 +1,3 @@
-import { PLURAL } from "constants";
-
 import React, { useState } from "react";
 
 import { Search, Plus } from "neetoicons";
@@ -8,6 +6,7 @@ import { MenuBar as NeetoUIMenuBar } from "neetoui/layouts";
 import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
+import { PLURAL } from "src/constants";
 import { v4 as uuid } from "uuid";
 
 import { useCategoriesState } from "contexts/categories";

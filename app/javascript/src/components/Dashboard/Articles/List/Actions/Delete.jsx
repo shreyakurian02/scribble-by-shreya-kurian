@@ -1,9 +1,8 @@
-import { SINGULAR } from "constants";
-
 import React from "react";
 
 import { Alert } from "neetoui";
 import { useTranslation, Trans } from "react-i18next";
+import { SINGULAR } from "src/constants";
 
 import articlesApi from "apis/articles";
 import { useCategoriesDispatch } from "contexts/categories";
