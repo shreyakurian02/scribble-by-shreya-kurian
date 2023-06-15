@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { REDIRECTIONS_BASE_URL } from "constants";
+import { REDIRECTIONS_BASE_URL } from "constants/routes";
 
 const fetch = () => axios.get(REDIRECTIONS_BASE_URL);
 

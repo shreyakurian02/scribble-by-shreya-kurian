@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import classnames from "classnames";
-import { Table, PageLoader } from "neetoui";
+import { Table, Spinner } from "neetoui";
 import { isEmpty, pluck } from "ramda";
 
 import { Update, Delete } from "./Actions";
@@ -42,8 +42,8 @@ const List = ({
 
   if (isArticlesLoading) {
     return (
-      <div className="h-screen w-full">
-        <PageLoader />
+      <div className="flex h-screen w-full items-center justify-center">
+        <Spinner />
       </div>
     );
   }

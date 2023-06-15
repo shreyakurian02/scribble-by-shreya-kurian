@@ -33,20 +33,29 @@ const handleSuccessResponse = response => {
   return response;
 };
 
-const handleErrorResponse = axiosErrorObject => {
-  Toastr.error(
-    axiosErrorObject.response?.data?.error || DEFAULT_ERROR_NOTIFICATION
-  );
-  if (axiosErrorObject.response?.status === 423) {
+const handleErrorResponse = (axiosErrorObject, setNotFoundError) => {
+  const errorMessage = axiosErrorObject.response?.data?.error;
+  const errorStatus = axiosErrorObject.response?.status;
+
+  if (errorStatus === 404) {
+    setNotFoundError({
+      show: true,
+      message: errorMessage,
+    });
+  } else {
+    Toastr.error(errorMessage || DEFAULT_ERROR_NOTIFICATION);
+  }
+
+  if (errorStatus === 423) {
     window.location.href = "/";
   }
 
   return Promise.reject(axiosErrorObject);
 };
 
-const registerIntercepts = () => {
+const registerIntercepts = setNotFoundError => {
   axios.interceptors.response.use(handleSuccessResponse, error =>
-    handleErrorResponse(error)
+    handleErrorResponse(error, setNotFoundError)
   );
 };
 

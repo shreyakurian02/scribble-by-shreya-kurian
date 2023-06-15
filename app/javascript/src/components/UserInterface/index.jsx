@@ -5,21 +5,29 @@ import { isEmpty, isNil, either } from "ramda";
 import { Route, Switch } from "react-router";
 
 import siteApi from "apis/site";
-import { PREVIEW_URL } from "constants";
+import ErrorPage from "components/Common/ErrorPage";
+import {
+  PREVIEW_URL,
+  EUI_LOGIN,
+  EUI_ARTICLE,
+  EUI_INVALID_ROUTE,
+} from "constants/urls";
 import { getFromSessionStorage } from "utils/storage";
 
 import Authentication from "./Authentication";
 import Preview from "./Preview";
 import PrivateRoute from "./PrivateRoute";
 
-const EUI = () => {
+const UserInterface = ({ notFoundError, setNotFoundError }) => {
   const [site, setSite] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
   const authToken = getFromSessionStorage("authToken");
-  const isLoggedIn = !either(isNil, isEmpty)(authToken) && authToken !== "null";
 
+  const isLoggedIn = !either(isNil, isEmpty)(authToken) && authToken !== "null";
   const { is_password_protected: isPasswordProtected = false } = site;
+  const hasAccess = (isPasswordProtected && isLoggedIn) || !isPasswordProtected;
+  const { show: show404Error } = notFoundError;
 
   const fetchSite = async () => {
     setIsLoading(true);
@@ -45,25 +53,43 @@ const EUI = () => {
     );
   }
 
+  if (show404Error) {
+    return (
+      <ErrorPage
+        homeUrl={PREVIEW_URL}
+        notFoundError={notFoundError}
+        setNotFoundError={setNotFoundError}
+      />
+    );
+  }
+
   return (
     <Switch>
-      <Route exact component={Authentication} path="/public/login" />
+      <Route
+        exact
+        path={EUI_LOGIN}
+        render={() => <Authentication site={site} />}
+      />
+      <Route
+        path={EUI_INVALID_ROUTE}
+        render={() => <ErrorPage homeUrl={PREVIEW_URL} />}
+      />
       <PrivateRoute
         component={Preview}
-        condition={(isPasswordProtected && isLoggedIn) || !isPasswordProtected}
-        path="/public/:slug"
-        redirectRoute="/public/login"
+        condition={hasAccess}
+        path={EUI_ARTICLE}
+        redirectRoute={EUI_LOGIN}
         site={site}
       />
       <PrivateRoute
         component={Preview}
-        condition={(isPasswordProtected && isLoggedIn) || !isPasswordProtected}
+        condition={hasAccess}
         path={PREVIEW_URL}
-        redirectRoute="/public/login"
+        redirectRoute={EUI_LOGIN}
         site={site}
       />
     </Switch>
   );
 };
 
-export default EUI;
+export default UserInterface;

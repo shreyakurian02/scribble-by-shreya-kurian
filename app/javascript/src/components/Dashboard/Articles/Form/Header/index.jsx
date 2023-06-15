@@ -9,7 +9,7 @@ import { useHistory } from "react-router";
 
 import categoriesApi from "apis/categories";
 import { getCategoryOptions } from "components/Dashboard/utils";
-import { ARTICLES_BASE_URL } from "constants";
+import { ARTICLES_URL } from "constants/urls";
 import { useCategories } from "contexts/categories";
 
 import SaveButton from "./SaveButton";
@@ -82,7 +82,7 @@ const Header = ({ status, setStatus, article = {}, isEdit = false }) => {
       </div>
       <Delete
         manageDeleteAlert={manageDeleteAlert}
-        refetchArticles={() => history.push(ARTICLES_BASE_URL)}
+        refetchArticles={() => history.push(ARTICLES_URL)}
         onClose={() => setManageDeleteAlert(MANAGE_DELETE_ALERT_INITIAL_VALUE)}
       />
     </div>

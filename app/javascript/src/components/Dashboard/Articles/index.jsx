@@ -1,3 +1,5 @@
+import { SINGULAR } from "constants";
+
 import React, { useEffect, useState } from "react";
 
 import { Button } from "neetoui";
@@ -7,7 +9,7 @@ import { useHistory } from "react-router";
 
 import articlesApi from "apis/articles";
 import AddCategory from "components/Dashboard/Common/CategoryForm";
-import { SINGULAR, NEW_ARTICLE_URL } from "constants";
+import { NEW_ARTICLE_URL } from "constants/urls";
 import { useCategoriesDispatch } from "contexts/categories";
 import useDebounce from "hooks/useDebounce";
 

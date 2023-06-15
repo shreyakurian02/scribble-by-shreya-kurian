@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { CATEGORIES_BASE_URL } from "constants";
+import { CATEGORIES_BASE_URL } from "constants/routes";
 
 const fetch = params => axios.get(CATEGORIES_BASE_URL, { params });
 

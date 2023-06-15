@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import { Typography } from "neetoui";
+import { Typography, Spinner } from "neetoui";
 import { isEmpty } from "ramda";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 
 import categoriesApi from "apis/public/categories";
 
@@ -10,29 +10,33 @@ import AccordianItem from "./AccordianItem";
 import Article from "./Article";
 
 const Preview = ({ site }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [article, setArticle] = useState({});
 
   const history = useHistory();
+  const { slug } = useParams();
 
   const { title } = site;
 
   const fetchCategories = async () => {
+    setIsLoading(true);
     try {
       const {
         data: { categories },
       } = await categoriesApi.fetch();
       setCategories(categories);
-
       const firstCategoryWithArticles = categories.find(
         category => !isEmpty(category.articles)
       );
 
-      if (firstCategoryWithArticles) {
-        history.push(`/public/${firstCategoryWithArticles.articles[0].slug}`);
+      if (!slug && firstCategoryWithArticles) {
+        history.push(`/articles/${firstCategoryWithArticles.articles[0].slug}`);
       }
     } catch (error) {
       logger.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -47,18 +51,24 @@ const Preview = ({ site }) => {
           {title}
         </Typography>
       </div>
-      <div className="flex w-full">
-        <div className="border-r accodrian_container w-1/4">
-          {categories.map(category => (
-            <AccordianItem
-              category={category}
-              isCategoryExpanded={article.category_id === category.id}
-              key={category.id}
-            />
-          ))}
+      {isLoading ? (
+        <div className="flex h-screen w-full items-center justify-center">
+          <Spinner />
         </div>
-        <Article article={article} setArticle={setArticle} />
-      </div>
+      ) : (
+        <div className="flex w-full">
+          <div className="border-r h-screen w-1/4 pl-5">
+            {categories.map(category => (
+              <AccordianItem
+                category={category}
+                isCategoryExpanded={article.category_id === category.id}
+                key={category.id}
+              />
+            ))}
+          </div>
+          <Article article={article} setArticle={setArticle} />
+        </div>
+      )}
     </>
   );
 };

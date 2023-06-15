@@ -1,7 +1,9 @@
+import { PLURAL } from "constants";
+
 import { t } from "i18next";
 import { Notes, Settings, ExternalLink } from "neetoicons";
 
-import { PLURAL, ARTICLES_URL, SETTINGS_URL } from "constants";
+import { ARTICLES_URL, SETTINGS_URL, PREVIEW_URL } from "constants/urls";
 
 export const NAV_LINKS = [
   {
@@ -18,7 +20,9 @@ export const NAV_LINKS = [
   },
   {
     label: t("common.preview"),
-    to: "/public",
+    to: "#",
+    onClick: () => window.open(PREVIEW_URL),
+    isActive: () => false,
     icon: ExternalLink,
     description: t("sidebarDescription.preview"),
   },

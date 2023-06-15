@@ -6,18 +6,17 @@ import { useTranslation } from "react-i18next";
 
 import { setAuthHeaders } from "apis/axios";
 import sessionApi from "apis/public/session";
+import { PREVIEW_URL } from "constants/urls";
 import { setToSessionStorage } from "utils/storage";
 
 import { LOGIN_INTIAL_VALUES, LOGIN_VALIDATION_SCHEMA } from "./constants";
 
-const Authentication = ({ location }) => {
+const Authentication = ({ site }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { t } = useTranslation();
 
-  const {
-    site: { title },
-  } = location.state;
+  const { title } = site;
 
   const handleSubmit = async ({ password }) => {
     setIsLoading(true);
@@ -27,7 +26,7 @@ const Authentication = ({ location }) => {
       } = await sessionApi.login({ password });
       setToSessionStorage(authentication_token);
       setAuthHeaders();
-      window.location.href = "/public";
+      window.location.href = PREVIEW_URL;
     } catch (error) {
       logger.error(error);
     } finally {

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { ARTICLES_BASE_URL, BULK_ARTICLES_BASE_URL } from "constants";
+import { ARTICLES_BASE_URL, BULK_ARTICLES_BASE_URL } from "constants/routes";
 
 const fetch = params => axios.get(ARTICLES_BASE_URL, { params });
 
