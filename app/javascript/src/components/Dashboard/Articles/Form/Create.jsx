@@ -33,7 +33,10 @@ const Create = () => {
     }
   };
 
-  const handleReset = () => editorRef.current.editor.commands.clearContent();
+  const handleReset = () => {
+    editorRef.current.editor.commands.clearContent();
+    history.push(ARTICLES_URL);
+  };
 
   return (
     <div className="w-full pt-5">

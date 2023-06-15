@@ -6,7 +6,7 @@ import { useEffect } from "react/cjs/react.development";
 import { useHistory, useParams } from "react-router";
 
 import articlesApi from "apis/articles";
-import { ADMIN_URL } from "constants/urls";
+import { ADMIN_URL, ARTICLES_URL } from "constants/urls";
 
 import { VALIDATION_SCHEMA } from "./constants";
 import Editor from "./Editor";
@@ -36,6 +36,7 @@ const Update = () => {
 
   const handleReset = ({ description }) => {
     editorRef.current.editor.commands.setContent(description);
+    history.push(ARTICLES_URL);
   };
 
   const fetchArticle = async () => {

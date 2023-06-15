@@ -39,8 +39,7 @@ const MenuBar = ({
   const isSearchedCategoryResultEmpty =
     isEmpty(categories) && !isEmpty(categorySearchTerm);
 
-  const handleAddCategory = () =>
-    setIsNewCategoryModalOpen(isModalOpen => !isModalOpen);
+  const handleAddCategory = () => setIsNewCategoryModalOpen(true);
 
   const handleSearchCollapse = () =>
     setIsSearchCollapsed(isSearchCollapsed => !isSearchCollapsed);

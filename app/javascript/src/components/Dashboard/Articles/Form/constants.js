@@ -10,6 +10,14 @@ export const INITIAL_VALUES = {
   description: "<p></p>",
 };
 
+export const EDITOR_ADDONS = [
+  "code-block",
+  "block-quote",
+  "image-upload",
+  "undo",
+  "redo",
+];
+
 export const VALIDATION_SCHEMA = yup.object().shape({
   category: yup
     .object()

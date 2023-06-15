@@ -1,9 +1,8 @@
-import { DEFAULT_ERROR_VALUES } from "constants";
-
 import React from "react";
 
 import { Typography, Button } from "neetoui";
 import { useTranslation } from "react-i18next";
+import { DEFAULT_ERROR_VALUES } from "src/constants";
 
 const ErrorPage = ({
   notFoundError = {},

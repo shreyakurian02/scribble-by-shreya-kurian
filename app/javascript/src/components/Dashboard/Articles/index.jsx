@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "neetoui";
 import { Header, Container } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router";
+import { useLocation, useHistory } from "react-router-dom";
 
 import articlesApi from "apis/articles";
 import AddCategory from "components/Dashboard/Common/CategoryForm";
@@ -34,6 +34,7 @@ const Articles = () => {
   const [articles, setArticles] = useState(ARTICLES_INITIAL_VALUE);
 
   const { t } = useTranslation();
+  const { search: locationSearch } = useLocation();
   const history = useHistory();
   const debouncedCategorySearchTerm = useDebounce(categorySearchTerm);
   const debouncedArticleSearchTerm = useDebounce(articleSearchTerm);
@@ -76,7 +77,7 @@ const Articles = () => {
 
   useEffect(() => {
     fetchArticles();
-  }, [window.location.search, pageProperties]);
+  }, [locationSearch, pageProperties]);
 
   return (
     <>

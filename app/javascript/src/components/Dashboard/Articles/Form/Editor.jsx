@@ -5,6 +5,8 @@ import { FormikEditor } from "neetoeditor";
 import { Textarea } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 
+import { EDITOR_ADDONS } from "./constants";
+
 const Editor = ({ editorRef }) => {
   const { t } = useTranslation();
 
@@ -13,6 +15,7 @@ const Editor = ({ editorRef }) => {
   return (
     <FormikEditor
       required
+      addons={EDITOR_ADDONS}
       className="space-y-3"
       contentClassName="editor-content"
       error={null}
