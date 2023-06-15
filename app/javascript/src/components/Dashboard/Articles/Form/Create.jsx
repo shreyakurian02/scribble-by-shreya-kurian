@@ -6,9 +6,11 @@ import { useHistory } from "react-router";
 import articlesApi from "apis/articles";
 import { ARTICLES_URL } from "constants/urls";
 
-import { ARTICLE_STATUS, INITIAL_VALUES, VALIDATION_SCHEMA } from "./constants";
+import { INITIAL_VALUES, VALIDATION_SCHEMA } from "./constants";
 import Editor from "./Editor";
 import Header from "./Header";
+
+import { ARTICLE_STATUS } from "../constants";
 
 const Create = () => {
   const [status, setStatus] = useState(ARTICLE_STATUS.draft);

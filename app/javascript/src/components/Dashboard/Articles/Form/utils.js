@@ -3,11 +3,11 @@ import dayjs from "dayjs";
 export const buildInitialValues = ({
   title,
   description,
-  category: { name: cartegoryName, id: cartegoryId },
+  category: { name, id },
 }) => ({
   title,
   description,
-  category: { label: cartegoryName, value: cartegoryId },
+  category: { label: name, value: id },
 });
 
 export const formatDate = date => dayjs(date).format("hh:mm A, DD MMMM YYYY");

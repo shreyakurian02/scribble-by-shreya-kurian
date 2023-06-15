@@ -5,7 +5,6 @@ import { pluck } from "ramda";
 import { useTranslation, Trans } from "react-i18next";
 
 import articlesApi from "apis/articles";
-import { SINGULAR } from "constants";
 import { useCategoriesDispatch } from "contexts/categories";
 
 const BulkDelete = ({
@@ -16,8 +15,9 @@ const BulkDelete = ({
   setSelectedArticles,
 }) => {
   const { t } = useTranslation();
-
   const fetchCategories = useCategoriesDispatch();
+
+  const selectedArticlesCount = selectedArticles.length;
 
   const handleDelete = async () => {
     try {
@@ -40,16 +40,18 @@ const BulkDelete = ({
           i18nKey="alert.deleteMessage"
           values={{
             title:
-              selectedArticles.length > 1
+              selectedArticlesCount > 1
                 ? t("common.articleWithCount", {
-                    count: selectedArticles.length,
+                    count: selectedArticlesCount,
                   })
                 : selectedArticles?.[0]?.title,
           }}
         />
       }
       title={t("alert.deleteEntity", {
-        entity: t("common.article", SINGULAR).toLowerCase(),
+        entity: t("common.article", {
+          count: selectedArticlesCount,
+        }).toLowerCase(),
       })}
       onClose={onClose}
       onSubmit={handleDelete}

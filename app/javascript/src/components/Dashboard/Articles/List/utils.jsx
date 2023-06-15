@@ -1,16 +1,14 @@
+import { SINGULAR } from "constants";
+
 import React from "react";
 
 import dayjs from "dayjs";
 import { t } from "i18next";
 import { MenuHorizontal } from "neetoicons";
 import { Dropdown, Tooltip } from "neetoui";
-import { stringify, parse } from "qs";
-import { without } from "ramda";
 import { Link } from "react-router-dom";
 
-import { SINGULAR } from "constants";
-
-import { ARTICLE_STATUS } from "./Form/constants";
+import { ARTICLE_STATUS } from "../constants";
 
 const {
   Menu,
@@ -21,17 +19,6 @@ const {
 export const isArticleStatusDraft = status => status === ARTICLE_STATUS.draft;
 
 export const formatDate = date => dayjs(date).format("MMM DD, YYYY, hh:mm A");
-
-export const handleFilterByCategories = ({
-  queryCategories,
-  history,
-  selectedCategory,
-}) => {
-  const selectedCategories = queryCategories?.includes(selectedCategory)
-    ? without([selectedCategory], queryCategories)
-    : [...queryCategories, selectedCategory];
-  pushURLSearchParams(history, "categories", selectedCategories);
-};
 
 export const renderAction = ({
   article,
@@ -129,18 +116,3 @@ export const getAllowedColumns = ({
       renderAction({ article, setManageDeleteAlert, setManageUpdateModal }),
   },
 ];
-
-export const pushURLSearchParams = (history, param, value) => {
-  const queryParams = getSearchParams();
-  history.push({ search: stringify({ ...queryParams, [param]: value }) });
-};
-
-export const getSearchParams = () => {
-  const {
-    status = "all",
-    categories = [],
-    search = "",
-  } = parse(location.search, { ignoreQueryPrefix: true });
-
-  return { status, categories, search };
-};

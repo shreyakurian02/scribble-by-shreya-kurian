@@ -101,8 +101,8 @@
     "deleteLastCategoryWarning": "Category <strong>{{name}}</strong> has {{articleWithCount}}. These articles will be moved to a default category called <strong>general</strong>."
   },
   "modal": {
-    "updateTitle": "Move articles to {{action}}",
-    "updateDescription": "You are changing the {{attribute}} of {{entity}} to {{attributeValue}}."
+    "updateTitle": "Move {{entity}} to {{action}}",
+    "updateDescription": "You are changing the {{attribute}} of <strong>{{entity}}</strong> to <strong>{{attributeValue}}</strong/>."
   },
   "menubar": {
     "general": "General",
