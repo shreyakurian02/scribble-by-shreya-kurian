@@ -4,7 +4,7 @@ class Api::V1::CategoriesController < ApplicationController
   before_action :load_category!, only: %i[update destroy reorder]
 
   def index
-    @categories = Categories::FilterService.new(filter_params).process.order(:position)
+    @categories = Categories::FilterService.new(filter_params).process
   end
 
   def create

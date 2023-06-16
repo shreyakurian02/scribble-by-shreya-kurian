@@ -28,6 +28,8 @@ const Header = ({ status, setStatus, article = {}, isEdit = false }) => {
   const { setFieldValue } = useFormikContext();
   const [categories, fetchCategories] = useCategories();
 
+  const { status: articleStatus, updated_at: articleUpdatedAt } = article;
+
   const handleCreateCategory = async category => {
     try {
       const payload = { name: category };
@@ -58,8 +60,8 @@ const Header = ({ status, setStatus, article = {}, isEdit = false }) => {
             <Trans
               i18nKey="labels.articleSavedDate"
               values={{
-                status: titlize(article.status),
-                date: formatDate(article.updated_at),
+                status: titlize(articleStatus),
+                date: formatDate(articleUpdatedAt),
               }}
             />
           </Typography>

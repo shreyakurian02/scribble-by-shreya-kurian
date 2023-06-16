@@ -25,6 +25,7 @@ const Create = () => {
       category_id: value,
       status,
     };
+
     try {
       await articlesApi.create(payload);
       history.push(ARTICLES_URL);
