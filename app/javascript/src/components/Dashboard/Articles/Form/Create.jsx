@@ -6,9 +6,11 @@ import { useHistory } from "react-router";
 import articlesApi from "apis/articles";
 import { ARTICLES_URL } from "constants/urls";
 
-import { ARTICLE_STATUS, INITIAL_VALUES, VALIDATION_SCHEMA } from "./constants";
+import { INITIAL_VALUES, VALIDATION_SCHEMA } from "./constants";
 import Editor from "./Editor";
 import Header from "./Header";
+
+import { ARTICLE_STATUS } from "../constants";
 
 const Create = () => {
   const [status, setStatus] = useState(ARTICLE_STATUS.draft);
@@ -23,6 +25,7 @@ const Create = () => {
       category_id: value,
       status,
     };
+
     try {
       await articlesApi.create(payload);
       history.push(ARTICLES_URL);
@@ -31,7 +34,10 @@ const Create = () => {
     }
   };
 
-  const handleReset = () => editorRef.current.editor.commands.clearContent();
+  const handleReset = () => {
+    editorRef.current.editor.commands.clearContent();
+    history.push(ARTICLES_URL);
+  };
 
   return (
     <div className="w-full pt-5">

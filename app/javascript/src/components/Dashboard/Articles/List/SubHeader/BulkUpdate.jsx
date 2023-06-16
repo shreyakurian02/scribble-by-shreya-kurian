@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import articlesApi from "apis/articles";
 import { useCategoriesDispatch } from "contexts/categories";
 
-import UpdateModal from "../../UpdateModal";
+import UpdateModal from "../UpdateModal";
 
 const BulkUpdate = ({
   bulkUpdateData,
@@ -16,7 +16,6 @@ const BulkUpdate = ({
   setSelectedArticles,
 }) => {
   const { t } = useTranslation();
-
   const fetchCategories = useCategoriesDispatch();
 
   const {
@@ -25,6 +24,7 @@ const BulkUpdate = ({
     type,
   } = bulkUpdateData;
 
+  const selectedArticlesCount = selectedArticles.length;
   const shouldUpdateCategory = type === "category";
   const modalTitle = shouldUpdateCategory ? categoryName : status;
 
@@ -53,10 +53,11 @@ const BulkUpdate = ({
       handleUpdate={handleUpdate}
       isOpen={isModalOpen}
       modalTitle={modalTitle}
+      selectedArticlesCount={selectedArticlesCount}
       entity={
-        selectedArticles.length > 1
+        selectedArticlesCount > 1
           ? t("common.articleWithCount", {
-              count: selectedArticles.length,
+              count: selectedArticlesCount,
             })
           : selectedArticles?.[0]?.title
       }

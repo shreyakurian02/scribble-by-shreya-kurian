@@ -2,12 +2,14 @@ import React from "react";
 
 import { Alert } from "neetoui";
 import { useTranslation, Trans } from "react-i18next";
+import { SINGULAR } from "src/constants";
 
 import articlesApi from "apis/articles";
-import { SINGULAR } from "constants";
+import { useCategoriesDispatch } from "contexts/categories";
 
 const Delete = ({ manageDeleteAlert, onClose, refetchArticles }) => {
   const { t } = useTranslation();
+  const fetchCategories = useCategoriesDispatch();
 
   const {
     isOpen,
@@ -18,6 +20,7 @@ const Delete = ({ manageDeleteAlert, onClose, refetchArticles }) => {
     try {
       await articlesApi.destroy(slug);
       refetchArticles();
+      fetchCategories();
       onClose();
     } catch (error) {
       logger.error(error);

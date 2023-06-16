@@ -26,8 +26,9 @@ const Header = ({ status, setStatus, article = {}, isEdit = false }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const { setFieldValue } = useFormikContext();
-
   const [categories, fetchCategories] = useCategories();
+
+  const { status: articleStatus, updated_at: articleUpdatedAt } = article;
 
   const handleCreateCategory = async category => {
     try {
@@ -53,14 +54,14 @@ const Header = ({ status, setStatus, article = {}, isEdit = false }) => {
           onCreateOption={handleCreateCategory}
         />
       </div>
-      <div className="flex items-center  space-x-5">
+      <div className="flex items-center space-x-5">
         {isEdit && (
           <Typography className="titlize" style="body2">
             <Trans
               i18nKey="labels.articleSavedDate"
               values={{
-                status: titlize(article.status),
-                date: formatDate(article.updated_at),
+                status: titlize(articleStatus),
+                date: formatDate(articleUpdatedAt),
               }}
             />
           </Typography>

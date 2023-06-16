@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "neetoui";
 import { Header, Container } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
-import { useHistory } from "react-router";
+import { useLocation, useHistory } from "react-router-dom";
 
 import articlesApi from "apis/articles";
 import AddCategory from "components/Dashboard/Common/CategoryForm";
@@ -14,7 +14,7 @@ import { useCategoriesDispatch } from "contexts/categories";
 import useDebounce from "hooks/useDebounce";
 
 import {
-  ARTICLES_DATA_INITIAL_VALUE,
+  ARTICLES_INITIAL_VALUE,
   DEFAULT_PAGE_PROPERTIES,
   HEADER_TITLE,
 } from "./constants";
@@ -23,22 +23,24 @@ import MenuBar from "./MenuBar";
 import { pushURLSearchParams, getSearchParams } from "./utils";
 
 const Articles = () => {
+  const { status, categories: queryCategories, search } = getSearchParams();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [articleSearchTerm, setArticleSearchTerm] = useState(search);
   const [categorySearchTerm, setCategorySearchTerm] = useState("");
   const [pageProperties, setPageProperties] = useState(DEFAULT_PAGE_PROPERTIES);
   const [isArticlesLoading, setIsArticlesLoading] = useState(true);
   const [isNewCategoryModalOpen, setIsNewCategoryModalOpen] = useState(false);
-  const [articlesData, setArticlesData] = useState(ARTICLES_DATA_INITIAL_VALUE);
+  const [articles, setArticles] = useState(ARTICLES_INITIAL_VALUE);
 
   const { t } = useTranslation();
+  const { search: locationSearch } = useLocation();
   const history = useHistory();
   const debouncedCategorySearchTerm = useDebounce(categorySearchTerm);
-  const debouncedArticleSearchTerm = useDebounce(searchTerm);
-
+  const debouncedArticleSearchTerm = useDebounce(articleSearchTerm);
   const fetchCategories = useCategoriesDispatch();
 
-  const { status, categories: queryCategories, search } = getSearchParams();
+  const { size: pageSize, page: currentPageNumber } = pageProperties;
 
   const fetchArticles = async () => {
     setIsArticlesLoading(true);
@@ -47,12 +49,12 @@ const Articles = () => {
         data: { articles, articles_count: count },
       } = await articlesApi.fetch({
         status,
-        categories: queryCategories,
         search,
-        per_page: pageProperties.size,
-        page_number: pageProperties.index,
+        categories: queryCategories,
+        per_page: pageSize,
+        page_number: currentPageNumber,
       });
-      setArticlesData({ articles, count });
+      setArticles({ articles, count });
     } catch (error) {
       logger.error(error);
     } finally {
@@ -61,21 +63,26 @@ const Articles = () => {
   };
 
   useEffect(() => {
-    pushURLSearchParams(history, "search", debouncedArticleSearchTerm);
+    pushURLSearchParams({
+      history,
+      param: "search",
+      value: debouncedArticleSearchTerm.trim(),
+    });
+    setPageProperties(DEFAULT_PAGE_PROPERTIES);
   }, [debouncedArticleSearchTerm]);
 
   useEffect(() => {
-    fetchCategories(debouncedCategorySearchTerm);
+    fetchCategories(debouncedCategorySearchTerm.trim());
   }, [debouncedCategorySearchTerm]);
 
   useEffect(() => {
     fetchArticles();
-  }, [window.location.search, pageProperties]);
+  }, [locationSearch, pageProperties]);
 
   return (
     <>
       <MenuBar
-        articlesCount={articlesData.count}
+        articlesCount={articles.count}
         categorySearchTerm={categorySearchTerm}
         setCategorySearchTerm={setCategorySearchTerm}
         setIsNewCategoryModalOpen={setIsNewCategoryModalOpen}
@@ -95,17 +102,17 @@ const Articles = () => {
           }
           searchProps={{
             placeholder: t("placeholder.searchArticles"),
-            onChange: ({ target: { value } }) => setSearchTerm(value),
-            value: searchTerm,
+            onChange: ({ target: { value } }) => setArticleSearchTerm(value),
+            value: articleSearchTerm,
           }}
         />
         <List
-          articlesData={articlesData}
+          articles={articles}
           isArticlesLoading={isArticlesLoading}
           pageProperties={pageProperties}
           refetchArticles={fetchArticles}
+          setArticleSearchTerm={setArticleSearchTerm}
           setPageProperties={setPageProperties}
-          setSearchTerm={setSearchTerm}
         />
         <AddCategory
           isOpen={isNewCategoryModalOpen}

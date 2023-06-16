@@ -5,6 +5,7 @@ import { SubHeader as NeetoUISubHeader } from "neetoui/layouts";
 import BulkDelete from "./BulkDelete";
 import BulkUpdate from "./BulkUpdate";
 import Columns from "./Columns";
+import { DEFAULT_BULK_UPDATE_VALUES } from "./constants";
 import LeftActionBlock from "./LeftActionBlock";
 
 const SubHeader = ({
@@ -16,11 +17,9 @@ const SubHeader = ({
   selectedArticles,
 }) => {
   const [isBulkDeleteAlertOpen, setIsBulkDeleteAlertOpen] = useState(false);
-  const [bulkUpdateData, setBulkUpdateData] = useState({
-    isModalOpen: false,
-    payload: {},
-    type: "",
-  });
+  const [bulkUpdateData, setBulkUpdateData] = useState(
+    DEFAULT_BULK_UPDATE_VALUES
+  );
 
   const selectedRowsCount = selectedArticles.length;
 
@@ -34,11 +33,6 @@ const SubHeader = ({
             selectedRowsCount={selectedRowsCount}
             setBulkUpdateData={setBulkUpdateData}
             setIsBulkDeleteAlertOpen={setIsBulkDeleteAlertOpen}
-            // setSelectedArticles={setSelectedArticles}
-            // refetchArticles={refetchArticles}
-            // selectedArticles={selectedArticles}
-            // setSelectedArticles={setSelectedArticles}
-            // selectedArticles={selectedArticles}
           />
         }
         rightActionBlock={
@@ -62,9 +56,7 @@ const SubHeader = ({
         refetchArticles={refetchArticles}
         selectedArticles={selectedArticles}
         setSelectedArticles={setSelectedArticles}
-        onClose={() =>
-          setBulkUpdateData({ isModalOpen: false, payload: {}, type: "" })
-        }
+        onClose={() => setBulkUpdateData(DEFAULT_BULK_UPDATE_VALUES)}
       />
     </>
   );

@@ -9,7 +9,7 @@ module Categories
     end
 
     def process
-      Category.where("name ILIKE ?", "%#{search_term}%")
+      Category.where("name ILIKE ?", "%#{search_term}%").order(:position)
     end
 
     private

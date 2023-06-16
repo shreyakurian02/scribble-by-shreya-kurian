@@ -1,5 +1,3 @@
-import { SINGULAR } from "constants";
-
 import React from "react";
 
 import EmptyStateImage from "images/EmptyState";
@@ -7,20 +5,21 @@ import { NoData } from "neetoui";
 import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
+import { SINGULAR } from "src/constants";
 
 import { NEW_ARTICLE_URL } from "constants/urls";
 
 import { getSearchParams, pushURLSearchParams } from "./utils";
 
-const EmptyState = ({ setSearchTerm }) => {
+const EmptyState = ({ setArticleSearchTerm }) => {
   const { t } = useTranslation();
   const history = useHistory();
 
   const { search } = getSearchParams();
 
   const handleClearSearch = () => {
-    setSearchTerm("");
-    pushURLSearchParams(history, "search", "");
+    setArticleSearchTerm("");
+    pushURLSearchParams({ history, param: "search", value: "" });
   };
 
   if (!isEmpty(search)) {

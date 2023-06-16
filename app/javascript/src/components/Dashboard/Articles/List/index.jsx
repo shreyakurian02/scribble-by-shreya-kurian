@@ -6,19 +6,19 @@ import { isEmpty, pluck } from "ramda";
 
 import { Update, Delete } from "./Actions";
 import SubHeader from "./SubHeader";
+import { getAllowedColumns, getColumnData } from "./utils";
 
 import {
   MANAGE_DELETE_ALERT_INITIAL_VALUE,
   MANAGE_UPDATE_MODAL_INITIAL_VALUE,
 } from "../constants";
 import EmptyState from "../EmptyState";
-import { getAllowedColumns, getColumnData } from "../utils";
 
 const List = ({
-  articlesData,
+  articles: articlesData,
   refetchArticles,
   isArticlesLoading,
-  setSearchTerm,
+  setArticleSearchTerm,
   setPageProperties,
   pageProperties,
 }) => {
@@ -37,7 +37,7 @@ const List = ({
 
   const {
     articles,
-    count: { filtered: filteredArticlesCount, all: totalArticlesCount },
+    count: { filtered: filteredArticlesCount },
   } = articlesData;
 
   if (isArticlesLoading) {
@@ -51,7 +51,7 @@ const List = ({
   if (isEmpty(articles)) {
     return (
       <div className="flex h-full w-full items-center justify-center">
-        <EmptyState setSearchTerm={setSearchTerm} />
+        <EmptyState setArticleSearchTerm={setArticleSearchTerm} />
       </div>
     );
   }
@@ -69,15 +69,15 @@ const List = ({
       <Table
         fixedHeight
         rowSelection
-        currentPageNumber={pageProperties.index}
+        currentPageNumber={pageProperties.page}
         defaultPageSize={pageProperties.size}
-        handlePageChange={(index, size) => setPageProperties({ index, size })}
+        handlePageChange={(page, size) => setPageProperties({ page, size })}
         loading={isArticlesLoading}
         rowData={articles}
         scroll={{ x: 0 }}
         selectedRowKeys={pluck("id", selectedArticles)}
         shouldDynamicallyRenderRowSize={false}
-        totalCount={totalArticlesCount}
+        totalCount={filteredArticlesCount}
         columnData={getAllowedColumns({
           filteredColumns,
           setManageDeleteAlert,

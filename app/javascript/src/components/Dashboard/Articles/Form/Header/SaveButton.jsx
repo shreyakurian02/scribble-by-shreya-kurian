@@ -5,7 +5,7 @@ import { Check } from "neetoicons";
 import { ActionDropdown } from "neetoui";
 import { useTranslation } from "react-i18next";
 
-import { ARTICLE_STATUS } from "../constants";
+import { ARTICLE_STATUS } from "../../constants";
 
 const {
   Menu,

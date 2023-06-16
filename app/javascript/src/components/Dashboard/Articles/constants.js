@@ -9,7 +9,7 @@ export const STATUS_MENU_BLOCKS = [
 
 export const DEFAULT_PAGE_PROPERTIES = {
   size: 10,
-  index: 1,
+  page: 1,
 };
 
 export const NEW_CATEGORY_INITIAL_VALUES = { category: "" };
@@ -21,7 +21,7 @@ export const CATEGORY_VALIDATION_SCHEMA = yup.object().shape({
     .required(t("validations.required", { entity: t("common.title") })),
 });
 
-export const ARTICLES_DATA_INITIAL_VALUE = {
+export const ARTICLES_INITIAL_VALUE = {
   articles: [],
   count: { all: 0, draft: 0, published: 0, filtered: 0 },
 };
@@ -41,4 +41,9 @@ export const HEADER_TITLE = {
   all: t("common.allArticles"),
   draft: t("common.draft"),
   published: t("common.published"),
+};
+
+export const ARTICLE_STATUS = {
+  draft: "draft",
+  publish: "published",
 };

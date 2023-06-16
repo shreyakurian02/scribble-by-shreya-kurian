@@ -16,9 +16,10 @@ const List = () => {
   const reorderCategories = async ({ draggableId, position }) => {
     setIsLoading(true);
     try {
-      await categoriesApi.reorder({
-        payload: { position },
+      await categoriesApi.update({
         id: draggableId,
+        payload: { position },
+        quiet: true,
       });
       fetchCategories();
     } catch (error) {
@@ -37,7 +38,7 @@ const List = () => {
       draggableId,
       destination: { index },
     } = result;
-    reorderCategories({ draggableId, position: index });
+    reorderCategories({ draggableId, position: index + 1 });
   };
 
   if (isLoading) {

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import articlesApi from "apis/articles";
 
-import UpdateModal from "../../UpdateModal";
+import UpdateModal from "../UpdateModal";
 
 const Update = ({ manageUpdateModal, refetchArticles, onClose }) => {
   const { t } = useTranslation();

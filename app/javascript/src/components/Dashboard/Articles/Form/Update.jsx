@@ -6,11 +6,14 @@ import { useEffect } from "react/cjs/react.development";
 import { useHistory, useParams } from "react-router";
 
 import articlesApi from "apis/articles";
+import { ADMIN_URL, ARTICLES_URL } from "constants/urls";
 
-import { ARTICLE_STATUS, VALIDATION_SCHEMA } from "./constants";
+import { VALIDATION_SCHEMA } from "./constants";
 import Editor from "./Editor";
 import Header from "./Header";
 import { buildInitialValues } from "./utils";
+
+import { ARTICLE_STATUS } from "../constants";
 
 const Update = () => {
   const [article, setArticle] = useState({});
@@ -24,8 +27,8 @@ const Update = () => {
   const handleSubmit = async values => {
     const payload = { ...values, status, category_id: values.category.value };
     try {
-      const response = await articlesApi.update({ slug, payload });
-      response.data?.notice && history.goBack();
+      await articlesApi.update({ slug, payload });
+      history.push(ADMIN_URL);
     } catch (error) {
       logger.error(error);
     }
@@ -33,6 +36,7 @@ const Update = () => {
 
   const handleReset = ({ description }) => {
     editorRef.current.editor.commands.setContent(description);
+    history.push(ARTICLES_URL);
   };
 
   const fetchArticle = async () => {

@@ -6,9 +6,9 @@ import { MenuBar as NeetoUIMenuBar } from "neetoui/layouts";
 import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router";
+import { PLURAL } from "src/constants";
 import { v4 as uuid } from "uuid";
 
-import { PLURAL } from "constants";
 import { useCategoriesState } from "contexts/categories";
 
 import { STATUS_MENU_BLOCKS } from "./constants";
@@ -29,9 +29,8 @@ const MenuBar = ({
 }) => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
 
-  const history = useHistory();
   const { t } = useTranslation();
-
+  const history = useHistory();
   const categories = useCategoriesState();
 
   const { status, categories: queryCategories } = getSearchParams();
@@ -39,8 +38,7 @@ const MenuBar = ({
   const isSearchedCategoryResultEmpty =
     isEmpty(categories) && !isEmpty(categorySearchTerm);
 
-  const handleAddCategory = () =>
-    setIsNewCategoryModalOpen(isModalOpen => !isModalOpen);
+  const handleAddCategory = () => setIsNewCategoryModalOpen(true);
 
   const handleSearchCollapse = () =>
     setIsSearchCollapsed(isSearchCollapsed => !isSearchCollapsed);
@@ -60,7 +58,9 @@ const MenuBar = ({
           count={articlesCount[value]}
           key={uuid()}
           label={label}
-          onClick={() => pushURLSearchParams(history, "status", value)}
+          onClick={() =>
+            pushURLSearchParams({ history, param: "status", value })
+          }
         />
       ))}
       <SubTitle
@@ -69,12 +69,7 @@ const MenuBar = ({
           { icon: Plus, onClick: handleAddCategory },
         ]}
       >
-        <Typography
-          component="h4"
-          style="h5"
-          textTransform="uppercase"
-          weight="bold"
-        >
+        <Typography style="h5" textTransform="uppercase" weight="bold">
           {t("common.category", PLURAL)}
         </Typography>
       </SubTitle>

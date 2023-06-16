@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class Api::V1::CategoriesController < ApplicationController
-  before_action :load_category!, only: %i[update destroy reorder]
+  before_action :load_category!, only: %i[update destroy]
 
   def index
-    @categories = Categories::FilterService.new(filter_params).process.order(:position)
+    @categories = Categories::FilterService.new(filter_params).process
   end
 
   def create
@@ -14,16 +14,12 @@ class Api::V1::CategoriesController < ApplicationController
 
   def update
     @category.update!(category_params)
-    render_notice(t("successfully_updated", entity: "Category"))
+    render_notice(t("successfully_updated", entity: "Category")) unless params.key?(:quiet)
   end
 
   def destroy
     Categories::DeletionService.new(@category, params[:move_to_category_id]).process
     render_notice(t("successfully_deleted", entity: "Category"))
-  end
-
-  def reorder
-    @category.insert_at(category_params[:position].to_i + 1)
   end
 
   private

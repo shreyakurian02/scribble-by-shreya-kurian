@@ -1,14 +1,22 @@
+import { SINGULAR } from "constants";
+
 import { t } from "i18next";
 import { isEditorEmpty } from "neetoeditor";
 import * as yup from "yup";
-
-import { SINGULAR } from "constants";
 
 export const INITIAL_VALUES = {
   category: null,
   title: "",
   description: "<p></p>",
 };
+
+export const EDITOR_ADDONS = [
+  "code-block",
+  "block-quote",
+  "image-upload",
+  "undo",
+  "redo",
+];
 
 export const VALIDATION_SCHEMA = yup.object().shape({
   category: yup
@@ -30,8 +38,3 @@ export const VALIDATION_SCHEMA = yup.object().shape({
       value => !isEditorEmpty(value)
     ),
 });
-
-export const ARTICLE_STATUS = {
-  draft: "draft",
-  publish: "published",
-};
