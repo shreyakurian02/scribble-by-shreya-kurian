@@ -12,7 +12,7 @@ import Header from "../Header";
 
 const General = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [site, setSite] = useState("");
+  const [site, setSite] = useState({});
 
   const { t } = useTranslation();
 
@@ -27,9 +27,9 @@ const General = () => {
     }
   };
 
-  const handleSubmit = async ({ siteTitle }) => {
+  const handleSubmit = async ({ title }) => {
     try {
-      const payload = { title: siteTitle };
+      const payload = { title };
       await siteApi.update(payload);
       fetchSite();
     } catch (error) {
@@ -55,7 +55,7 @@ const General = () => {
         <Form
           formikProps={{
             onSubmit: handleSubmit,
-            initialValues: { siteTitle: site.title },
+            initialValues: { title: site.title },
             validationSchema: VALIDATION_SCHEMA,
             enableReinitialize: true,
           }}
@@ -64,7 +64,7 @@ const General = () => {
             <div className="space-y-3">
               <Input
                 label={t("common.siteTitle")}
-                name="siteTitle"
+                name="title"
                 placeholder={t("placeholder.addSiteTitle")}
               />
               <Typography className="neeto-ui-text-gray-600" style="body3">

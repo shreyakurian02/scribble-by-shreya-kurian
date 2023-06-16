@@ -10,14 +10,14 @@ export const handleFilterByCategories = ({
     ? without([selectedCategory], queryCategories)
     : [...queryCategories, selectedCategory];
 
-  pushURLSearchParams({
+  pushUrlSearchParams({
     history,
     param: "categories",
     value: selectedCategories,
   });
 };
 
-export const pushURLSearchParams = ({ history, param, value }) => {
+export const pushUrlSearchParams = ({ history, param, value }) => {
   const queryParams = getSearchParams();
   history.push({ search: stringify({ ...queryParams, [param]: value }) });
 };

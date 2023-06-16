@@ -32,7 +32,7 @@ const ManageCategories = () => {
           <Button
             icon={Plus}
             iconPosition="left"
-            label={t("common.addCategoryHeader")}
+            label={t("headers.addCategoryHeader")}
             style="link"
             onClick={() => setIsAddCategoryModalOpen(true)}
           />

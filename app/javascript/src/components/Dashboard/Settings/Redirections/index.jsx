@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-import { Plus } from "neetoicons";
-import { Button } from "neetoui";
-import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 
 import redirectionsApi from "apis/redirections";
-import { SINGULAR } from "constants";
 
 import { DEFAULT_REDIRECTION_VALUE } from "./constants";
 import Delete from "./Delete";
-import Form from "./Form";
-import Item from "./Item";
-import TableHeader from "./TableHeader";
+import List from "./List";
 
 import Header from "../Header";
 
@@ -26,11 +20,7 @@ const Redirections = () => {
 
   const { t } = useTranslation();
 
-  const isAddButtonDisabled =
-    isAddFormOpen || !isEmpty(manageRedirection.redirection);
-
   const fetchRedirections = async () => {
-    setIsLoading(true);
     try {
       const {
         data: { redirections },
@@ -55,42 +45,15 @@ const Redirections = () => {
           title={t("common.redirections")}
         />
       </div>
-      <div className="neeto-ui-bg-pastel-blue space-y-3 rounded-md px-6 pb-6 pt-16">
-        {!isLoading && !isEmpty(redirections) && (
-          <>
-            <TableHeader />
-            <div className="max-h-3/4 space-y-3 overflow-y-auto">
-              {redirections?.map(redirection => (
-                <Item
-                  isAddFormOpen={isAddFormOpen}
-                  key={redirection.id}
-                  manageRedirection={manageRedirection}
-                  redirection={redirection}
-                  refetchRedirections={fetchRedirections}
-                  setManageRedirection={setManageRedirection}
-                />
-              ))}
-            </div>
-          </>
-        )}
-        {isAddFormOpen && (
-          <Form
-            refetchRedirections={fetchRedirections}
-            onClose={() => setIsAddFormOpen(false)}
-          />
-        )}
-        <Button
-          className="flex pt-3"
-          disabled={isAddButtonDisabled}
-          icon={Plus}
-          iconPosition="left"
-          style="link"
-          label={t("button.addNewEntity", {
-            entity: t("common.redirection", SINGULAR),
-          })}
-          onClick={() => setIsAddFormOpen(true)}
-        />
-      </div>
+      <List
+        isAddFormOpen={isAddFormOpen}
+        isLoading={isLoading}
+        manageRedirection={manageRedirection}
+        redirections={redirections}
+        refetchRedirections={fetchRedirections}
+        setIsAddFormOpen={setIsAddFormOpen}
+        setManageRedirection={setManageRedirection}
+      />
       <Delete
         manageRedirection={manageRedirection}
         refetchRedirections={fetchRedirections}

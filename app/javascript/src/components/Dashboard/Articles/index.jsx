@@ -20,7 +20,7 @@ import {
 } from "./constants";
 import List from "./List";
 import MenuBar from "./MenuBar";
-import { pushURLSearchParams, getSearchParams } from "./utils";
+import { pushUrlSearchParams, getSearchParams } from "./utils";
 
 const Articles = () => {
   const { status, categories: queryCategories, search } = getSearchParams();
@@ -63,7 +63,7 @@ const Articles = () => {
   };
 
   useEffect(() => {
-    pushURLSearchParams({
+    pushUrlSearchParams({
       history,
       param: "search",
       value: debouncedArticleSearchTerm.trim(),

@@ -13,7 +13,7 @@ import { useCategoriesState } from "contexts/categories";
 
 import { STATUS_MENU_BLOCKS } from "./constants";
 import {
-  pushURLSearchParams,
+  pushUrlSearchParams,
   getSearchParams,
   handleFilterByCategories,
 } from "./utils";
@@ -59,7 +59,7 @@ const MenuBar = ({
           key={uuid()}
           label={label}
           onClick={() =>
-            pushURLSearchParams({ history, param: "status", value })
+            pushUrlSearchParams({ history, param: "status", value })
           }
         />
       ))}
