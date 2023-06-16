@@ -75,9 +75,7 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
   def test_reorder_categories
     new_category = create :category
     assert_equal 1, @category.position
-    patch(
-      reorder_api_v1_category_path(@category.id), params: { category: { position: new_category.position - 1 } },
-      headers:)
+    put(api_v1_category_path(@category.id), params: { category: { position: new_category.position } }, headers:)
     assert_equal 2, @category.reload.position
   end
 

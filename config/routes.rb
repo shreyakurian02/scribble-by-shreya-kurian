@@ -5,9 +5,7 @@ Rails.application.routes.draw do
     namespace :api do
       namespace :v1 do
 
-        resources :categories, except: %i[new show edit] do
-          patch :reorder, on: :member
-        end
+        resources :categories, except: %i[new show edit]
 
         namespace :bulk do
           resource :articles, only: %i[update destroy]
