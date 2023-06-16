@@ -22,6 +22,11 @@
       "bundle exec erblint --lint-all --format compact -a"
     ]
   },
+  "engines": {
+    "node": "18.12",
+    "npm": "7.x",
+    "yarn": "1.22.x"
+  },
   "dependencies": {
     "@babel/plugin-proposal-private-methods": "^7.18.6",
     "@babel/preset-react": "^7.22.3",
