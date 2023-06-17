@@ -5,6 +5,9 @@ import { MenuBar, Container } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 import { useHistory, useLocation } from "react-router-dom";
 
+import ErrorPage from "components/Common/ErrorPage";
+import { SETTINGS_URL } from "constants/urls";
+
 import {
   DEFAULT_ACTIVE_TAB_KEY,
   MENUBAR_ITEMS,
@@ -19,6 +22,7 @@ const Settings = () => {
   const { search } = useLocation();
 
   const URLParams = new URLSearchParams(search);
+  const isTabValid = Object.keys(TAB_COMPONENTS).find(tab => tab === activeTab);
 
   const handleTabChange = value => {
     URLParams.set("tab", value);
@@ -28,6 +32,8 @@ const Settings = () => {
   useEffect(() => {
     setActiveTab(URLParams.get("tab") || DEFAULT_ACTIVE_TAB_KEY);
   }, [search]);
+
+  if (!isTabValid) return <ErrorPage homeUrl={SETTINGS_URL} />;
 
   return (
     <div className="flex w-full">

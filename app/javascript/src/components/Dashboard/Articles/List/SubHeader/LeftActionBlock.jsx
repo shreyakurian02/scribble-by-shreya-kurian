@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Delete } from "neetoicons";
 import { Typography, Button, Dropdown, Tag } from "neetoui";
 import { isEmpty } from "ramda";
 import { useTranslation, Trans } from "react-i18next";
@@ -111,6 +112,7 @@ const LeftActionBlock = ({
         </Menu>
       </Dropdown>
       <Button
+        icon={Delete}
         label={t("button.delete")}
         style="danger"
         onClick={() => setIsBulkDeleteAlertOpen(true)}

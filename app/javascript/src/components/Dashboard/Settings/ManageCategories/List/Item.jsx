@@ -4,7 +4,7 @@ import { MenuLayout, MenuVertical } from "neetoicons";
 import { Typography, Dropdown } from "neetoui";
 import { useTranslation } from "react-i18next";
 
-import EditCategory from "components/Dashboard/Common/CategoryForm";
+import EditCategory from "components/Dashboard/CategoryForm";
 
 import { DEFAULT_CATEGORY_NAME } from "./constants";
 import Delete from "./Delete";

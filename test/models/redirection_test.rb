@@ -68,4 +68,38 @@ class RedirectionTest < ActiveSupport::TestCase
     redirection = build(:redirection, from_path: "/about", to_path: "https://sample.com/about")
     assert redirection.valid?
   end
+
+  def test_redirection_shouldnt_be_saved_with_invalid_from_path
+    invalid_paths = ["invalid-path", "https://invalid-path.com"]
+
+    invalid_paths.each do |path|
+      redirection = build :redirection, from_path: "invalid-path"
+      assert_not redirection.valid?
+      assert_includes redirection.errors.full_messages, "From path is invalid"
+    end
+  end
+
+  def test_redirection_should_be_saved_with_valid_from_path
+    redirection = build :redirection, from_path: "/settings"
+    assert redirection.valid?
+  end
+
+  def test_redirection_shouldnt_be_saved_with_invalid_to_path
+    invalid_paths = ["invalid-path", "https://invalid-path", "https//google.com"]
+
+    invalid_paths.each do |path|
+      redirection = build :redirection, to_path: "invalid-path"
+      assert_not redirection.valid?
+      assert_includes redirection.errors.full_messages, "To path is invalid"
+    end
+  end
+
+  def test_redirection_should_be_saved_with_valid_to_path
+    valid_paths = ["/settings", "http://google.com"]
+
+    valid_paths.each do |path|
+      redirection = build :redirection, to_path: "/settings"
+      assert redirection.valid?
+    end
+  end
 end

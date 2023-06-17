@@ -19,7 +19,7 @@ const Security = () => {
 
   const { is_password_protected: isSitePasswordProtected } = siteSettings;
 
-  const handlePasswordChange = async () => {
+  const handleRemovePassword = async () => {
     try {
       await siteApi.update({ password: null });
       fetchSecurityDetails();
@@ -30,7 +30,7 @@ const Security = () => {
 
   const handleSecurityToggle = () => {
     setIsSecurityEnabled(isSecurityEnabled => !isSecurityEnabled);
-    isSitePasswordProtected && handlePasswordChange();
+    isSitePasswordProtected && handleRemovePassword();
   };
 
   const fetchSecurityDetails = async () => {

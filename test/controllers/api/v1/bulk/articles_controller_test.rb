@@ -19,13 +19,13 @@ class Api::V1::Bulk::ArticlesControllerTest < ActionDispatch::IntegrationTest
     invalid_status = "pub"
     put(api_v1_bulk_articles_path, params: article_params({ article: { status: invalid_status } }), headers:)
     assert_response :unprocessable_entity
-    assert_equal I18n.t("article.invalid_status", status: invalid_status), "'pub' is not a valid status"
+    assert_includes response_json["error"], I18n.t("article.invalid_status", status: invalid_status)
   end
 
   def test_bulk_destroy_articles
     assert_difference "Article.count", -5 do
       delete(api_v1_bulk_articles_path, params: article_params, headers:)
-      assert_response :ok
+      assert_response :success
     end
 
     assert_equal I18n.t("successfully_deleted", entity: "Articles"), response_json["notice"]

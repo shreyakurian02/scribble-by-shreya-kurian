@@ -14,7 +14,7 @@ class ArticleTest < ActiveSupport::TestCase
   end
 
   def test_article_count_increases_on_saving
-    assert_difference ["Article.count"] do
+    assert_difference "Article.count" do
       create :article
     end
   end
@@ -137,14 +137,14 @@ class ArticleTest < ActiveSupport::TestCase
   def test_last_published_at_updates_when_status_is_published
     article = create(:article, status: "draft")
     assert_nil article.last_published_at
-    article.update!(status: "published")
+    article.published!
     assert_not_nil article.last_published_at
   end
 
   def test_last_published_at_does_not_updates_when_status_was_already_published
     article = create(:article, status: "published")
     last_published_at = article.last_published_at
-    article.update!(status: "published")
+    article.published!
     assert_equal last_published_at, article.reload.last_published_at
   end
 end

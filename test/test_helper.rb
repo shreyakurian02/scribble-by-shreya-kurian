@@ -32,7 +32,7 @@ class ActiveSupport::TestCase
   def headers
     {
       Accept: "application/json",
-      "Content_Type" => "application/json"
+      "Content_Type": "application/json"
     }
   end
 

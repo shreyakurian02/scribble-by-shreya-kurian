@@ -33,6 +33,7 @@ class Api::V1::SitesControllerTest < ActionDispatch::IntegrationTest
   def test_shouldnt_show_site_if_invalid
     Site.destroy_all
     get(api_v1_site_path, headers:)
+    assert_response :not_found
     assert_includes response_json["error"], "Site not found"
   end
 end

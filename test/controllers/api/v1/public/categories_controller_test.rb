@@ -6,7 +6,7 @@ class Api::V1::Public::CategoriesControllerTest < ActionDispatch::IntegrationTes
   def setup
     site = create :site
     @headers = public_headers(site)
-    create_list(:category, 5)
+    create_list(:category, 5, site:)
   end
 
   def test_should_list_all_categories

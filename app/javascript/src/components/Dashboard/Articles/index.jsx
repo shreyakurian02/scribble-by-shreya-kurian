@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation, useHistory } from "react-router-dom";
 
 import articlesApi from "apis/articles";
-import AddCategory from "components/Dashboard/Common/CategoryForm";
+import AddCategory from "components/Dashboard/CategoryForm";
 import { NEW_ARTICLE_URL } from "constants/urls";
 import { useCategoriesDispatch } from "contexts/categories";
 import useDebounce from "hooks/useDebounce";
@@ -20,7 +20,7 @@ import {
 } from "./constants";
 import List from "./List";
 import MenuBar from "./MenuBar";
-import { pushURLSearchParams, getSearchParams } from "./utils";
+import { pushUrlSearchParams, getSearchParams } from "./utils";
 
 const Articles = () => {
   const { status, categories: queryCategories, search } = getSearchParams();
@@ -63,7 +63,7 @@ const Articles = () => {
   };
 
   useEffect(() => {
-    pushURLSearchParams({
+    pushUrlSearchParams({
       history,
       param: "search",
       value: debouncedArticleSearchTerm.trim(),

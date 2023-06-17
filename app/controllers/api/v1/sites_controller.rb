@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Api::V1::SitesController < ApplicationController
-  before_action :load_site, only: %i[show update]
-
   def show
     render
   end

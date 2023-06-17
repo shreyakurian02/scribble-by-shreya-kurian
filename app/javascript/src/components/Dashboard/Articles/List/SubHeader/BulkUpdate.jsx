@@ -20,8 +20,8 @@ const BulkUpdate = ({
 
   const {
     isModalOpen,
-    payload: { categoryName = "", categoryId = "", status = "" },
     type,
+    payload: { categoryName = "", categoryId = "", status = "" },
   } = bulkUpdateData;
 
   const selectedArticlesCount = selectedArticles.length;

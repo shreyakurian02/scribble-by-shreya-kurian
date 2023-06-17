@@ -5,7 +5,7 @@ class Api::V1::ArticlesController < ApplicationController
   before_action :load_current_user, only: :create
 
   def index
-    @articles, @filtered_count = Articles::FilterService.new(filter_params).process.values_at(
+    @articles, @filtered_count = Articles::FilterService.new(@site, filter_params).process.values_at(
       :articles,
       :filtered_count)
   end
@@ -36,7 +36,7 @@ class Api::V1::ArticlesController < ApplicationController
     end
 
     def load_article!
-      @article = Article.find_by!(slug: params[:slug])
+      @article = @site.articles.find_by!(slug: params[:slug])
     end
 
     def filter_params

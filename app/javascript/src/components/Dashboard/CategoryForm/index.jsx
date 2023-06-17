@@ -26,8 +26,6 @@ const CategoryForm = ({
     ? { category: selectedCategoryName }
     : INITIAL_VALUES;
 
-  const handleReset = () => onClose();
-
   const handleSubmit = async ({ category }) => {
     try {
       const payload = { name: category };
@@ -44,13 +42,17 @@ const CategoryForm = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <Modal.Header>
-        <Typography style="h2">{t("common.addCategoryHeader")}</Typography>
+        <Typography style="h2">
+          {isEdit
+            ? t("headers.editCategoryHeader")
+            : t("headers.addCategoryHeader")}
+        </Typography>
       </Modal.Header>
       <Form
         formikProps={{
           initialValues,
           onSubmit: handleSubmit,
-          onReset: handleReset,
+          onReset: onClose,
           validationSchema: VALIDATION_SCHEMA,
         }}
       >

@@ -23,7 +23,6 @@
     "lastPublished": "Last published at",
     "somethingWentWrong": "Something went wrong",
     "selectedOf": "{{selectedCount}} {{resource}} selected of <span>{{articlesCount}}</span>",
-    "addCategoryHeader": "New category",
     "searchResult_one": "{{count}} result for \"{{search}}\"",
     "searchResult_other": "{{count}} results for \"{{search}}\"",
     "siteTitle": "Site title",
@@ -130,6 +129,8 @@
     "preview": "Launch your KB preview"
   },
   "headers": {
+    "addCategoryHeader": "New category",
+    "editCategoryHeader": "Edit category",
     "siteProtected": "{{site}} is password protected!",
     "enterPassword": "Enter the password to gain access to {{site}}."
   },

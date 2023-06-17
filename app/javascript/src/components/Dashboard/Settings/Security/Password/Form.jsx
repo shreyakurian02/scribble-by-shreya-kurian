@@ -42,7 +42,7 @@ const Form = ({ fetchSecurityDetails, setIsChangePasswordEnabled }) => {
         onReset: handleReset,
       }}
     >
-      {({ dirty, errors, values: { password: passwordValue } }) => (
+      {({ dirty, errors, values: { password } }) => (
         <div className="space-y-5">
           <Input
             className="w-3/4"
@@ -61,11 +61,11 @@ const Form = ({ fetchSecurityDetails, setIsChangePasswordEnabled }) => {
           />
           <div className="neeto-ui-text-gray-500">
             <Validation
-              isValid={passwordValue.match(VALID_PASSWORD_REGEX)}
+              isValid={password.match(VALID_PASSWORD_REGEX)}
               message={t("validations.passwordFormat")}
             />
             <Validation
-              isValid={passwordValue.length >= MINIMUM_PASSWORD_LENGTH}
+              isValid={password.length >= MINIMUM_PASSWORD_LENGTH}
               message={t("validations.minimumPasswordLength")}
             />
           </div>

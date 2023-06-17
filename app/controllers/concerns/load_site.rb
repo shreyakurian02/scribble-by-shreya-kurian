@@ -3,6 +3,10 @@
 module LoadSite
   extend ActiveSupport::Concern
 
+  included do
+    before_action :load_site
+  end
+
   private
 
     def load_site

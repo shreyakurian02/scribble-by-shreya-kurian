@@ -4,13 +4,14 @@ require "test_helper"
 
 class Articles::FilterServiceTest < ActiveSupport::TestCase
   def setup
-    @articles = create_list(:article, 5)
+    @category = create :category
+    @articles = create_list(:article, 5, category: @category)
   end
 
   def test_filter_by_status
-    @articles[0].update!(status: "published")
+    @articles[0].published!
     process_service({ status: "published" })
-    assert_equal [@articles[0].id], @filtered_articles.pluck("id")
+    assert_equal [@articles[0].id], @filtered_articles.ids
     assert_equal 1, @filtered_count
   end
 
@@ -19,26 +20,30 @@ class Articles::FilterServiceTest < ActiveSupport::TestCase
     expected_articles_with_selected_categories = @articles.select { |article|
       selected_categories.include? article.category.name }
     process_service({ categories: selected_categories })
-    assert_equal expected_articles_with_selected_categories.pluck("id"), @filtered_articles.pluck("id")
+    assert_equal expected_articles_with_selected_categories.pluck("id"), @filtered_articles.ids
   end
 
   def test_filter_by_search_term
     search_term = @articles[0].title
-    expected_articles_with_search_term = Article.where("title ILIKE ?", "%#{search_term}%")
-    process_service({ search: search_term })
-    assert_equal expected_articles_with_search_term.pluck("id"), @filtered_articles.pluck("id")
-    assert_equal expected_articles_with_search_term.count, @filtered_count
+    possible_search_terms = [search_term.upcase, search_term.downcase]
+
+    possible_search_terms.each do |search|
+      expected_articles_with_search_term = Article.where("title ILIKE ?", "%#{search}%")
+      process_service({ search: })
+      assert_equal expected_articles_with_search_term.pluck("id"), @filtered_articles.ids
+      assert_equal expected_articles_with_search_term.size, @filtered_count
+    end
   end
 
   def test_pagination
     process_service({ per_page: 2, page_number: 3 })
-    assert_equal 1, @filtered_articles.count
+    assert_equal 1, @filtered_articles.size
   end
 
   private
 
     def process_service(options)
-      @filtered_articles, @filtered_count = Articles::FilterService.new(options).process.values_at(
+      @filtered_articles, @filtered_count = Articles::FilterService.new(@category.site, options).process.values_at(
         :articles,
         :filtered_count)
     end

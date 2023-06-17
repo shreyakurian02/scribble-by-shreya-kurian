@@ -62,12 +62,13 @@ const Form = ({
                 placeholder={t("placeholder.addToPath")}
                 size="large"
               />
-              <div className="h-10 flex">
+              <div className="flex h-10">
                 <Button
                   disabled={!dirty}
                   icon={() => <Check color="#268E6C" />}
                   style="text"
                   type="submit"
+                  onMouseDown={event => event.preventDefault()}
                 />
                 <Button
                   icon={() => <Close color="#D7373F" />}

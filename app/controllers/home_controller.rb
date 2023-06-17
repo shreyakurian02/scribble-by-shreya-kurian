@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class HomeController < ApplicationController
-  before_action :load_site, only: :index
   before_action :load_redirection, only: :index
   before_action :redirect, only: :index
 
@@ -16,7 +15,7 @@ class HomeController < ApplicationController
     end
 
     def load_redirection
-      @redirection = @site.redirections.find_by(from_path: request.path)
+      @redirection = @site.redirections.find_by(from_path: request.fullpath)
     end
 
     def redirection_url

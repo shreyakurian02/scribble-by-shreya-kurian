@@ -9,7 +9,7 @@ import { SINGULAR } from "src/constants";
 
 import { NEW_ARTICLE_URL } from "constants/urls";
 
-import { getSearchParams, pushURLSearchParams } from "./utils";
+import { getSearchParams, pushUrlSearchParams } from "./utils";
 
 const EmptyState = ({ setArticleSearchTerm }) => {
   const { t } = useTranslation();
@@ -19,7 +19,7 @@ const EmptyState = ({ setArticleSearchTerm }) => {
 
   const handleClearSearch = () => {
     setArticleSearchTerm("");
-    pushURLSearchParams({ history, param: "search", value: "" });
+    pushUrlSearchParams({ history, param: "search", value: "" });
   };
 
   if (!isEmpty(search)) {

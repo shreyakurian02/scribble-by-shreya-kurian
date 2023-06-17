@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_10_092950) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_16_122757) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -36,7 +36,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_092950) do
     t.datetime "updated_at", null: false
     t.integer "articles_count", default: 0
     t.integer "position"
+    t.uuid "site_id", null: false
     t.index ["name"], name: "index_categories_on_name", unique: true
+    t.index ["site_id"], name: "index_categories_on_site_id"
   end
 
   create_table "redirections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -69,5 +71,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_10_092950) do
 
   add_foreign_key "articles", "categories"
   add_foreign_key "articles", "users", column: "author_id"
+  add_foreign_key "categories", "sites"
   add_foreign_key "redirections", "sites"
 end

@@ -2,9 +2,10 @@
 
 module Articles
   class FilterService
-    attr_reader :options
+    attr_reader :options, :site
 
-    def initialize(options = {})
+    def initialize(site, options = {})
+      @site = site
       @options = options
     end
 
@@ -18,7 +19,7 @@ module Articles
     private
 
       def filter_by_status
-        @articles = Article.send(status)
+        @articles = site.articles.send(status)
       end
 
       def filter_by_category
@@ -38,7 +39,7 @@ module Articles
       end
 
       def paginate
-        { articles: @articles.page(page_number).per(per_page), filtered_count: @articles.count }
+        { articles: @articles.page(page_number).per(per_page), filtered_count: @articles.size }
       end
 
       def categories
