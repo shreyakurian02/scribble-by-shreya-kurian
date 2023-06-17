@@ -4,7 +4,7 @@ import { Plus } from "neetoicons";
 import { Button, Typography } from "neetoui";
 import { useTranslation } from "react-i18next";
 
-import AddCategory from "components/Dashboard/Common/CategoryForm";
+import AddCategory from "components/Dashboard/CategoryForm";
 import { useCategoriesState } from "contexts/categories";
 
 import List from "./List";

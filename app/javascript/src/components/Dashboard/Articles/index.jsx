@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { useLocation, useHistory } from "react-router-dom";
 
 import articlesApi from "apis/articles";
-import AddCategory from "components/Dashboard/Common/CategoryForm";
+import AddCategory from "components/Dashboard/CategoryForm";
 import { NEW_ARTICLE_URL } from "constants/urls";
 import { useCategoriesDispatch } from "contexts/categories";
 import useDebounce from "hooks/useDebounce";
