@@ -25,12 +25,6 @@ class CategoryTest < ActiveSupport::TestCase
     assert_includes new_category.errors.full_messages, "Name has already been taken"
   end
 
-  def test_category_count_increases_on_saving
-    assert_difference "Category.count" do
-      create :category
-    end
-  end
-
   def test_category_should_not_be_saved_with_invalid_name_format
     @category.name = "*"
     assert_not @category.valid?

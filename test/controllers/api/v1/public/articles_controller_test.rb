@@ -6,7 +6,7 @@ class Api::V1::Public::ArticlesControllerTest < ActionDispatch::IntegrationTest
   def setup
     site = create :site
     @category = create(:category, site:)
-    @article = create :article, status: "published", category:@category
+    @article = create :article, :published, category:@category
     @headers = public_headers(site)
   end
 

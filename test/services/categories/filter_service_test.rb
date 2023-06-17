@@ -10,9 +10,13 @@ class Categories::FilterServiceTest < ActiveSupport::TestCase
 
   def test_filter_by_search_term
     search_term = @categories[0].name
-    expected_categories_with_search_term = Category.where("name ILIKE ?", "%#{search_term}%")
-    @filtered_categories = Categories::FilterService.new(@site, { search: search_term }).process
-    assert_equal expected_categories_with_search_term.pluck("id"), @filtered_categories.pluck("id")
-    assert_equal 1, @filtered_categories.count
+    possible_search_terms = [search_term.upcase, search_term.downcase]
+
+    possible_search_terms.each do |search|
+      expected_categories_with_search_term = Category.where("name ILIKE ?", "%#{search}%")
+      @filtered_categories = Categories::FilterService.new(@site, { search: }).process
+      assert_equal expected_categories_with_search_term.pluck("id"), @filtered_categories.ids
+      assert_equal 1, @filtered_categories.size
+    end
   end
 end

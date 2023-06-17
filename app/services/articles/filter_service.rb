@@ -39,7 +39,7 @@ module Articles
       end
 
       def paginate
-        { articles: @articles.page(page_number).per(per_page), filtered_count: @articles.count }
+        { articles: @articles.page(page_number).per(per_page), filtered_count: @articles.size }
       end
 
       def categories

@@ -3,13 +3,13 @@
   class Categories::DeletionService
     attr_reader :category, :move_to_category_id, :site
 
-    def initialize(site, category, move_to_category_id)
+    def initialize(site, category, move_to_category_id = nil)
       @site = site
       @category = category
       @move_to_category_id = move_to_category_id
     end
 
-    def process
+    def process!
       Category.transaction do
         check_for_default_category_deletion!
         create_default_category_if_last
@@ -29,7 +29,7 @@
       end
 
       def last_category?
-        site.categories.count == 1
+        site.categories.size == 1
       end
 
       def create_default_category_if_last

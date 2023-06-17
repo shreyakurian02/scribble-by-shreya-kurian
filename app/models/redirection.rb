@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
 class Redirection < ApplicationRecord
+  VALID_FROM_PATH_REGEX = /\A\/[a-zA-Z0-9@:%._\\+~#&?\/=]*\z/i.freeze
+  VALID_TO_PATH_REGEX =
+    /\A(https?:\/\/)?([a-zA-Z0-9-]+\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(:[0-9]+)?(\/.*)?$|^\/.*\z/i.freeze
+
   belongs_to :site
 
-  validates :from_path, presence: true, uniqueness: { scope: :site_id }
-  validates :to_path, presence: true
+  validates :from_path, presence: true, uniqueness: { scope: :site_id }, format: { with: VALID_FROM_PATH_REGEX }
+  validates :to_path, presence: true, format: { with: VALID_TO_PATH_REGEX }
   validate :validate_redirection
 
   private

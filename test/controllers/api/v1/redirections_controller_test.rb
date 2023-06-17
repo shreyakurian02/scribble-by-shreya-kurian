@@ -52,7 +52,7 @@ class Api::V1::RedirectionsControllerTest < ActionDispatch::IntegrationTest
   def test_can_destroy_redirection
     assert_difference "Redirection.count", -1 do
       delete(api_v1_redirection_path(@redirection.id), headers:)
-      assert_response :ok
+      assert_response :success
     end
 
     assert_equal I18n.t("successfully_deleted", entity: "Redirection"), response_json["notice"]

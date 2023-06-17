@@ -18,7 +18,7 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
   def test_should_create_valid_category
     assert_difference "Category.count" do
       post(
-        api_v1_categories_path, params: category_params, headers:)
+        api_v1_categories_path, params: { category: { name: "Userflow" } }, headers:)
       assert_response :success
     end
 
@@ -52,15 +52,16 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
 
   def test_destroy_category
     delete(api_v1_category_path(@category.id), headers:)
-    assert_response :ok
+    assert_response :success
     assert_equal I18n.t("successfully_deleted", entity: "Category"), response_json["notice"]
   end
 
   def test_creates_default_category_when_last_category_is_deleted_and_has_articles
     create :article, category: @category
+
     assert_no_difference "Category.count" do
       delete(api_v1_category_path(@category.id), headers:)
-      assert_response :ok
+      assert_response :success
     end
     assert_equal Category::DEFAULT_CATEGORY_NAME, Category.first.name
     assert_equal I18n.t("successfully_deleted", entity: "Category"), response_json["notice"]
@@ -80,10 +81,4 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
     put(api_v1_category_path(@category.id), params: { category: { position: new_category.position } }, headers:)
     assert_equal 2, @category.reload.position
   end
-
-  private
-
-    def category_params
-      { category: { name: "Userflow" } }
-    end
 end

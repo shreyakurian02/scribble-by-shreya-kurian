@@ -15,7 +15,7 @@ class HomeController < ApplicationController
     end
 
     def load_redirection
-      @redirection = @site.redirections.find_by(from_path: request.path)
+      @redirection = @site.redirections.find_by(from_path: request.fullpath)
     end
 
     def redirection_url

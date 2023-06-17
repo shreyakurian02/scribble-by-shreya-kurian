@@ -18,7 +18,7 @@ class Api::V1::CategoriesController < ApplicationController
   end
 
   def destroy
-    Categories::DeletionService.new(@site, @category, params[:move_to_category_id]).process
+    Categories::DeletionService.new(@site, @category, params[:move_to_category_id]).process!
     render_notice(t("successfully_deleted", entity: "Category"))
   end
 

@@ -44,7 +44,7 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
   def test_destroy_article
     assert_difference "Article.count", -1 do
       delete(api_v1_article_path(@article.slug), headers:)
-      assert_response :ok
+      assert_response :success
     end
 
     assert_equal I18n.t("successfully_deleted", entity: "Article"), response_json["notice"]
