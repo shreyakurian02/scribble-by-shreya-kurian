@@ -4,11 +4,12 @@ require "test_helper"
 
 class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
   def setup
-    @category = create :category
+    @site = create :site
+    @category = create :category, site: @site
   end
 
   def test_should_list_all_categories
-    create_list(:category, 5)
+    create_list(:category, 5, site: @site)
     get(api_v1_categories_path, headers:)
     assert_response :success
     assert_equal 6, response_json["categories"].length
@@ -55,7 +56,8 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal I18n.t("successfully_deleted", entity: "Category"), response_json["notice"]
   end
 
-  def test_creates_default_category_when_last_category_is_deleted
+  def test_creates_default_category_when_last_category_is_deleted_and_has_articles
+    create :article, category: @category
     assert_no_difference "Category.count" do
       delete(api_v1_category_path(@category.id), headers:)
       assert_response :ok
@@ -73,7 +75,7 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_reorder_categories
-    new_category = create :category
+    new_category = create :category, site: @site
     assert_equal 1, @category.position
     put(api_v1_category_path(@category.id), params: { category: { position: new_category.position } }, headers:)
     assert_equal 2, @category.reload.position

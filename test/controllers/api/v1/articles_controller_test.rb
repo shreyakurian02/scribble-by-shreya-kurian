@@ -4,21 +4,21 @@ require "test_helper"
 
 class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
   def setup
-    @article = create :article
+    site = create :site
+    @category = create(:category, site:)
+    @article = create :article, category: @category
   end
 
   def test_should_list_all_articles
-    create_list(:article, 5)
+    create_list(:article, 5, category: @category)
     get(api_v1_articles_path, headers:)
     assert_response :success
     assert_equal 6, response_json["articles"].length
   end
 
   def test_should_create_valid_article
-    category = create :category
-
     assert_difference "Article.count" do
-      post(api_v1_articles_path, params: article_params({ category_id: category.id }), headers:)
+      post(api_v1_articles_path, params: article_params({ category_id: @category.id }), headers:)
       assert_response :success
     end
 

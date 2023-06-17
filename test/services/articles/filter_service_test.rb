@@ -4,7 +4,8 @@ require "test_helper"
 
 class Articles::FilterServiceTest < ActiveSupport::TestCase
   def setup
-    @articles = create_list(:article, 5)
+    @category = create :category
+    @articles = create_list(:article, 5, category: @category)
   end
 
   def test_filter_by_status
@@ -38,7 +39,7 @@ class Articles::FilterServiceTest < ActiveSupport::TestCase
   private
 
     def process_service(options)
-      @filtered_articles, @filtered_count = Articles::FilterService.new(options).process.values_at(
+      @filtered_articles, @filtered_count = Articles::FilterService.new(@category.site, options).process.values_at(
         :articles,
         :filtered_count)
     end

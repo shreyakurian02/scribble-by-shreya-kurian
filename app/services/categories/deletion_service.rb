@@ -1,9 +1,10 @@
   # frozen_string_literal: true
 
   class Categories::DeletionService
-    attr_reader :category, :move_to_category_id
+    attr_reader :category, :move_to_category_id, :site
 
-    def initialize(category, move_to_category_id)
+    def initialize(site, category, move_to_category_id)
+      @site = site
       @category = category
       @move_to_category_id = move_to_category_id
     end
@@ -28,11 +29,11 @@
       end
 
       def last_category?
-        Category.count == 1
+        site.categories.count == 1
       end
 
       def create_default_category_if_last
-        if last_category?
+        if last_category? && category.articles.exists?
           default_category = create_default_category!
           @move_to_category_id = default_category.id
         end
@@ -49,6 +50,6 @@
       end
 
       def create_default_category!
-        Category.create!(name: Category::DEFAULT_CATEGORY_NAME)
+        site.categories.create!(name: Category::DEFAULT_CATEGORY_NAME)
       end
   end

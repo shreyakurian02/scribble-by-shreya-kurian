@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class HomeController < ApplicationController
-  before_action :load_site, only: :index
   before_action :load_redirection, only: :index
   before_action :redirect, only: :index
 

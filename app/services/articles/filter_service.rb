@@ -2,9 +2,10 @@
 
 module Articles
   class FilterService
-    attr_reader :options
+    attr_reader :options, :site
 
-    def initialize(options = {})
+    def initialize(site, options = {})
+      @site = site
       @options = options
     end
 
@@ -18,7 +19,7 @@ module Articles
     private
 
       def filter_by_status
-        @articles = Article.send(status)
+        @articles = site.articles.send(status)
       end
 
       def filter_by_category

@@ -5,6 +5,8 @@ class Site < ApplicationRecord
   VALID_PASSWORD_REGEX = /\A(?=.*[a-zA-Z])(?=.*\d).+\z/i.freeze
 
   has_many :redirections, dependent: :destroy
+  has_many :categories, dependent: :destroy
+  has_many :articles, through: :categories
 
   validates :title, presence: true, uniqueness: true,
     format: { with: Constants::ALPHANUMERIC_FORMAT_REGEX, message: I18n.t("errors.alphanumeric") }

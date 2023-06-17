@@ -2,14 +2,15 @@
 
 module Categories
   class FilterService
-    attr_reader :options
+    attr_reader :options, :site
 
-    def initialize(options = {})
+    def initialize(site, options = {})
+      @site = site
       @options = options
     end
 
     def process
-      Category.where("name ILIKE ?", "%#{search_term}%").order(:position)
+      site.categories.where("name ILIKE ?", "%#{search_term}%").order(:position)
     end
 
     private

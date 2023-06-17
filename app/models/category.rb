@@ -4,6 +4,8 @@ class Category < ApplicationRecord
   MAXIMUM_NAME_LENGTH = 40
   DEFAULT_CATEGORY_NAME = "General"
 
+  belongs_to :site
+
   has_many :articles
 
   validates :name, presence: true, uniqueness: true, length: { maximum: MAXIMUM_NAME_LENGTH },

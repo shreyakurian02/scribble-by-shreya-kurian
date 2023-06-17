@@ -5,7 +5,8 @@ require "test_helper"
 class Api::V1::Public::ArticlesControllerTest < ActionDispatch::IntegrationTest
   def setup
     site = create :site
-    @article = create :article, status: "published"
+    @category = create(:category, site:)
+    @article = create :article, status: "published", category:@category
     @headers = public_headers(site)
   end
 
@@ -16,7 +17,7 @@ class Api::V1::Public::ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_shouldnt_show_article_with_draft_status
-    draft_article = create :article
+    draft_article = create :article,category:@category
     get(api_v1_public_article_path(draft_article.slug), headers:@headers)
     assert_response :not_found
     assert_includes response_json["error"], "Article not found"

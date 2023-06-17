@@ -4,11 +4,11 @@ class Api::V1::CategoriesController < ApplicationController
   before_action :load_category!, only: %i[update destroy]
 
   def index
-    @categories = Categories::FilterService.new(filter_params).process
+    @categories = Categories::FilterService.new(@site, filter_params).process
   end
 
   def create
-    category = Category.create!(category_params)
+    category = @site.categories.create!(category_params)
     render_notice(t("successfully_created", entity: "Category"), :ok, { category_id: category.id })
   end
 
@@ -18,7 +18,7 @@ class Api::V1::CategoriesController < ApplicationController
   end
 
   def destroy
-    Categories::DeletionService.new(@category, params[:move_to_category_id]).process
+    Categories::DeletionService.new(@site, @category, params[:move_to_category_id]).process
     render_notice(t("successfully_deleted", entity: "Category"))
   end
 
@@ -33,6 +33,6 @@ class Api::V1::CategoriesController < ApplicationController
     end
 
     def load_category!
-      @category = Category.find(params[:id])
+      @category = @site.categories.find(params[:id])
     end
 end
