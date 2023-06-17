@@ -24,14 +24,14 @@ def create_user!
 end
 
 def create_site!
-  Site.create! title: 'Spinkart'
+  @site = Site.create! title: 'Spinkart'
 end
 
 def create_categories_with_articles!
   Category.reset_column_information
 
   5.times do
-    category = Category.create!(name: Faker::Lorem.word)
+    category = @site.categories.create!(name: Faker::Lorem.word)
     create_articles!(category)
   end
 end
