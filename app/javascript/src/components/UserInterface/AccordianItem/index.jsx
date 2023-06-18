@@ -21,7 +21,10 @@ const AccordianItem = ({ category, isCategoryExpanded = false }) => {
         onClick={() => setIsExpanded(isExpanded => !isExpanded)}
       >
         {isExpanded ? <Down size={18} /> : <Right size={18} />}
-        <Typography className="font-semibold text-gray-800" style="h5">
+        <Typography
+          className="neeto-ui-font-semibold neeto-ui-text-gray-800"
+          style="h5"
+        >
           {name}
         </Typography>
       </div>

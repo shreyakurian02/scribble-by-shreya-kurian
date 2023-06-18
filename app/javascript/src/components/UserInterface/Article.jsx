@@ -31,7 +31,7 @@ const Article = ({ article, setArticle }) => {
     }
   }, [slug]);
 
-  if (isEmpty(article)) {
+  if (isEmpty(article) && !slug) {
     return (
       <div className="flex h-screen w-full items-center justify-center">
         <Typography style="h5">{t("noData.publishedArticles")}</Typography>

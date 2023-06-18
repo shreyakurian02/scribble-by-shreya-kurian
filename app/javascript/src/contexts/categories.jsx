@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  createContext,
-  useContext,
-  useCallback,
-} from "react";
+import React, { useState, useEffect, createContext, useContext } from "react";
 
 import PropTypes from "prop-types";
 
@@ -16,7 +10,7 @@ const CategoriesDispatchContext = createContext();
 const CategoriesProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
 
-  const fetchCategories = useCallback(async (categorySearchTerm = "") => {
+  const fetchCategories = async (categorySearchTerm = "") => {
     try {
       const {
         data: { categories },
@@ -25,7 +19,7 @@ const CategoriesProvider = ({ children }) => {
     } catch (error) {
       logger.error(error);
     }
-  }, []);
+  };
 
   useEffect(() => {
     fetchCategories();

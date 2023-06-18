@@ -31,7 +31,7 @@ def create_categories_with_articles!
   Category.reset_column_information
 
   5.times do
-    category = @site.categories.create!(name: Faker::Lorem.word)
+    category = @site.categories.create!(name: Faker::Lorem.sentence(word_count: 2))
     create_articles!(category)
   end
 end

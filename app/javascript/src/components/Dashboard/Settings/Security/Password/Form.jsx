@@ -36,9 +36,9 @@ const Form = ({ fetchSecurityDetails, setIsChangePasswordEnabled }) => {
   return (
     <NeetoUIForm
       formikProps={{
-        onSubmit: handleSubmit,
         initialValues: INITIAL_FORM_VALUES,
         validationSchema: VALIDATION_SCHEMA,
+        onSubmit: handleSubmit,
         onReset: handleReset,
       }}
     >
@@ -50,9 +50,11 @@ const Form = ({ fetchSecurityDetails, setIsChangePasswordEnabled }) => {
             name="password"
             placeholder={t("placeholder.enterPassword")}
             type={inputType}
-            error={errors.password?.includes(
-              t("validation.required", { entity: t("input.password") })
-            )}
+            error={
+              errors.password?.includes(
+                t("validations.required", { entity: t("input.password") })
+              ) && errors.password
+            }
             suffix={renderPasswordVisibilityIcon({
               setInputType,
               setIsPasswordHidden,

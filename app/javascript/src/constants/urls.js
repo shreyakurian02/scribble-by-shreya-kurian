@@ -10,9 +10,9 @@ export const SETTINGS_URL = `${ADMIN_URL}/settings`;
 
 export const PREVIEW_URL = "/";
 
-export const EUI_LOGIN = "/login";
+export const EUI_LOGIN_URL = "/login";
 
-export const EUI_ARTICLE = "/articles/:slug";
+export const EUI_ARTICLE_URL = "/articles/:slug";
 
 export const EUI_INVALID_URL = "/articles/:slug/*";
 

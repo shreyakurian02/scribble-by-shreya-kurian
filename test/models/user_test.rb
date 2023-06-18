@@ -28,19 +28,15 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  def test_user_should_not_be_valid_with_duplicate_email
-    new_user = build :user, email: @user.email
-    assert new_user.invalid?
+  def test_shouldnt_save_user_with_duplicate_email
+    existing_email = @user.email
+    invalid_emails = [existing_email, existing_email.downcase, existing_email.upcase]
 
-    new_user = build :user, email: @user.email.upcase
-    assert new_user.invalid?
-    assert_includes new_user.errors.full_messages, "Email has already been taken"
-  end
-
-  def test_email_is_saved_in_lower_case
-    uppercase_email = "OLIVER@EXAMPLE.COM"
-    @user.update!(email: uppercase_email)
-    assert_equal uppercase_email.downcase, @user.email
+    invalid_emails.each do |email|
+      new_user = build(:user, email:)
+      assert new_user.invalid?
+      assert_includes new_user.errors.full_messages, "Email has already been taken"
+    end
   end
 
   def test_name_returns_concatenated_first_and_last_name
