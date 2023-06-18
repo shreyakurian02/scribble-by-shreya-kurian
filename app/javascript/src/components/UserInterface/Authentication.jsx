@@ -56,6 +56,7 @@ const Authentication = ({ site }) => {
               label={t("input.password")}
               name="password"
               placeholder={t("placeholder.enterPassword")}
+              type="password"
             />
             <Button
               fullWidth
