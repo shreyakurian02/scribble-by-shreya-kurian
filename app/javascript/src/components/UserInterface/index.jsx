@@ -8,8 +8,8 @@ import siteApi from "apis/site";
 import ErrorPage from "components/Common/ErrorPage";
 import {
   PREVIEW_URL,
-  EUI_LOGIN,
-  EUI_ARTICLE,
+  EUI_LOGIN_URL,
+  EUI_ARTICLE_URL,
   EUI_INVALID_URL,
   PUBLIC_ARTICLES_URL,
 } from "constants/urls";
@@ -67,28 +67,28 @@ const UserInterface = ({ notFoundError, setNotFoundError }) => {
   return (
     <Switch>
       <Redirect exact from={PREVIEW_URL} to={PUBLIC_ARTICLES_URL} />
-      {hasAccess && <Redirect exact from={EUI_LOGIN} to={PREVIEW_URL} />}
+      {hasAccess && <Redirect exact from={EUI_LOGIN_URL} to={PREVIEW_URL} />}
       <Route
         path={EUI_INVALID_URL}
         render={() => <ErrorPage homeUrl={PREVIEW_URL} />}
       />
       <Route
         exact
-        path={EUI_LOGIN}
+        path={EUI_LOGIN_URL}
         render={() => <Authentication site={site} />}
       />
       <PrivateRoute
         component={Preview}
         condition={hasAccess}
-        path={EUI_ARTICLE}
-        redirectRoute={EUI_LOGIN}
+        path={EUI_ARTICLE_URL}
+        redirectRoute={EUI_LOGIN_URL}
         site={site}
       />
       <PrivateRoute
         component={Preview}
         condition={hasAccess}
         path={PUBLIC_ARTICLES_URL}
-        redirectRoute={EUI_LOGIN}
+        redirectRoute={EUI_LOGIN_URL}
         site={site}
       />
       <Route path="*" render={() => <ErrorPage homeUrl={PREVIEW_URL} />} />

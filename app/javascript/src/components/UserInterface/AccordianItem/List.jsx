@@ -23,7 +23,7 @@ const List = ({ articles }) => {
       key={id}
       to={`/articles/${slug}`}
     >
-      <Typography className="ml-8 font-medium" style="body2">
+      <Typography className="neeto-ui-font-mediumm ml-8" style="body2">
         {title}
       </Typography>
     </NavLink>

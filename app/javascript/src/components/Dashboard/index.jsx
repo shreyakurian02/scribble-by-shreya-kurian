@@ -14,6 +14,7 @@ import {
   NEW_ARTICLE_URL,
   EDIT_ARTICLE_URL,
   SETTINGS_URL,
+  ADMIN_URL,
 } from "constants/urls";
 
 const Dashboard = ({ notFoundError, setNotFoundError }) => {
@@ -37,7 +38,7 @@ const Dashboard = ({ notFoundError, setNotFoundError }) => {
         <Route exact component={UpdateArticle} path={EDIT_ARTICLE_URL} />
         <Route exact component={Settings} path={SETTINGS_URL} />
         <Route exact component={Articles} path={ARTICLES_URL} />
-        <Redirect exact from="/admin" to={ARTICLES_URL} />
+        <Redirect exact from={ADMIN_URL} to={ARTICLES_URL} />
         <Route path="*" render={() => <ErrorPage homeUrl={ARTICLES_URL} />} />
       </Switch>
     </div>

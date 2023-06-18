@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Typography, Button } from "neetoui";
+import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { DEFAULT_ERROR_VALUES } from "src/constants";
 
@@ -23,6 +24,12 @@ const ErrorPage = ({
       />
     </div>
   );
+};
+
+ErrorPage.propTypes = {
+  notFoundError: PropTypes.object,
+  homeUrl: PropTypes.string,
+  setNotFoundError: PropTypes.func,
 };
 
 export default ErrorPage;

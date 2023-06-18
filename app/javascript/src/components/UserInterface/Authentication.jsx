@@ -24,7 +24,7 @@ const Authentication = ({ site }) => {
       const {
         data: { authentication_token },
       } = await sessionApi.login({ password });
-      setToSessionStorage(authentication_token);
+      setToSessionStorage({ key: "authToken", value: authentication_token });
       setAuthHeaders();
       window.location.href = PREVIEW_URL;
     } catch (error) {
