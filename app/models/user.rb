@@ -8,15 +8,7 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
 
-  before_save :downcase_email
-
   def name
     [first_name, last_name].join(" ").strip
   end
-
-  private
-
-    def downcase_email
-      email.downcase!
-    end
 end
