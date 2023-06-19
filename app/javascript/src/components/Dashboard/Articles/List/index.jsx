@@ -91,11 +91,13 @@ const List = ({
       <Delete
         manageDeleteAlert={manageDeleteAlert}
         refetchArticles={refetchArticles}
+        setSelectedArticles={setSelectedArticles}
         onClose={() => setManageDeleteAlert(MANAGE_DELETE_ALERT_INITIAL_VALUE)}
       />
       <Update
         manageUpdateModal={manageUpdateModal}
         refetchArticles={refetchArticles}
+        setSelectedArticles={setSelectedArticles}
         onClose={() => setManageUpdateModal(MANAGE_UPDATE_MODAL_INITIAL_VALUE)}
       />
     </>

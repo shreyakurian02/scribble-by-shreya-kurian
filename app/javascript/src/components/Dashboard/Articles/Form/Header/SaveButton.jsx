@@ -1,6 +1,7 @@
 import React from "react";
 
 import classnames from "classnames";
+import { useFormikContext } from "formik";
 import { Check } from "neetoicons";
 import { ActionDropdown } from "neetoui";
 import { useTranslation } from "react-i18next";
@@ -14,6 +15,7 @@ const {
 
 const SaveButton = ({ status, setStatus }) => {
   const { t } = useTranslation();
+  const { isSubmitting } = useFormikContext();
 
   const isArticleStatusDraft = status === ARTICLE_STATUS.draft;
 
@@ -29,7 +31,7 @@ const SaveButton = ({ status, setStatus }) => {
 
   return (
     <ActionDropdown
-      buttonProps={{ type: "submit" }}
+      buttonProps={{ type: "submit", loading: isSubmitting }}
       label={
         isArticleStatusDraft ? t("button.saveAsDraft") : t("common.publish")
       }

@@ -7,7 +7,12 @@ import { SINGULAR } from "src/constants";
 import articlesApi from "apis/articles";
 import { useCategoriesDispatch } from "contexts/categories";
 
-const Delete = ({ manageDeleteAlert, onClose, refetchArticles }) => {
+const Delete = ({
+  manageDeleteAlert,
+  onClose,
+  refetchArticles,
+  setSelectedArticles,
+}) => {
   const { t } = useTranslation();
   const fetchCategories = useCategoriesDispatch();
 
@@ -21,6 +26,7 @@ const Delete = ({ manageDeleteAlert, onClose, refetchArticles }) => {
       await articlesApi.destroy(slug);
       refetchArticles();
       fetchCategories();
+      setSelectedArticles([]);
       onClose();
     } catch (error) {
       logger.error(error);
@@ -31,7 +37,7 @@ const Delete = ({ manageDeleteAlert, onClose, refetchArticles }) => {
     <Alert
       isOpen={isOpen}
       message={<Trans i18nKey="alert.deleteMessage" values={{ title }} />}
-      submitButtonLabel={t("button.proceed")}
+      submitButtonLabel={t("button.delete")}
       title={t("alert.deleteEntity", {
         entity: t("common.article", SINGULAR).toLowerCase(),
       })}

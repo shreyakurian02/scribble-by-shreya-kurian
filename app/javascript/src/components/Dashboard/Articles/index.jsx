@@ -96,7 +96,7 @@ const Articles = () => {
             <Button
               to={NEW_ARTICLE_URL}
               label={t("button.addEntity", {
-                entity: t("common.article", SINGULAR),
+                entity: t("common.article", SINGULAR).toLowerCase(),
               })}
             />
           }

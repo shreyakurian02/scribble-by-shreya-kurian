@@ -1,6 +1,5 @@
-const setToSessionStorage = ({ key, value }) => {
+const setToSessionStorage = ({ key, value }) =>
   sessionStorage.setItem(key, JSON.stringify(value));
-};
 
 const getFromSessionStorage = key => {
   let response = "";

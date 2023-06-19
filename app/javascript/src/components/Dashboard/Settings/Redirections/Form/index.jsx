@@ -4,6 +4,7 @@ import { Check, Close } from "neetoicons";
 import { Button } from "neetoui";
 import { Form as NeetoUIForm, Input } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
+import { noop } from "src/utils";
 
 import redirectionsApi from "apis/redirections";
 
@@ -13,7 +14,7 @@ const Form = ({
   selectedRedirection = {},
   isEdit = false,
   onClose,
-  refetchRedirections = () => {},
+  refetchRedirections = noop,
 }) => {
   const { t } = useTranslation();
 

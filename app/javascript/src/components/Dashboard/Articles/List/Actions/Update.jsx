@@ -6,7 +6,12 @@ import articlesApi from "apis/articles";
 
 import UpdateModal from "../UpdateModal";
 
-const Update = ({ manageUpdateModal, refetchArticles, onClose }) => {
+const Update = ({
+  manageUpdateModal,
+  refetchArticles,
+  onClose,
+  setSelectedArticles,
+}) => {
   const { t } = useTranslation();
 
   const {
@@ -20,6 +25,7 @@ const Update = ({ manageUpdateModal, refetchArticles, onClose }) => {
       const payload = { status };
       await articlesApi.update({ slug, payload });
       refetchArticles();
+      setSelectedArticles([]);
       onClose();
     } catch (error) {
       logger.error(error);

@@ -1,3 +1,5 @@
+import { SINGULAR } from "constants";
+
 import React, { useState, useEffect, useMemo } from "react";
 
 import { Warning } from "neetoicons";
@@ -6,7 +8,6 @@ import { useTranslation, Trans } from "react-i18next";
 
 import categoriesApi from "apis/categories";
 import { getCategoryOptions } from "components/Dashboard/utils";
-import { SINGULAR } from "constants";
 import { useCategories } from "contexts/categories";
 
 const Delete = ({ isOpen, onClose, category }) => {
@@ -44,7 +45,7 @@ const Delete = ({ isOpen, onClose, category }) => {
   return (
     <Alert
       isOpen={isOpen}
-      submitButtonLabel={t("button.proceed")}
+      submitButtonLabel={t("button.delete")}
       message={
         <div className="space-y-2">
           <Trans i18nKey="alert.deleteMessage" values={{ title: name }} />

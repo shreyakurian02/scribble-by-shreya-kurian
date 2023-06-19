@@ -1,24 +1,23 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Local development setup
 
-Things you may want to cover:
+Use the following commands to set up and start the application.
 
-* Ruby version
+```
+./bin/setup
+```
 
-* System dependencies
+Run rails server and weback dev server
 
-* Configuration
+```
+bundle exec rails server
+```
 
-* Database creation
+```
+./bin/webpack-dev-server
+```
 
-* Database initialization
+Admin dashboard will be available at `http://localhost:3000/admin`
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+EUI will be available at `http://localhost:3000`

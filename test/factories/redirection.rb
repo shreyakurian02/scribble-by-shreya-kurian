@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :redirection do
-    from_path { "/#{Faker::Lorem.word}" }
+    from_path { "/#{Faker::Internet.slug(glue: '-')}" }
     to_path { Faker::Internet.url }
     site
   end
