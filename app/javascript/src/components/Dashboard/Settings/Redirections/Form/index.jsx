@@ -49,7 +49,7 @@ const Form = ({
         validationSchema: VALIDATION_SCHEMA,
       }}
     >
-      {({ dirty }) => (
+      {({ dirty, isSubmitting }) => (
         <div className="neeto-ui-bg-white border neeto-ui-border-primary-500 flex p-4">
           <div className="grid w-full grid-cols-2 space-x-2">
             <Input
@@ -65,7 +65,7 @@ const Form = ({
               />
               <div className="flex h-10">
                 <Button
-                  disabled={!dirty}
+                  disabled={!dirty || isSubmitting}
                   icon={() => <Check color="#268E6C" />}
                   style="text"
                   type="submit"

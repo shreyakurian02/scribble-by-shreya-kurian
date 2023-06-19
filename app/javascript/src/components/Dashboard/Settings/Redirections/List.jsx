@@ -50,14 +50,17 @@ const List = ({
         </>
       )}
       {isAddFormOpen && (
-        <Form
-          refetchRedirections={refetchRedirections}
-          onClose={() => setIsAddFormOpen(false)}
-        />
+        <>
+          {isEmpty(redirections) && <TableHeader />}
+          <Form
+            refetchRedirections={refetchRedirections}
+            onClose={() => setIsAddFormOpen(false)}
+          />
+        </>
       )}
       <Button
         className="flex pt-3"
-        disabled={isAddButtonDisabled}
+        disabled={isAddButtonDisabled || isLoading}
         icon={Plus}
         iconPosition="left"
         style="link"
