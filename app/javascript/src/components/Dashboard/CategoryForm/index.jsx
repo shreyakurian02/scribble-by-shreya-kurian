@@ -56,7 +56,7 @@ const CategoryForm = ({
           validationSchema: VALIDATION_SCHEMA,
         }}
       >
-        {({ dirty }) => (
+        {({ isSubmitting, dirty }) => (
           <>
             <Modal.Body className="space-y-2">
               <Input
@@ -66,7 +66,12 @@ const CategoryForm = ({
               />
             </Modal.Body>
             <Modal.Footer className="space-x-2">
-              <Button disabled={!dirty} label={t("button.add")} type="submit" />
+              <Button
+                disabled={!dirty || isSubmitting}
+                label={t("button.add")}
+                loading={isSubmitting}
+                type="submit"
+              />
               <Button label={t("button.cancel")} style="text" type="reset" />
             </Modal.Footer>
           </>

@@ -34,7 +34,7 @@ const BulkDelete = ({
   return (
     <Alert
       isOpen={isOpen}
-      submitButtonLabel={t("button.proceed")}
+      submitButtonLabel={t("button.delete")}
       message={
         <Trans
           i18nKey="alert.deleteMessage"

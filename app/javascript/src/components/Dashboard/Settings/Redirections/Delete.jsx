@@ -1,10 +1,11 @@
+import { SINGULAR } from "constants";
+
 import React from "react";
 
 import { Alert } from "neetoui";
 import { useTranslation, Trans } from "react-i18next";
 
 import redirectionsApi from "apis/redirections";
-import { SINGULAR } from "constants";
 
 import { ACTION } from "./constants";
 
@@ -34,7 +35,7 @@ const Delete = ({ manageRedirection, onClose, refetchRedirections }) => {
     <Alert
       className="break-all"
       isOpen={action === ACTION.delete}
-      submitButtonLabel={t("button.proceed")}
+      submitButtonLabel={t("button.delete")}
       message={
         <Trans
           i18nKey="alert.deleteRedirectionMessage"

@@ -26,6 +26,7 @@ const Form = ({ fetchSecurityDetails, setIsChangePasswordEnabled }) => {
     try {
       await siteApi.update({ password });
       fetchSecurityDetails();
+      setIsChangePasswordEnabled(false);
     } catch (error) {
       logger.error(error);
     }
@@ -42,7 +43,7 @@ const Form = ({ fetchSecurityDetails, setIsChangePasswordEnabled }) => {
         onReset: handleReset,
       }}
     >
-      {({ dirty, errors, values: { password } }) => (
+      {({ dirty, isSubmitting, errors, values: { password } }) => (
         <div className="space-y-5">
           <Input
             className="w-3/4"
@@ -73,8 +74,9 @@ const Form = ({ fetchSecurityDetails, setIsChangePasswordEnabled }) => {
           </div>
           <div className="flex flex-row space-x-2 py-4">
             <Button
-              disabled={!dirty}
+              disabled={!dirty || isSubmitting}
               label={t("button.saveChanges")}
+              loading={isSubmitting}
               type="submit"
             />
             <Button label={t("button.cancel")} style="text" type="reset" />

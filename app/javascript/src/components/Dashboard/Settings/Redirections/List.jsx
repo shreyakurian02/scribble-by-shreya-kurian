@@ -26,7 +26,7 @@ const List = ({
     isAddFormOpen || !isEmpty(manageRedirection.redirection);
 
   return (
-    <div className="neeto-ui-bg-pastel-blue space-y-3 rounded-md px-6 pb-6 pt-16">
+    <div className="neeto-ui-bg-pastel-blue space-y-3 rounded-md px-6 pb-6 pt-10">
       {isLoading && (
         <div className="flex w-full items-center justify-center">
           <Spinner />
@@ -62,7 +62,7 @@ const List = ({
         iconPosition="left"
         style="link"
         label={t("button.addNewEntity", {
-          entity: t("common.redirection", SINGULAR),
+          entity: t("common.redirection", SINGULAR).toLowerCase(),
         })}
         onClick={() => setIsAddFormOpen(true)}
       />

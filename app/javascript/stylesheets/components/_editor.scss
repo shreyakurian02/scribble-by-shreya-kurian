@@ -1,7 +1,7 @@
 .editor-content {
   width: 100% !important;
   border: none !important;
-  padding: 12px 10% 0 11% !important;
+  padding: 12px 10% 0 10% !important;
   overflow-y: scroll;
   max-height: calc(100vh - 200px);
 }
@@ -20,6 +20,8 @@
   margin: 12px 10% 0 10% !important;
 
   .neeto-ui-input {
+    padding-left: 0px !important;
+
     textarea {
       font-size: var(--neeto-ui-text-3xl);
       font-weight: var(--neeto-ui-font-semibold);

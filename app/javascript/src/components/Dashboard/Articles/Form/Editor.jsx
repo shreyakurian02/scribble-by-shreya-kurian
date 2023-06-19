@@ -9,7 +9,6 @@ import { EDITOR_ADDONS } from "./constants";
 
 const Editor = ({ editorRef }) => {
   const { t } = useTranslation();
-
   const { setFieldValue } = useFormikContext();
 
   return (
@@ -33,7 +32,7 @@ const Editor = ({ editorRef }) => {
           rows={1}
         />
         <ErrorMessage
-          className="mt-5 text-xs text-red-600"
+          className="neeto-ui-text-error-800 mt-5 text-xs"
           component="p"
           name="description"
         />

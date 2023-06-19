@@ -68,9 +68,8 @@ const LeftActionBlock = ({
 
   return (
     <div className="flex items-center space-x-2">
-      <Typography component="h4" style="h4">
+      <Typography style="body1">
         <Trans
-          components={{ span: <span className="neeto-ui-text-gray-600" /> }}
           i18nKey="common.selectedOf"
           values={{
             selectedCount: selectedRowsCount,

@@ -22,7 +22,7 @@
     "description": "Description",
     "lastPublished": "Last published at",
     "somethingWentWrong": "Something went wrong",
-    "selectedOf": "{{selectedCount}} {{resource}} selected of <span>{{articlesCount}}</span>",
+    "selectedOf": "<strong>{{selectedCount}} {{resource}}</strong> selected of {{articlesCount}}",
     "searchResult_one": "{{count}} result for \"{{search}}\"",
     "searchResult_other": "{{count}} results for \"{{search}}\"",
     "siteTitle": "Site title",
@@ -93,14 +93,14 @@
     "passwordFormat": "Include at least 1 letter and 1 number"
   },
   "alert": {
-    "deleteEntity": "Delete {{entity}}",
+    "deleteEntity": "Delete {{entity}}?",
     "deleteMessage": "You are permanently deleting <strong>{{title}}</strong>. This action cannot be undone.",
     "deleteRedirectionMessage": "You are permanently deleting redirection from <strong>{{from}}</strong> to <strong>{{to}}</strong>. This action cannot be undone.",
     "deleteCategoryWarning": "Category <strong>{{name}}</strong> has {{articleWithCount}}. Before this category can be deleted, these articles need to be moved to another category.",
     "deleteLastCategoryWarning": "Category <strong>{{name}}</strong> has {{articleWithCount}}. These articles will be moved to a default category called <strong>general</strong>."
   },
   "modal": {
-    "updateTitle": "Move {{entity}} to {{action}}",
+    "updateTitle": "Move {{entity}} to {{action}}?",
     "updateDescription": "You are changing the {{attribute}} of <strong>{{entity}}</strong> to <strong>{{attributeValue}}</strong/>."
   },
   "menubar": {

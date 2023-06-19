@@ -23,34 +23,35 @@ export const renderAction = ({
   article,
   setManageDeleteAlert,
   setManageUpdateModal,
-}) => (
-  <Dropdown buttonStyle="text" icon={MenuHorizontal}>
-    <Menu>
-      <Button
-        onClick={() =>
-          setManageUpdateModal({
-            isOpen: true,
-            article,
-            status: isArticleStatusDraft(article.status)
-              ? ARTICLE_STATUS.publish
-              : ARTICLE_STATUS.draft,
-          })
-        }
-      >
-        {isArticleStatusDraft(article.status)
-          ? t("common.publish")
-          : t("button.unpublish")}
-      </Button>
-      <Divider />
-      <Button
-        style="danger"
-        onClick={() => setManageDeleteAlert({ isOpen: true, article })}
-      >
-        {t("actions.delete")}
-      </Button>
-    </Menu>
-  </Dropdown>
-);
+}) => {
+  const handleUpdate = () =>
+    setManageUpdateModal({
+      isOpen: true,
+      article,
+      status: isArticleStatusDraft(article.status)
+        ? ARTICLE_STATUS.publish
+        : ARTICLE_STATUS.draft,
+    });
+
+  return (
+    <Dropdown buttonStyle="text" icon={MenuHorizontal}>
+      <Menu>
+        <Button onClick={handleUpdate}>
+          {isArticleStatusDraft(article.status)
+            ? t("common.publish")
+            : t("button.unpublish")}
+        </Button>
+        <Divider />
+        <Button
+          style="danger"
+          onClick={() => setManageDeleteAlert({ isOpen: true, article })}
+        >
+          {t("actions.delete")}
+        </Button>
+      </Menu>
+    </Dropdown>
+  );
+};
 
 export const renderStatus = status => (
   <span className="capitalize">{status}</span>

@@ -50,21 +50,24 @@ const Authentication = ({ site }) => {
             onSubmit: handleSubmit,
           }}
         >
-          <div className="mt-3 space-y-5 text-center">
-            <Input
-              required
-              label={t("input.password")}
-              name="password"
-              placeholder={t("placeholder.enterPassword")}
-              type="password"
-            />
-            <Button
-              fullWidth
-              label={t("button.continue")}
-              loading={isLoading}
-              type="submit"
-            />
-          </div>
+          {({ isSubmitting }) => (
+            <div className="mt-3 space-y-5 text-center">
+              <Input
+                required
+                label={t("input.password")}
+                name="password"
+                placeholder={t("placeholder.enterPassword")}
+                type="password"
+              />
+              <Button
+                fullWidth
+                disabled={isSubmitting || isLoading}
+                label={t("button.continue")}
+                loading={isLoading}
+                type="submit"
+              />
+            </div>
+          )}
         </Form>
       </div>
     </div>

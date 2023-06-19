@@ -8,19 +8,20 @@ export const renderPasswordVisibilityIcon = ({
   isPasswordHidden,
   setIsPasswordHidden,
   setInputType,
-}) =>
-  !isPasswordHidden ? (
-    <Hide
-      onClick={() => {
-        setIsPasswordHidden(true);
-        setInputType(INPUT_TYPE.password);
-      }}
-    />
+}) => {
+  const handleHidePassword = () => {
+    setIsPasswordHidden(true);
+    setInputType(INPUT_TYPE.password);
+  };
+
+  const handleShowPasword = () => {
+    setIsPasswordHidden(false);
+    setInputType(INPUT_TYPE.text);
+  };
+
+  return !isPasswordHidden ? (
+    <Hide onClick={handleHidePassword} />
   ) : (
-    <Eye
-      onClick={() => {
-        setIsPasswordHidden(false);
-        setInputType(INPUT_TYPE.text);
-      }}
-    />
+    <Eye onClick={handleShowPasword} />
   );
+};
