@@ -8,7 +8,7 @@ Use the following commands to set up and start the application.
 ./bin/setup
 ```
 
-Run rails server and weback dev server
+Run rails server and webpack dev server
 
 ```
 bundle exec rails server
