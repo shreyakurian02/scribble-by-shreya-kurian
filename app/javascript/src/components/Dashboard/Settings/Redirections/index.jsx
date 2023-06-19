@@ -38,8 +38,8 @@ const Redirections = () => {
   }, []);
 
   return (
-    <div className="relative mx-auto my-16 w-3/4 space-y-5 border-blue-800">
-      <div className="sticky top-0 border-red-700 bg-white py-3">
+    <div className="relative mx-auto my-16 w-3/4 space-y-5">
+      <div className="sticky top-0 bg-white py-3">
         <Header
           subtitle={t("settings.redirectionsSubtitle")}
           title={t("common.redirections")}
