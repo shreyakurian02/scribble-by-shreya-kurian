@@ -27,7 +27,9 @@ const CategoriesProvider = ({ children }) => {
 
   return (
     <CategoriesStateContext.Provider value={categories}>
-      <CategoriesDispatchContext.Provider value={fetchCategories}>
+      <CategoriesDispatchContext.Provider
+        value={{ fetchCategories, setCategories }}
+      >
         {children}
       </CategoriesDispatchContext.Provider>
     </CategoriesStateContext.Provider>

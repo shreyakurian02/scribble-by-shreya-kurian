@@ -15,7 +15,7 @@ class Api::V1::SitesControllerTest < ActionDispatch::IntegrationTest
     assert_equal new_title, @site.reload.title
   end
 
-  def test_shouldnt_update_site_with_invalid_title
+  def test_shouldnt_update_site_with_invalid_params
     assert_no_difference "Site.count" do
       put(api_v1_site_path, params: { site: { title: "" } }, headers:)
       assert_response :unprocessable_entity

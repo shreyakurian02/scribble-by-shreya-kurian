@@ -38,7 +38,7 @@ const Articles = () => {
   const history = useHistory();
   const debouncedCategorySearchTerm = useDebounce(categorySearchTerm);
   const debouncedArticleSearchTerm = useDebounce(articleSearchTerm);
-  const fetchCategories = useCategoriesDispatch();
+  const { fetchCategories } = useCategoriesDispatch();
 
   const { size: pageSize, page: currentPageNumber } = pageProperties;
 

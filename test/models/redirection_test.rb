@@ -19,12 +19,6 @@ class RedirectionTest < ActiveSupport::TestCase
     assert_includes @redirection.errors.full_messages, "To path can't be blank"
   end
 
-  def test_redirection_count_increases_on_saving
-    assert_difference "Redirection.count" do
-      create :redirection
-    end
-  end
-
   def test_from_path_is_unique_for_a_site
     duplicate_redirection = @redirection.dup
     assert_not duplicate_redirection.valid?

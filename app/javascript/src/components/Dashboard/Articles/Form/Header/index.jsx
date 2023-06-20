@@ -26,7 +26,7 @@ const Header = ({ status, setStatus, article = {}, isEdit = false }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const { setFieldValue } = useFormikContext();
-  const [categories, fetchCategories] = useCategories();
+  const [categories, { fetchCategories }] = useCategories();
 
   const { status: articleStatus, updated_at: articleUpdatedAt } = article;
 

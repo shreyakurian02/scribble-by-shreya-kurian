@@ -15,7 +15,7 @@ const {
 
 const SaveButton = ({ status, setStatus }) => {
   const { t } = useTranslation();
-  const { isSubmitting } = useFormikContext();
+  const { isSubmitting, dirty } = useFormikContext();
 
   const isArticleStatusDraft = status === ARTICLE_STATUS.draft;
 
@@ -32,6 +32,7 @@ const SaveButton = ({ status, setStatus }) => {
   return (
     <ActionDropdown
       buttonProps={{ type: "submit", loading: isSubmitting }}
+      disabled={!dirty}
       label={
         isArticleStatusDraft ? t("button.saveAsDraft") : t("common.publish")
       }

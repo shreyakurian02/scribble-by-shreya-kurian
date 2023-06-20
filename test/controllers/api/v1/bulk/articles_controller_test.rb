@@ -10,7 +10,7 @@ class Api::V1::Bulk::ArticlesControllerTest < ActionDispatch::IntegrationTest
     @articles = create_list(:article, 5, author: current_user, category:)
   end
 
-  def test_should_bulk_update_articles_status
+  def test_bulk_articles_update_success
     article_with_draft_status = @articles.first
     put(api_v1_bulk_articles_path, params: article_params({ article: { status: "published" } }), headers:)
     assert_response :success
@@ -18,7 +18,7 @@ class Api::V1::Bulk::ArticlesControllerTest < ActionDispatch::IntegrationTest
     assert_equal "published", article_with_draft_status.reload.status
   end
 
-  def test_shouldnt_update_articles_with_invalid_status
+  def test_bulk_articles_update_failure
     invalid_status = "pub"
     put(api_v1_bulk_articles_path, params: article_params({ article: { status: invalid_status } }), headers:)
     assert_response :unprocessable_entity

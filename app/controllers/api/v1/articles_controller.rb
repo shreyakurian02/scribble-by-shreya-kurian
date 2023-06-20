@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::ArticlesController < ApplicationController
-  before_action :load_current_user, only: %i[index create show update destroy]
+  before_action :load_current_user, except: %i[edit new]
   before_action :load_article!, only: %i[show update destroy]
 
   def index

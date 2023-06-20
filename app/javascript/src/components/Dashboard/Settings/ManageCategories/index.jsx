@@ -15,7 +15,6 @@ const ManageCategories = () => {
   const [isAddCategoryModalOpen, setIsAddCategoryModalOpen] = useState(false);
 
   const { t } = useTranslation();
-
   const categories = useCategoriesState();
 
   return (

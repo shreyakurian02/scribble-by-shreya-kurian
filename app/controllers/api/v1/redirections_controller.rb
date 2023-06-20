@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::V1::RedirectionsController < ApplicationController
-  before_action :load_redirection, only: %i[update destroy]
+  before_action :load_redirection!, only: %i[update destroy]
 
   def index
     @redirections = @site.redirections
@@ -28,7 +28,7 @@ class Api::V1::RedirectionsController < ApplicationController
       params.require(:redirection).permit(:from_path, :to_path)
     end
 
-    def load_redirection
+    def load_redirection!
       @redirection = @site.redirections.find(params[:id])
     end
 end

@@ -15,7 +15,7 @@ const BulkDelete = ({
   setSelectedArticles,
 }) => {
   const { t } = useTranslation();
-  const fetchCategories = useCategoriesDispatch();
+  const { fetchCategories } = useCategoriesDispatch();
 
   const selectedArticlesCount = selectedArticles.length;
 

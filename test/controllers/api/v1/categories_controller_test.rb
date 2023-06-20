@@ -12,7 +12,7 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
     create_list(:category, 5, site: @site)
     get(api_v1_categories_path, headers:)
     assert_response :success
-    assert_equal 6, response_json["categories"].length
+    assert_equal @site.categories.length, response_json["categories"].length
   end
 
   def test_should_create_valid_category
@@ -25,7 +25,7 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
     assert_equal I18n.t("successfully_created", entity: "Category"), response_json["notice"]
   end
 
-  def test_shouldnt_create_category_without_name
+  def test_shouldnt_create_category_with_invalid_param
     assert_no_difference "Category.count" do
       post(api_v1_categories_path, params: { category: { name: "" } }, headers:)
       assert_response :unprocessable_entity

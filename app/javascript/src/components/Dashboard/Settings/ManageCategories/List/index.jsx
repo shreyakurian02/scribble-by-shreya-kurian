@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 
-import { Spinner } from "neetoui";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import categoriesApi from "apis/categories";
@@ -9,12 +8,9 @@ import { useCategories } from "contexts/categories";
 import Item from "./Item";
 
 const List = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [categories, fetchCategories] = useCategories();
+  const [categories, { fetchCategories, setCategories }] = useCategories();
 
   const reorderCategories = async ({ draggableId, position }) => {
-    setIsLoading(true);
     try {
       await categoriesApi.update({
         id: draggableId,
@@ -24,8 +20,6 @@ const List = () => {
       fetchCategories();
     } catch (error) {
       logger.error(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -36,18 +30,16 @@ const List = () => {
 
     const {
       draggableId,
-      destination: { index },
+      source: { index: sourceIndex },
+      destination: { index: destinationIndex },
     } = result;
-    reorderCategories({ draggableId, position: index + 1 });
-  };
 
-  if (isLoading) {
-    return (
-      <div className="flex w-full justify-center">
-        <Spinner />
-      </div>
-    );
-  }
+    const reorderedCategories = [...categories];
+    const [removed] = reorderedCategories.splice(sourceIndex, 1);
+    reorderedCategories.splice(destinationIndex, 0, removed);
+    setCategories(reorderedCategories);
+    reorderCategories({ draggableId, position: destinationIndex + 1 });
+  };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
