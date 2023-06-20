@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Api::V1::Bulk::ArticlesController < ApplicationController
-  before_action :load_articles, only: %i[destroy update]
+  before_action :load_current_user, only: %i[update destroy]
+  before_action :load_articles, only: %i[update destroy]
 
   def update
     Article.transaction do
@@ -24,7 +25,7 @@ class Api::V1::Bulk::ArticlesController < ApplicationController
     end
 
     def load_articles
-      @articles = Article.where(id: params[:ids])
+      @articles = @current_user.articles.where(id: params[:ids])
     end
 
     def update_params

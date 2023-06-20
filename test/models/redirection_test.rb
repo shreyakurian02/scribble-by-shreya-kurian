@@ -38,30 +38,30 @@ class RedirectionTest < ActiveSupport::TestCase
     path = "/about"
     redirection = build(:redirection, from_path: path, to_path: path)
     assert_not redirection.valid?
-    assert_includes redirection.errors.full_messages, "To path cannot be same as from path"
+    assert_includes redirection.errors.full_messages, "To path #{I18n.t("errors.same_path")}"
 
     redirection = build(:redirection, from_path: path, to_path: "https://#{Rails.application.secrets[:host]}#{path}")
     assert_not redirection.valid?
-    assert_includes redirection.errors.full_messages, "To path cannot be same as from path"
+    assert_includes redirection.errors.full_messages, "To path #{I18n.t("errors.same_path")}"
   end
 
   def test_redirection_shouldnt_form_cyclic_path
     first_redirection = create(:redirection, from_path: "/article", to_path: "/article-1")
     second_redirection = build(:redirection, from_path: "/article-1", to_path: "/article", site: first_redirection.site)
     assert_not second_redirection.valid?
-    assert_includes second_redirection.errors.full_messages, "To path forms a loop with existing redirection"
+    assert_includes second_redirection.errors.full_messages, "To path #{I18n.t("errors.loop")}"
   end
 
   def test_to_path_shouldnt_be_same_as_from_path_of_another_redirection
     new_redirection = build(:redirection, from_path: @redirection.to_path, site: @redirection.site)
     assert_not new_redirection.valid?
-    assert_includes new_redirection.errors.full_messages, "From path cannot be same as to path of another redirection"
+    assert_includes new_redirection.errors.full_messages, "From path #{I18n.t("errors.chain_path", path: "to")}"
   end
 
   def test_from_path_shouldnt_be_same_as_to_path_of_another_redirection
     new_redirection = build(:redirection, to_path: @redirection.from_path, site: @redirection.site)
     assert_not new_redirection.valid?
-    assert_includes new_redirection.errors.full_messages, "To path cannot be same as from path of another redirection"
+    assert_includes new_redirection.errors.full_messages, "To path #{I18n.t("errors.chain_path", path: "from")}"
   end
 
   def test_from_and_to_path_can_be_same_with_different_host

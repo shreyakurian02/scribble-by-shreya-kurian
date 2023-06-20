@@ -57,7 +57,8 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_creates_default_category_when_last_category_is_deleted_and_has_articles
-    create :article, category: @category
+    author = create :user, site: @site
+    create(:article, category: @category, author:)
 
     assert_no_difference "Category.count" do
       delete(api_v1_category_path(@category.id), headers:)

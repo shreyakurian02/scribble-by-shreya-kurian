@@ -4,7 +4,10 @@ require "test_helper"
 
 class Api::V1::Bulk::ArticlesControllerTest < ActionDispatch::IntegrationTest
   def setup
-    @articles = create_list(:article, 5, status: "draft")
+    site = create :site
+    category = create(:category, site:)
+    current_user = create(:user, site:)
+    @articles = create_list(:article, 5, author: current_user, category:)
   end
 
   def test_should_bulk_update_articles_status

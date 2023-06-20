@@ -14,13 +14,13 @@ end
 
 def create_sample_data!
   puts 'Seeding with sample data...'
-  create_user!
   create_site!
+  create_user!
   create_categories_with_articles!
 end
 
 def create_user!
-  @user = User.create! email: 'oliver@example.com', first_name: 'Oliver', last_name: "Smith"
+  @user = @site.users.create! email: 'oliver@example.com', first_name: 'Oliver', last_name: "Smith"
 end
 
 def create_site!

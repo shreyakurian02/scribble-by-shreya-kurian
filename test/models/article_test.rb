@@ -30,7 +30,7 @@ class ArticleTest < ActiveSupport::TestCase
       @article.update!(slug: "modified-slug")
     end
 
-    assert_includes @article.errors.full_messages, "Slug is immutable"
+    assert_includes @article.errors.full_messages, "Slug #{I18n.t("slug.immutable")}"
   end
 
   def test_article_should_not_be_valid_with_duplicate_slug

@@ -4,9 +4,10 @@ require "test_helper"
 
 class Categories::DeletionServiceTest < ActiveSupport::TestCase
   def setup
-    @category = create :category
-    @site = @category.site
-    @articles = create_list(:article, 5, category: @category)
+    @site = create :site
+    @category = create :category, site: @site
+    current_user = create :user, site: @site
+    @articles = create_list(:article, 5, category: @category, author: current_user)
   end
 
   def test_category_deletion_moves_associated_articles_to_requested_category
