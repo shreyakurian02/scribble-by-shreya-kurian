@@ -2,10 +2,10 @@
 
 module Articles
   class FilterService
-    attr_reader :options, :site
+    attr_reader :options, :current_user
 
-    def initialize(site, options = {})
-      @site = site
+    def initialize(current_user, options = {})
+      @current_user = current_user
       @options = options
     end
 
@@ -19,7 +19,7 @@ module Articles
     private
 
       def filter_by_status
-        @articles = site.articles.send(status)
+        @articles = current_user.articles.send(status)
       end
 
       def filter_by_category
