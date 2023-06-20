@@ -4,8 +4,9 @@ require "test_helper"
 
 class Categories::DeletionServiceTest < ActiveSupport::TestCase
   def setup
-    @category = create :category
-    @site = @category.site
+    @site = create :site
+    @category = create :category, site: @site
+    current_user = create :user, site: @site
     @articles = create_list(:article, 5, category: @category)
   end
 

@@ -5,15 +5,16 @@ require "test_helper"
 class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
   def setup
     site = create :site
+    @current_user = create(:user, site:)
     @category = create(:category, site:)
-    @article = create :article, category: @category
+    @article = create :article, category: @category, author: @current_user
   end
 
   def test_should_list_all_articles
-    create_list(:article, 5, category: @category)
+    create_list(:article, 5, category: @category, author: @current_user)
     get(api_v1_articles_path, headers:)
     assert_response :success
-    assert_equal 6, response_json["articles"].length
+    assert_equal @current_user.articles.length, response_json["articles"].length
   end
 
   def test_should_create_valid_article
