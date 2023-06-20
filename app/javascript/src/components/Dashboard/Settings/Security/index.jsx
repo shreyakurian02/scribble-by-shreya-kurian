@@ -40,7 +40,7 @@ const Security = () => {
         data: { site },
       } = await siteApi.show();
       setSiteSettings(site);
-      site.is_password_protected && setIsSecurityEnabled(true);
+      setIsSecurityEnabled(site.is_password_protected);
     } catch (error) {
       logger.error(error);
     } finally {

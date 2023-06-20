@@ -14,7 +14,7 @@ const Delete = ({ isOpen, onClose, category }) => {
   const [selectedCategory, setSelectedCategory] = useState({});
 
   const { t } = useTranslation();
-  const [categories, fetchCategories] = useCategories();
+  const [categories, { fetchCategories }] = useCategories();
 
   const { name, articles_count: articlesCount, id: categoryId } = category;
   const isLastCategory = categories.length === 1;

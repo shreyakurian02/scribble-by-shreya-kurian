@@ -14,7 +14,7 @@ const Delete = ({
   setSelectedArticles,
 }) => {
   const { t } = useTranslation();
-  const fetchCategories = useCategoriesDispatch();
+  const { fetchCategories } = useCategoriesDispatch();
 
   const {
     isOpen,

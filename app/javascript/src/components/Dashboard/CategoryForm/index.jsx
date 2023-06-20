@@ -17,7 +17,7 @@ const CategoryForm = ({
 }) => {
   const { t } = useTranslation();
 
-  const fetchCategories = useCategoriesDispatch();
+  const { fetchCategories } = useCategoriesDispatch();
 
   const { name: selectedCategoryName, id: selectedCategoryId } =
     selectedCategory;
