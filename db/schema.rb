@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_18_063035) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_20_062807) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -67,11 +67,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_063035) do
     t.citext "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "site_id", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["site_id"], name: "index_users_on_site_id"
   end
 
   add_foreign_key "articles", "categories"
   add_foreign_key "articles", "users", column: "author_id"
   add_foreign_key "categories", "sites"
   add_foreign_key "redirections", "sites"
+  add_foreign_key "users", "sites"
 end

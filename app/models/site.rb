@@ -4,6 +4,7 @@ class Site < ApplicationRecord
   MINIMUM_PASSWORD_LENGTH = 6
   VALID_PASSWORD_REGEX = /\A(?=.*[a-zA-Z])(?=.*\d).+\z/i.freeze
 
+  has_many :users, dependent: :destroy
   has_many :redirections, dependent: :destroy
   has_many :categories, dependent: :destroy
   has_many :articles, through: :categories
