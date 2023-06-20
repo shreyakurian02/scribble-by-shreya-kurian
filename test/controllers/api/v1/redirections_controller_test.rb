@@ -12,7 +12,7 @@ class Api::V1::RedirectionsControllerTest < ActionDispatch::IntegrationTest
     create_list(:redirection, 5, site: @site)
     get(api_v1_redirections_path, headers:)
     assert_response :success
-    assert_equal 6, response_json["redirections"].length
+    assert_equal @site.redirections.length, response_json["redirections"].length
   end
 
   def test_should_create_valid_redirection
