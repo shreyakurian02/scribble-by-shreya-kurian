@@ -16,7 +16,6 @@ const CategoryForm = ({
   isEdit = false,
 }) => {
   const { t } = useTranslation();
-
   const { fetchCategories } = useCategoriesDispatch();
 
   const { name: selectedCategoryName, id: selectedCategoryId } =
