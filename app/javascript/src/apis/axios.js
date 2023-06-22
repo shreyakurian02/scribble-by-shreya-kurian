@@ -1,7 +1,7 @@
+import { DEFAULT_ERROR_NOTIFICATION } from "constants";
+
 import axios from "axios";
 import { Toastr } from "neetoui";
-
-import { DEFAULT_ERROR_NOTIFICATION } from "constants";
 
 import { getFromSessionStorage } from "../utils/storage";
 
