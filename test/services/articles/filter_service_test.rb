@@ -4,40 +4,46 @@ require "test_helper"
 
 class Articles::FilterServiceTest < ActiveSupport::TestCase
   def setup
-    @category = create :category
-    @articles = create_list(:article, 5, category: @category)
+    site = create :site
+    @category = create(:category, site:)
+    @current_user = create(:user, site:)
+    @articles = create_list(:article, 5, category: @category, user: @current_user)
   end
 
   def test_filter_by_status
-    @articles[0].published!
-    process_service({ status: "published" })
-    assert_equal [@articles[0].id], @filtered_articles.ids
-    assert_equal 1, @filtered_count
+    selected_status = "published"
+    @articles.first.published!
+    process_service({ status: selected_status })
+    expected_articles_with_selected_status = @current_user.articles.send(selected_status)
+    assert_equal expected_articles_with_selected_status.ids.sort, @filtered_articles.ids.sort
+    assert_equal expected_articles_with_selected_status.size, @filtered_count
   end
 
   def test_filter_by_category
-    selected_categories = [@articles[0].category.name]
-    expected_articles_with_selected_categories = @articles.select { |article|
-      selected_categories.include? article.category.name }
+    selected_categories = [@articles.first.category.name]
+    expected_articles_with_selected_categories = @current_user.articles.includes(:category)
+      .where(category: { name: selected_categories })
     process_service({ categories: selected_categories })
-    assert_equal expected_articles_with_selected_categories.pluck("id"), @filtered_articles.ids
+    assert_equal expected_articles_with_selected_categories.ids.sort, @filtered_articles.ids.sort
   end
 
   def test_filter_by_search_term
-    search_term = @articles[0].title
+    search_term = @articles.first.title
     possible_search_terms = [search_term.upcase, search_term.downcase]
 
     possible_search_terms.each do |search|
       expected_articles_with_search_term = Article.where("title ILIKE ?", "%#{search}%")
       process_service({ search: })
-      assert_equal expected_articles_with_search_term.pluck("id"), @filtered_articles.ids
+      assert_equal expected_articles_with_search_term.ids.sort, @filtered_articles.ids.sort
       assert_equal expected_articles_with_search_term.size, @filtered_count
     end
   end
 
   def test_pagination
+    expected_paginated_articles = @current_user.articles.order(updated_at: :desc).page(3).per(2)
     process_service({ per_page: 2, page_number: 3 })
-    assert_equal 1, @filtered_articles.size
+    assert_equal expected_paginated_articles.size, @filtered_articles.size
+    assert_equal expected_paginated_articles.ids.sort, @filtered_articles.ids.sort
   end
 
   private

@@ -8,8 +8,8 @@ class Api::V1::CategoriesController < ApplicationController
   end
 
   def create
-    category = @site.categories.create!(category_params)
-    render_notice(t("successfully_created", entity: "Category"), :ok, { category_id: category.id })
+    @site.categories.create!(category_params)
+    render_notice(t("successfully_created", entity: "Category"))
   end
 
   def update

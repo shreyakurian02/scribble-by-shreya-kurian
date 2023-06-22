@@ -7,7 +7,7 @@ class Site < ApplicationRecord
   has_many :users, dependent: :destroy
   has_many :redirections, dependent: :destroy
   has_many :categories, dependent: :destroy
-  has_many :articles, through: :categories
+  has_many :articles, through: :users
 
   validates :title, presence: true, uniqueness: true,
     format: { with: Constants::ALPHANUMERIC_FORMAT_REGEX, message: I18n.t("errors.alphanumeric") }

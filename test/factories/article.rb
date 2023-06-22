@@ -2,9 +2,9 @@
 
 FactoryBot.define do
   factory :article do
-    title { Faker::Lorem.sentence(word_count: 1) }
+    title { Faker::Lorem.sentence(word_count: 2) }
     description { Faker::Lorem.sentence }
     category
-    association :author, factory: :user
+    user
   end
 end

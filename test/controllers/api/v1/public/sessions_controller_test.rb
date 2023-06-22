@@ -16,7 +16,6 @@ class Api::V1::Public::SessionsControllerTest < ActionDispatch::IntegrationTest
   def test_shouldnt_login_into_site_with_invalid_credentials
     post(api_v1_public_session_path, params: { login: { password: "Invalid password" } }, headers:)
     assert_response :unauthorized
-    response_json = response.parsed_body
     assert_equal I18n.t("session.incorrect_credentials"), response_json["error"]
   end
 end

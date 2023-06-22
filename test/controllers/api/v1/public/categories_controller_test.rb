@@ -11,7 +11,7 @@ class Api::V1::Public::CategoriesControllerTest < ActionDispatch::IntegrationTes
 
   def test_should_only_list_categories_with_published_articles
     user = create :user, site: @site
-    create(:article, :published, category: @categories.first, author: user)
+    create(:article, :published, category: @categories.first, user:)
     categories_with_published_articles = @site.categories.joins(:articles).where(articles: { status: Article.statuses[:published] }).distinct
     get api_v1_public_categories_path, headers: @headers
     assert_response :success

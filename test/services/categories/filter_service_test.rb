@@ -15,8 +15,8 @@ class Categories::FilterServiceTest < ActiveSupport::TestCase
     possible_search_terms.each do |search|
       expected_categories_with_search_term = Category.where("name ILIKE ?", "%#{search}%")
       @filtered_categories = Categories::FilterService.new(@site, { search: }).process
-      assert_equal expected_categories_with_search_term.pluck("id"), @filtered_categories.ids
-      assert_equal 1, @filtered_categories.size
+      assert_equal expected_categories_with_search_term.ids.sort, @filtered_categories.ids.sort
+      assert_equal expected_categories_with_search_term.size, @filtered_categories.size
     end
   end
 end

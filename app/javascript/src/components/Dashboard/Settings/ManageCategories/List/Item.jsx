@@ -61,8 +61,8 @@ const Item = ({ category, categoriesCount }) => {
         </div>
       </div>
       <Delete
-        category={category}
         isOpen={isDeleteAlertOpen}
+        selectedCategory={category}
         onClose={() => setIsDeleteAlertOpen(false)}
       />
       <EditCategory
