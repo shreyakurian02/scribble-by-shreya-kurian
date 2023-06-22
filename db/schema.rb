@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_20_062807) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_21_182110) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -23,12 +23,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_062807) do
     t.datetime "last_published_at"
     t.string "status", default: "draft", null: false
     t.uuid "category_id", null: false
-    t.uuid "author_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["author_id"], name: "index_articles_on_author_id"
+    t.uuid "user_id", null: false
     t.index ["category_id"], name: "index_articles_on_category_id"
     t.index ["slug"], name: "index_articles_on_slug", unique: true
+    t.index ["user_id"], name: "index_articles_on_user_id"
   end
 
   create_table "categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -38,7 +38,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_062807) do
     t.integer "articles_count", default: 0
     t.integer "position"
     t.uuid "site_id", null: false
-    t.index ["name"], name: "index_categories_on_name", unique: true
+    t.index ["site_id", "name"], name: "index_categories_on_site_id_and_name", unique: true
     t.index ["site_id"], name: "index_categories_on_site_id"
   end
 
@@ -68,13 +68,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_20_062807) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "site_id", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["site_id", "email"], name: "index_users_on_site_id_and_email", unique: true
     t.index ["site_id"], name: "index_users_on_site_id"
   end
 
   add_foreign_key "articles", "categories"
-  add_foreign_key "articles", "users", column: "author_id"
-  add_foreign_key "categories", "sites"
-  add_foreign_key "redirections", "sites"
-  add_foreign_key "users", "sites"
+  add_foreign_key "articles", "users", on_delete: :cascade
+  add_foreign_key "categories", "sites", on_delete: :cascade
+  add_foreign_key "redirections", "sites", on_delete: :cascade
+  add_foreign_key "users", "sites", on_delete: :cascade
 end
