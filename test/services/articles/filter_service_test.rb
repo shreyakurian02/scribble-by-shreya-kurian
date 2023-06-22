@@ -16,7 +16,7 @@ class Articles::FilterServiceTest < ActiveSupport::TestCase
     process_service({ status: selected_status })
     expected_articles_with_selected_status = @current_user.articles.send(selected_status)
     assert_equal expected_articles_with_selected_status.ids.sort, @filtered_articles.ids.sort
-    assert_equal expected_articles_with_selected_status.length, @filtered_count
+    assert_equal expected_articles_with_selected_status.size, @filtered_count
   end
 
   def test_filter_by_category
@@ -42,7 +42,7 @@ class Articles::FilterServiceTest < ActiveSupport::TestCase
   def test_pagination
     expected_paginated_articles = @current_user.articles.order(updated_at: :desc).page(3).per(2)
     process_service({ per_page: 2, page_number: 3 })
-    assert_equal expected_paginated_articles.length, @filtered_articles.size
+    assert_equal expected_paginated_articles.size, @filtered_articles.size
     assert_equal expected_paginated_articles.ids.sort, @filtered_articles.ids.sort
   end
 

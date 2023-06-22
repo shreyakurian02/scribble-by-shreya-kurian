@@ -14,7 +14,7 @@ class Categories::DeletionServiceTest < ActiveSupport::TestCase
     move_to_category = create :category, site: @site
     assert_equal 0, move_to_category.articles.size
 
-    assert_difference "@site.categories.count", -1 do
+    assert_difference "@site.categories.size", -1 do
       Categories::DeletionService.new(@site, @category, move_to_category.id).process!
     end
 
@@ -23,17 +23,17 @@ class Categories::DeletionServiceTest < ActiveSupport::TestCase
 
   def test_creates_default_category_when_last_category_is_deleted_and_has_articles
     Categories::DeletionService.new(@site, @category).process!
-    assert_equal 1, @site.categories.count
+    assert_equal 1, @site.categories.size
     assert_equal Category::DEFAULT_CATEGORY_NAME, Category.first.name
   end
 
   def test_default_category_is_not_created_when_last_category_with_no_articles_is_deleted
     @category.articles.destroy_all
 
-    assert_difference "@site.categories.count", -1 do
+    assert_difference "@site.categories.size", -1 do
       Categories::DeletionService.new(@site, @category).process!
     end
-    assert_equal 0, @site.categories.count
+    assert_equal 0, @site.categories.size
   end
 
   def test_cannot_delete_default_category_if_last
@@ -51,7 +51,7 @@ class Categories::DeletionServiceTest < ActiveSupport::TestCase
     new_category = create :category, site: @site
     default_category = Category.find_by!(name: Category::DEFAULT_CATEGORY_NAME)
 
-    assert_difference "@site.categories.count", -1 do
+    assert_difference "@site.categories.size", -1 do
       Categories::DeletionService.new(@site, default_category, new_category.id).process!
     end
   end

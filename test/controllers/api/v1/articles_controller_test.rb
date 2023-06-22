@@ -18,7 +18,7 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_should_create_valid_article
-    assert_difference "@current_user.articles.count" do
+    assert_difference "@current_user.articles.size" do
       post(api_v1_articles_path, params: article_params({ category_id: @category.id }), headers:)
       assert_response :success
     end
@@ -43,7 +43,7 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_destroy_article
-    assert_difference "@current_user.articles.count", -1 do
+    assert_difference "@current_user.articles.size", -1 do
       delete(api_v1_article_path(@article.slug), headers:)
       assert_response :success
     end
@@ -51,7 +51,7 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_shouldnt_destroy_article_with_invalid_slug
-    assert_no_difference "@current_user.articles.count" do
+    assert_no_difference "@current_user.articles.size" do
       delete(api_v1_article_path("invalid-slug"), headers:)
       assert_response :not_found
     end
@@ -66,7 +66,7 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_shouldnt_create_article_with_invalid_params
-    assert_no_difference "@current_user.articles.count" do
+    assert_no_difference "@current_user.articles.size" do
       post(api_v1_articles_path, params: article_params, headers:)
       assert_response :unprocessable_entity
     end

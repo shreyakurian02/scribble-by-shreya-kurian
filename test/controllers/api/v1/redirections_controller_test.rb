@@ -16,7 +16,7 @@ class Api::V1::RedirectionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_should_create_valid_redirection
-    assert_difference "@site.redirections.count" do
+    assert_difference "@site.redirections.size" do
       post(api_v1_redirections_path, params: redirection_params({ site_id: @site.id }), headers:)
       assert_response :success
     end
@@ -41,7 +41,7 @@ class Api::V1::RedirectionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_shouldnt_create_redirection_with_invalid_params
-    assert_no_difference "@site.redirections.count" do
+    assert_no_difference "@site.redirections.size" do
       post(api_v1_redirections_path, params: redirection_params({ from_path: "" }), headers:)
       assert_response :unprocessable_entity
     end
@@ -49,7 +49,7 @@ class Api::V1::RedirectionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_can_destroy_redirection
-    assert_difference "@site.redirections.count", -1 do
+    assert_difference "@site.redirections.size", -1 do
       delete(api_v1_redirection_path(@redirection.id), headers:)
       assert_response :success
     end
@@ -57,7 +57,7 @@ class Api::V1::RedirectionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_shouldnt_destroy_redirection_with_invalid_id
-    assert_no_difference "@site.redirections.count" do
+    assert_no_difference "@site.redirections.size" do
       delete(api_v1_redirection_path("invalid-id"), headers:)
       assert_response :not_found
     end

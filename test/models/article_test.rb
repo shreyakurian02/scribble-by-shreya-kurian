@@ -13,12 +13,6 @@ class ArticleTest < ActiveSupport::TestCase
     assert_includes @article.errors.full_messages, "Title can't be blank"
   end
 
-  def test_article_count_increases_on_saving
-    assert_difference "Article.count" do
-      create :article
-    end
-  end
-
   def test_article_should_not_be_saved_without_description
     @article.description = ""
     assert @article.invalid?

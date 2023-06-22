@@ -6,7 +6,7 @@ class Api::V1::Public::CategoriesControllerTest < ActionDispatch::IntegrationTes
   def setup
     @site = create :site
     @headers = public_headers(@site)
-    @categories= create_list :category, 5, site: @site
+    @categories = create_list :category, 5, site: @site
   end
 
   def test_should_only_list_categories_with_published_articles

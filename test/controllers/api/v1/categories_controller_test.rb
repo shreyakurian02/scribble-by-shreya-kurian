@@ -16,7 +16,7 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_should_create_valid_category
-    assert_difference "@site.categories.count" do
+    assert_difference "@site.categories.size" do
       post(
         api_v1_categories_path, params: { category: { name: "Userflow" } }, headers:)
       assert_response :success
@@ -26,7 +26,7 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_shouldnt_create_category_with_invalid_param
-    assert_no_difference "@site.categories.count" do
+    assert_no_difference "@site.categories.size" do
       post(api_v1_categories_path, params: { category: { name: "" } }, headers:)
       assert_response :unprocessable_entity
     end
@@ -60,7 +60,7 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
     user = create :user, site: @site
     create(:article, category: @category, user:)
 
-    assert_no_difference "@site.categories.count" do
+    assert_no_difference "@site.categories.size" do
       delete(api_v1_category_path(@category.id), headers:)
       assert_response :success
     end
@@ -69,11 +69,11 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_shouldnt_destroy_category_with_invalid_id
-    assert_no_difference "@site.categories.count" do
+    assert_no_difference "@site.categories.size" do
       delete(api_v1_category_path("invalid-id"), headers:)
       assert_response :not_found
     end
-    assert_includes response_json["error"], "Category not found"
+    assert_equal "Category not found", response_json["error"]
   end
 
   def test_can_reorder_categories
