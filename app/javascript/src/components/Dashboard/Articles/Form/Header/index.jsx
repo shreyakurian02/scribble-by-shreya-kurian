@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useFormikContext } from "formik";
 import { MenuHorizontal } from "neetoicons";
@@ -19,35 +19,59 @@ import { Delete } from "../../List/Actions";
 import { formatDate, titlize } from "../utils";
 
 const Header = ({ status, setStatus, article = {}, isEdit = false }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [manageDeleteAlert, setManageDeleteAlert] = useState(
     MANAGE_DELETE_ALERT_INITIAL_VALUE
   );
 
   const { t } = useTranslation();
   const history = useHistory();
-  const { setFieldValue } = useFormikContext();
   const [categories, { fetchCategories }] = useCategories();
+
+  const {
+    setFieldValue,
+    values: { category },
+  } = useFormikContext();
 
   const { status: articleStatus, updated_at: articleUpdatedAt } = article;
 
   const handleCreateCategory = async category => {
+    setIsLoading(true);
     try {
       const payload = { name: category };
-      const {
-        data: { category_id },
-      } = await categoriesApi.create(payload);
-      setFieldValue("category", { label: category, value: category_id });
+      await categoriesApi.create(payload);
+      setFieldValue("category", {
+        label: category,
+        value: category,
+      });
       fetchCategories();
     } catch (error) {
       logger.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  const setNewCategory = () => {
+    const newCategory = category?.label;
+    if (newCategory) {
+      setFieldValue("category", {
+        label: newCategory,
+        value: categories?.find(({ name }) => name === newCategory)?.id,
+      });
+    }
+  };
+
+  useEffect(() => {
+    setNewCategory();
+  }, [categories]);
 
   return (
     <div className="flex justify-between px-5">
       <div className="w-64">
         <Select
           isCreateable
+          loading={isLoading}
           name="category"
           options={getCategoryOptions(categories)}
           placeholder={t("placeholder.searchCategory")}
