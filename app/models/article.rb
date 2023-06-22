@@ -6,7 +6,7 @@ class Article < ApplicationRecord
   enum :status, { draft: "draft", published: "published" }, default: "draft"
 
   belongs_to :category, counter_cache: true
-  belongs_to :author, class_name: "User", foreign_key: :author_id
+  belongs_to :user
 
   validates :description, presence: true
   validates :slug, uniqueness: true

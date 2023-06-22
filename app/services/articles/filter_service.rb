@@ -19,7 +19,7 @@ module Articles
     private
 
       def filter_by_status
-        @articles = current_user.articles.send(status)
+        @articles = current_user.articles.send(status).order(updated_at: :desc)
       end
 
       def filter_by_category
