@@ -5,6 +5,7 @@ require "test_helper"
 class RedirectionTest < ActiveSupport::TestCase
   def setup
     @redirection = create(:redirection)
+    @site = @redirection.site
   end
 
   def test_redirection_should_not_be_saved_without_from_path
@@ -46,16 +47,20 @@ class RedirectionTest < ActiveSupport::TestCase
     assert_includes second_redirection.errors.full_messages, "To path #{I18n.t("errors.loop")}"
   end
 
-  def test_to_path_shouldnt_be_same_as_from_path_of_another_redirection
-    new_redirection = build(:redirection, from_path: @redirection.to_path, site: @redirection.site)
-    assert_not new_redirection.valid?
-    assert_includes new_redirection.errors.full_messages, "From path #{I18n.t("errors.chain_path", path: "to")}"
-  end
+  def test_shouldnt_allow_chained_paths
+    first_redirection = create(:redirection, from_path: "/one", to_path: "/two", site: @site)
+    second_redirection = create(:redirection, from_path: "/three", to_path: "/four", site: @site)
+    assert first_redirection.valid?
+    assert second_redirection.valid?
 
-  def test_from_path_shouldnt_be_same_as_to_path_of_another_redirection
-    new_redirection = build(:redirection, to_path: @redirection.from_path, site: @redirection.site)
-    assert_not new_redirection.valid?
-    assert_includes new_redirection.errors.full_messages, "To path #{I18n.t("errors.chain_path", path: "from")}"
+    third_redirection = build(:redirection, from_path: "/four", to_path: "/one", site: @site)
+    assert_not third_redirection.valid?
+    assert_includes third_redirection.errors.full_messages, "From path #{I18n.t("errors.chain_path", path: "to")}"
+    assert_includes third_redirection.errors.full_messages, "To path #{I18n.t("errors.chain_path", path: "from")}"
+
+    fourth_redirection = build(:redirection, from_path: "/two", to_path: "/five", site: @site)
+    assert_not third_redirection.valid?
+    assert_includes third_redirection.errors.full_messages, "From path #{I18n.t("errors.chain_path", path: "to")}"
   end
 
   def test_from_and_to_path_can_be_same_with_different_host

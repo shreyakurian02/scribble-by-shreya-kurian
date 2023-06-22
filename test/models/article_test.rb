@@ -49,10 +49,10 @@ class ArticleTest < ActiveSupport::TestCase
     assert_not_equal @article.slug, article_two.slug
   end
 
-  def test_article_has_author
-    @article.author_id = nil
+  def test_article_has_user
+    @article.user_id = nil
     assert @article.invalid?
-    assert_includes @article.errors.full_messages, "Author must exist"
+    assert_includes @article.errors.full_messages, "User must exist"
   end
 
   def test_article_has_category
@@ -141,7 +141,7 @@ class ArticleTest < ActiveSupport::TestCase
     assert_not_nil article.last_published_at
   end
 
-  def test_last_published_at_does_not_updates_when_status_was_already_published
+  def test_last_published_at_does_not_update_when_status_was_already_published
     article = create(:article, status: "published")
     last_published_at = article.last_published_at
     article.published!

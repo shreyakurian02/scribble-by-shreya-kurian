@@ -16,7 +16,7 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_should_create_valid_category
-    assert_difference "Category.count" do
+    assert_difference "@site.categories.count" do
       post(
         api_v1_categories_path, params: { category: { name: "Userflow" } }, headers:)
       assert_response :success
@@ -26,7 +26,7 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_shouldnt_create_category_with_invalid_param
-    assert_no_difference "Category.count" do
+    assert_no_difference "@site.categories.count" do
       post(api_v1_categories_path, params: { category: { name: "" } }, headers:)
       assert_response :unprocessable_entity
     end
@@ -57,10 +57,10 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_creates_default_category_when_last_category_is_deleted_and_has_articles
-    author = create :user, site: @site
-    create(:article, category: @category, author:)
+    user = create :user, site: @site
+    create(:article, category: @category, user:)
 
-    assert_no_difference "Category.count" do
+    assert_no_difference "@site.categories.count" do
       delete(api_v1_category_path(@category.id), headers:)
       assert_response :success
     end
@@ -69,17 +69,18 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_shouldnt_destroy_category_with_invalid_id
-    assert_no_difference "Category.count" do
+    assert_no_difference "@site.categories.count" do
       delete(api_v1_category_path("invalid-id"), headers:)
       assert_response :not_found
     end
     assert_includes response_json["error"], "Category not found"
   end
 
-  def test_reorder_categories
-    new_category = create :category, site: @site
-    assert_equal 1, @category.position
-    put(api_v1_category_path(@category.id), params: { category: { position: new_category.position } }, headers:)
-    assert_equal 2, @category.reload.position
+  def test_can_reorder_categories
+    second_category = create :category, site: @site
+    old_position = @category.position
+    target_position = second_category.position
+    put(api_v1_category_path(@category.id), params: { category: { position: target_position } }, headers:)
+    assert_equal target_position, @category.reload.position
   end
 end

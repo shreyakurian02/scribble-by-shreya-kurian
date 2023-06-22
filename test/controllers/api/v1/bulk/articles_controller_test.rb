@@ -6,8 +6,8 @@ class Api::V1::Bulk::ArticlesControllerTest < ActionDispatch::IntegrationTest
   def setup
     site = create :site
     category = create(:category, site:)
-    current_user = create(:user, site:)
-    @articles = create_list(:article, 5, author: current_user, category:)
+    @current_user = create(:user, site:)
+    @articles = create_list(:article, 5, user: @current_user, category:)
   end
 
   def test_bulk_articles_update_success
@@ -26,7 +26,8 @@ class Api::V1::Bulk::ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_bulk_destroy_articles
-    assert_difference "Article.count", -5 do
+    expected_difference_count = @articles.length
+    assert_difference "@current_user.articles.size", -expected_difference_count do
       delete(api_v1_bulk_articles_path, params: article_params, headers:)
       assert_response :success
     end

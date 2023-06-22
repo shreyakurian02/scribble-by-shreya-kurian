@@ -57,4 +57,17 @@ class SiteTest < ActiveSupport::TestCase
     @site.update!(password: "new_password@2")
     assert_not_equal old_authentication_token, @site.reload.authentication_token
   end
+
+  def test_site_incinerates_successfully
+    category = create :category, site: @site
+    redirection = create :redirection, site: @site
+    user = create :user, site: @site
+    article = create(:article, category:, user:)
+
+    @site.destroy!
+    assert_not Article.exists?(article.id)
+    assert_not Category.exists?(category.id)
+    assert_not Redirection.exists?(category.id)
+    assert_not User.exists?(category.id)
+  end
 end
