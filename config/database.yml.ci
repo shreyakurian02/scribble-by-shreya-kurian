@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  host: 127.0.0.1
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: scribble_by_shreya_kurian_development
+
+test:
+  <<: *default
+  user: postgres
+  database: scribble_by_shreya_kurian_test<%= ENV['CIRCLE_NODE_INDEX'] %>
+
+production:
+  <<: *default
+  database: scribble_by_shreya_kurian_production
