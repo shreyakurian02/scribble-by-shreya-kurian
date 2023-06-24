@@ -17,9 +17,24 @@ import SaveButton from "./SaveButton";
 import { MANAGE_DELETE_ALERT_INITIAL_VALUE } from "../../constants";
 import { Delete } from "../../List/Actions";
 import { formatDate, titlize } from "../utils";
+import VersionHistory from "../VersionHistory";
 
-const Header = ({ status, setStatus, article = {}, isEdit = false }) => {
+const {
+  Menu,
+  MenuItem: { Button: MenuButton },
+} = Dropdown;
+
+const Header = ({
+  status,
+  setStatus,
+  article = {},
+  isEdit = false,
+  fetchArticle,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isVersionHistoryPaneOpen, setIsVersionHistoryPaneOpen] =
+    useState(false);
+
   const [manageDeleteAlert, setManageDeleteAlert] = useState(
     MANAGE_DELETE_ALERT_INITIAL_VALUE
   );
@@ -94,14 +109,17 @@ const Header = ({ status, setStatus, article = {}, isEdit = false }) => {
         <SaveButton setStatus={setStatus} status={status} />
         {isEdit && (
           <Dropdown buttonStyle="text" icon={MenuHorizontal}>
-            <Dropdown.Menu>
-              <Dropdown.MenuItem.Button
+            <Menu>
+              <MenuButton onClick={() => setIsVersionHistoryPaneOpen(true)}>
+                {t("button.showVersionsHistory")}
+              </MenuButton>
+              <MenuButton
                 style="danger"
                 onClick={() => setManageDeleteAlert({ isOpen: true, article })}
               >
                 {t("button.delete")}
-              </Dropdown.MenuItem.Button>
-            </Dropdown.Menu>
+              </MenuButton>
+            </Menu>
           </Dropdown>
         )}
       </div>
@@ -109,6 +127,12 @@ const Header = ({ status, setStatus, article = {}, isEdit = false }) => {
         manageDeleteAlert={manageDeleteAlert}
         refetchArticles={() => history.push(ARTICLES_URL)}
         onClose={() => setManageDeleteAlert(MANAGE_DELETE_ALERT_INITIAL_VALUE)}
+      />
+      <VersionHistory
+        article={article}
+        fetchArticle={fetchArticle}
+        isOpen={isVersionHistoryPaneOpen}
+        onClose={() => setIsVersionHistoryPaneOpen(false)}
       />
     </div>
   );

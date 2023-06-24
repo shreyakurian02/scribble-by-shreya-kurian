@@ -12,10 +12,11 @@ module ScribbleByShreyaKurian
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
+    config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::TimeWithZone,
+       ActiveSupport::TimeZone]
 
     config.generators do |g|
       g.orm :active_record, primary_key_type: :uuid
-
       g.test_framework :test_unit, fixture: false
     end
     # Configuration for the application, engines, and railties goes here.

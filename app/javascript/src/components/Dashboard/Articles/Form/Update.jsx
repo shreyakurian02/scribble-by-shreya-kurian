@@ -77,6 +77,7 @@ const Update = () => {
           <Header
             isEdit
             article={article}
+            fetchArticle={fetchArticle}
             setStatus={setStatus}
             status={status}
           />
