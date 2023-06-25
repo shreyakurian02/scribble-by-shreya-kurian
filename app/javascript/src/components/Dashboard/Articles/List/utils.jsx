@@ -59,7 +59,10 @@ export const renderStatus = status => (
 
 export const renderTitle = ({ title, slug }) => (
   <Tooltip content={title} followCursor="horizontal" position="bottom">
-    <Link className="neeto-ui-text-primary-500" to={`articles/${slug}/edit`}>
+    <Link
+      className="neeto-ui-text-primary-500"
+      to={`/admin/articles/${slug}/edit`}
+    >
       {title}
     </Link>
   </Tooltip>

@@ -5,9 +5,7 @@ module LoadCurrentUser
 
   private
 
-    def load_current_user
-      return if (@current_user = @site.users.first.presence)
-
-      render_error(t("not_found", entity: "User"), :not_found)
-    end
+    def current_user
+      @_current_user ||= @site.users.first
+end
 end

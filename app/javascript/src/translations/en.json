@@ -47,7 +47,9 @@
     "changePassword": "Change password",
     "edit": "Edit",
     "continue": "Continue",
-    "goHome": "Go home"
+    "goHome": "Go home",
+    "restore": "Restore",
+    "showVersionsHistory": "Show version history"
   },
   "placeholder": {
     "searchArticles": "Search article titles",
@@ -75,12 +77,14 @@
   },
   "input": {
     "categoryTitle": "Category title",
+    "articleTitle": "Article title",
     "fromPath": "From path",
     "toPath": "To path",
     "password": "Password",
     "selectCategory": "Select a category to move this articles into"
   },
   "labels": {
+    "content": "Content",
     "passwordProtect": "Password protect your site",
     "articleSavedDate": "{{status}} saved at <strong>{{date}}</strong>"
   },
@@ -134,7 +138,10 @@
     "addCategoryHeader": "New category",
     "editCategoryHeader": "Edit category",
     "siteProtected": "{{site}} is password protected!",
-    "enterPassword": "Enter the password to gain access to {{site}}."
+    "enterPassword": "Enter the password to gain access to {{site}}.",
+    "versionHistory": "Version history",
+    "versionEvent": "Article {{event}}",
+    "versionHistoryDescription": "Version history of setting up an account in scribble."
   },
   "errors": {
     "pageNotFound": "The page you're looking for can't be found."

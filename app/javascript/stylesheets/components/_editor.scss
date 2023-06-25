@@ -6,6 +6,15 @@
   max-height: calc(100vh - 200px);
 }
 
+.versions_editor_content {
+  overflow-y: scroll;
+  border: 1px solid rgb(var(--neeto-ui-gray-400));
+  background-color: rgb(var(--neeto-ui-gray-100));
+  padding: 3px;
+  border-radius: 5px;
+  max-height: calc(100vh - 80vh);
+}
+
 .editor-preview__wrapper {
   padding: 5px 50px !important;
   overflow-y: scroll;

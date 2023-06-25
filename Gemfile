@@ -91,3 +91,6 @@ end
 gem "webpacker"
 
 gem "react-rails"
+
+# versioning
+gem "paper_trail"

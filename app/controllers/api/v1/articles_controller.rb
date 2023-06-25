@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
 class Api::V1::ArticlesController < ApplicationController
-  before_action :load_current_user, except: %i[edit new]
+  before_action :set_paper_trail_whodunnit
   before_action :load_article!, only: %i[show update destroy]
 
   def index
-    @articles, @filtered_count = Articles::FilterService.new(@current_user, filter_params).process.values_at(
+    @articles, @filtered_count = Articles::FilterService.new(current_user, filter_params).process.values_at(
       :articles,
       :filtered_count)
   end
 
   def create
-    @current_user.articles.create!(article_params)
+    current_user.articles.create!(article_params)
     render_notice(t("successfully_created", entity: "Article"))
   end
 
@@ -36,7 +36,7 @@ class Api::V1::ArticlesController < ApplicationController
     end
 
     def load_article!
-      @article = @current_user.articles.find_by!(slug: params[:slug])
+      @article = current_user.articles.find_by!(slug: params[:slug])
     end
 
     def filter_params

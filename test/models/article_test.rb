@@ -141,4 +141,27 @@ class ArticleTest < ActiveSupport::TestCase
     article.published!
     assert_equal last_published_at, article.reload.last_published_at
   end
+
+  def test_article_version_event_is_set_when_created
+    assert_equal "created", article_last_version_event
+  end
+
+  def test_version_event_is_edited_when_fields_except_status_is_updated
+    @article.update!(title: Faker::Lorem.sentence)
+    assert_equal "edited", article_last_version_event
+  end
+
+  def test_version_event_is_same_as_status_when_status_is_updated
+    @article.published!
+    assert_equal "published", article_last_version_event
+
+    @article.draft!
+    assert_equal "drafted", article_last_version_event
+  end
+
+  private
+
+    def article_last_version_event
+      @article.versions.last.event
+    end
 end
