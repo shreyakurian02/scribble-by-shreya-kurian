@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Typography, Spinner } from "neetoui";
+import { Spinner } from "neetoui";
 import { isEmpty } from "ramda";
 import { useHistory, useParams } from "react-router";
 
@@ -8,6 +8,7 @@ import categoriesApi from "apis/public/categories";
 
 import AccordianItem from "./AccordianItem";
 import Article from "./Article";
+import Header from "./Header";
 
 const Preview = ({ site }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -46,11 +47,7 @@ const Preview = ({ site }) => {
 
   return (
     <>
-      <div className="border-b sticky z-10 flex h-16 w-full items-center justify-center px-6 py-4">
-        <Typography className="neeto-ui-text-gray-800" style="h4">
-          {title}
-        </Typography>
-      </div>
+      <Header siteTitle={title} />
       {isLoading ? (
         <div className="flex h-screen w-full items-center justify-center">
           <Spinner />
