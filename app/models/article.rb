@@ -19,7 +19,6 @@ class Article < ApplicationRecord
 
   before_create :set_slug
   before_save :set_last_published_at
-  before_save :set_paper_trail_event
 
   has_paper_trail on: [:create, :update]
 
