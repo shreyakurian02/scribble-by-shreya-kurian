@@ -6,10 +6,12 @@ module.exports = {
   purge: [],
   theme: {
     maxHeight: {
+      0: "0",
+      "1/4": "250px",
+      "1/2": "50%",
       "3/4": "75%",
-      90: "90%",
+      full: "100%",
     },
-    extend: {},
   },
   variants: {},
   plugins: [],
