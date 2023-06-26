@@ -60,7 +60,8 @@
     "addSiteTitle": "Enter site title here.",
     "addFromPath": "Enter from path",
     "addToPath": "Add to path",
-    "enterPassword": "Enter password"
+    "enterPassword": "Enter password",
+    "euiSearchArticles": "Search for articles here"
   },
   "noData": {
     "categories": "There are no such categories",
