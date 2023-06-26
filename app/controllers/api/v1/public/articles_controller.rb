@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class Api::V1::Public::ArticlesController < Api::V1::Public::BaseController
+  include PublicArticlesQueryHelper
+
   before_action :load_article!, only: :show
 
   def index
-    @articles = published_articles.where("title ILIKE ?", "%#{params[:search]}%")
-      .or(published_articles.where("description ILIKE ?", "%#{params[:search]}%"))
+    @articles = filter_by_search_in_title_and_description(published_articles, params[:search])
   end
 
   def show
@@ -19,6 +20,6 @@ class Api::V1::Public::ArticlesController < Api::V1::Public::BaseController
   end
 
   def published_articles
-    @_published_articles = @site.articles.published
+    @site.articles.published
   end
 end

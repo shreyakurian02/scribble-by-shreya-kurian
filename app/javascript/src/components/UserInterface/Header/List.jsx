@@ -5,6 +5,8 @@ import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
+import HighlightedTypography from "components/Common/HighlightedTypography";
+
 const List = ({
   filteredArticles,
   setSearchTerm,
@@ -23,25 +25,31 @@ const List = ({
   }
 
   return (
-    <div className="neeto-ui-bg-white neeto-ui-shadow-lg space-y-2">
+    <div className="neeto-ui-bg-white neeto-ui-shadow-lg max-h-1/4 space-y-2 overflow-y-scroll">
       {!isEmpty(searchTerm) &&
-        filteredArticles.map(({ title, slug, id }) => (
-          <div
-            className="hover:neeto-ui-bg-gray-200 neeto-ui-bg-white neeto-ui-rounded-sm relative w-full p-3"
-            key={id}
-          >
-            <Link className="w-full" to={`/articles/${slug}`}>
-              <Typography
-                className="neeto-ui-text-gray-800"
-                style="h5"
-                weight="semibold"
-                onClick={() => setSearchTerm("")}
-              >
-                {title}
-              </Typography>
-            </Link>
-          </div>
-        ))}
+        filteredArticles.map(
+          ({ title, slug, id, matched_content: matchedContent }) => (
+            <div
+              className="hover:neeto-ui-bg-gray-200 neeto-ui-bg-white neeto-ui-rounded-sm relative w-full p-3"
+              key={id}
+            >
+              <Link className="w-full" to={`/articles/${slug}`}>
+                <div onClick={() => setSearchTerm("")}>
+                  <HighlightedTypography
+                    searchTerm={debouncedSearchTerm}
+                    style="h6"
+                    text={title}
+                  />
+                  <HighlightedTypography
+                    className="neeto-ui-text-gray-400"
+                    searchTerm={debouncedSearchTerm}
+                    text={matchedContent}
+                  />
+                </div>
+              </Link>
+            </div>
+          )
+        )}
       {isEmpty(filteredArticles) && !isEmpty(debouncedSearchTerm) && (
         <Typography className="neeto-ui-text-gray-300 w-full p-5" style="body3">
           {t("noData.searchResultTitle", { searchTerm: debouncedSearchTerm })}
