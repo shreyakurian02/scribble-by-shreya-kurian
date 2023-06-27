@@ -5,7 +5,7 @@ require "test_helper"
 class Categories::FilterServiceTest < ActiveSupport::TestCase
   def setup
     @site = create :site
-    @categories = create_list(:category, 5, site: @site)
+    @categories = create_list :category, 5, site: @site
   end
 
   def test_filter_by_search_term

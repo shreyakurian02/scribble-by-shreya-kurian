@@ -21,12 +21,12 @@ const Update = () => {
 
   const editorRef = useRef(null);
   const history = useHistory();
-  const { slug } = useParams();
+  const { id } = useParams();
 
   const handleSubmit = async values => {
     const payload = { ...values, status, category_id: values.category.value };
     try {
-      await articlesApi.update({ slug, payload });
+      await articlesApi.update({ id, payload });
       history.push(ADMIN_URL);
     } catch (error) {
       logger.error(error);
@@ -43,7 +43,7 @@ const Update = () => {
     try {
       const {
         data: { article },
-      } = await articlesApi.show(slug);
+      } = await articlesApi.show(id);
       setArticle(article);
     } catch (error) {
       logger.error(error);

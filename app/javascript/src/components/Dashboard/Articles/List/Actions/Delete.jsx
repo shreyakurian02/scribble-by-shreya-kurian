@@ -18,12 +18,12 @@ const Delete = ({
 
   const {
     isOpen,
-    article: { slug, title },
+    article: { id, title },
   } = manageDeleteAlert;
 
   const handleSubmit = async () => {
     try {
-      await articlesApi.destroy(slug);
+      await articlesApi.destroy(id);
       refetchArticles();
       fetchCategories();
       setSelectedArticles([]);

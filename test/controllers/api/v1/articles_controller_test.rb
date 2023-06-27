@@ -11,7 +11,7 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_should_list_all_articles
-    create_list(:article, 5, category: @category, user: @current_user)
+    create_list :article, 5, category: @category, user: @current_user
     get(api_v1_articles_path, headers:)
     assert_response :success
     assert_equal @current_user.articles.length, response_json["articles"].length
@@ -28,7 +28,7 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
 
   def test_should_update_valid_article
     new_title = "Updated title"
-    put(api_v1_article_path(@article.slug), params: article_params({ title: new_title }), headers:)
+    put(api_v1_article_path(@article.id), params: article_params({ title: new_title }), headers:)
     assert_response :success
     assert_equal I18n.t("successfully_updated", entity: "Article"), response_json["notice"]
     assert_equal new_title, @article.reload.title
@@ -36,7 +36,7 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
 
   def test_shouldnt_update_article_with_invalid_params
     existing_title = @article.title
-    put(api_v1_article_path(@article.slug), params: article_params({ title: "" }), headers:)
+    put(api_v1_article_path(@article.id), params: article_params({ title: "" }), headers:)
     assert_response :unprocessable_entity
     assert_includes response_json["error"], I18n.t("errors.presence", entity: "Title")
     assert_equal existing_title, @article.reload.title
@@ -44,7 +44,7 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
 
   def test_destroy_article
     assert_difference "@current_user.articles.size", -1 do
-      delete(api_v1_article_path(@article.slug), headers:)
+      delete(api_v1_article_path(@article.id), headers:)
       assert_response :success
     end
     assert_equal I18n.t("successfully_deleted", entity: "Article"), response_json["notice"]
@@ -59,7 +59,7 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_should_show_article
-    get(api_v1_article_path(@article.slug), headers:)
+    get(api_v1_article_path(@article.id), headers:)
     assert_response :success
     assert_equal %w[author category description id last_published_at slug status title updated_at versions views],
       response_json["article"].keys.sort
@@ -70,7 +70,7 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
       post(api_v1_articles_path, params: article_params, headers:)
       assert_response :unprocessable_entity
     end
-    assert_equal I18n.t("errors.must_exist", entity: "Category"), response_json["error"]
+    assert_includes response_json["error"], I18n.t("errors.must_exist", entity: "Category")
   end
 
   private

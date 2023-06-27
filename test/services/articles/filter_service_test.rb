@@ -7,7 +7,7 @@ class Articles::FilterServiceTest < ActiveSupport::TestCase
     site = create :site
     @category = create(:category, site:)
     @current_user = create(:user, site:)
-    @articles = create_list(:article, 5, category: @category, user: @current_user)
+    @articles = create_list :article, 5, category: @category, user: @current_user
   end
 
   def test_filter_by_status

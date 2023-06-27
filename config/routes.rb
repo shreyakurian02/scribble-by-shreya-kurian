@@ -8,7 +8,7 @@ Rails.application.routes.draw do
         resources :redirections, except: %i[new show edit]
         resource :site, only: %i[show update]
 
-        resources :articles, except: %i[edit new], param: :slug do
+        resources :articles, except: %i[edit new] do
           resources :versions, only: %i[show], module: :articles do
             put "restore", on: :member
           end

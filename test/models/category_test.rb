@@ -4,7 +4,7 @@ require "test_helper"
 
 class CategoryTest < ActiveSupport::TestCase
   def setup
-    @category = create(:category)
+    @category = create :category
   end
 
   def test_category_should_not_be_valid_without_name

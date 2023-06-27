@@ -10,12 +10,12 @@ class Api::V1::Bulk::ArticlesControllerTest < ActionDispatch::IntegrationTest
     @articles = create_list(:article, 5, user: @current_user, category:)
   end
 
-  def test_bulk_articles_update_success
-    article_with_draft_status = @articles.first
-    put(api_v1_bulk_articles_path, params: article_params({ article: { status: "published" } }), headers:)
+  def test_can_update_bulk_articles
+    article_with_published_status = @articles.first
+    put(api_v1_bulk_articles_path, params: article_params({ article: { status: "draft" } }), headers:)
     assert_response :success
     assert_equal I18n.t("successfully_updated", entity: "Articles"), response_json["notice"]
-    assert_equal "published", article_with_draft_status.reload.status
+    assert_equal "draft", article_with_published_status.reload.status
   end
 
   def test_bulk_articles_update_failure

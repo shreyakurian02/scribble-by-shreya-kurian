@@ -15,15 +15,12 @@ class Article < ApplicationRecord
   belongs_to :user
 
   validates :description, presence: true
-  validates :slug, uniqueness: true
+  validates :slug, uniqueness: true, allow_nil: true
   validate :slug_not_changed
   validates :title, presence: true, length: { maximum: MAXIMUM_TITLE_LENGTH },
     format: { with: Constants::ALPHANUMERIC_FORMAT_REGEX, message: I18n.t("errors.alphanumeric") }
 
-  before_create :set_slug
   before_save :set_last_published_at
-
-  has_paper_trail on: [:create, :update]
 
   def matched_description_content(search_term)
     description.gsub(/<[^>]+>/, "").scan(/(?i)(#{search_term}(?:[^ ]* ){0,3})/).flatten
@@ -33,9 +30,5 @@ class Article < ApplicationRecord
 
     def set_last_published_at
       self.last_published_at = Time.zone.now() if status_changed? && published?
-    end
-
-    def slug_not_changed
-      errors.add(:slug, I18n.t("slug.immutable")) if slug_changed? && self.persisted?
     end
 end

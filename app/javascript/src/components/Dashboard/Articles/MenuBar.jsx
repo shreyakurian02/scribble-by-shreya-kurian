@@ -18,6 +18,8 @@ import {
   handleFilterByCategories,
 } from "./utils";
 
+import { DEFAULT_PAGE_PROPERTIES } from "../constants";
+
 const { Block, SubTitle, Search: MenuSearch } = NeetoUIMenuBar;
 
 const MenuBar = ({
@@ -26,6 +28,7 @@ const MenuBar = ({
   categorySearchTerm,
   showMenu,
   setIsNewCategoryModalOpen,
+  setPageProperties,
 }) => {
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
 
@@ -46,6 +49,15 @@ const MenuBar = ({
   const handleCollapse = () => {
     setCategorySearchTerm("");
     setIsSearchCollapsed(true);
+  };
+
+  const handleCategorySelect = selectedCategory => {
+    setPageProperties(DEFAULT_PAGE_PROPERTIES);
+    handleFilterByCategories({
+      queryCategories,
+      history,
+      selectedCategory,
+    });
   };
 
   const handleEsc = ({ keyCode }) => keyCode === 27 && handleCollapse();
@@ -91,13 +103,7 @@ const MenuBar = ({
             count={articlesCount}
             key={id}
             label={name}
-            onClick={() =>
-              handleFilterByCategories({
-                queryCategories,
-                history,
-                selectedCategory: name,
-              })
-            }
+            onClick={() => handleCategorySelect(name)}
           />
         ))
       )}

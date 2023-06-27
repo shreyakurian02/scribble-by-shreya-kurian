@@ -15,7 +15,7 @@ export const COLUMN_DATA = [
     title: t("common.title"),
     key: "title",
     width: "25%",
-    render: (title, record) => renderArticleTitle({ title, slug: record.slug }),
+    render: (title, { id }) => renderArticleTitle({ title, id }),
   },
   {
     dataIndex: "last_published_at",

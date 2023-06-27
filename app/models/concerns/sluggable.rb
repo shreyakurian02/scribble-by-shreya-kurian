@@ -3,6 +3,10 @@
 module Sluggable
   extend ActiveSupport::Concern
 
+  included do
+    before_save :set_slug, if: :published_for_the_first_time?
+  end
+
   private
 
     def set_slug
@@ -20,5 +24,13 @@ module Sluggable
       end
       slug_candidate = slug_count.positive? ? "#{title_slug}-#{slug_count + 1}" : title_slug
       self.slug = slug_candidate
+    end
+
+    def slug_not_changed
+      errors.add(:slug, I18n.t("slug.immutable")) if slug_changed? && self.persisted?
+    end
+
+    def published_for_the_first_time?
+      slug.nil? && published?
     end
 end

@@ -8,7 +8,7 @@ import { v4 as uuid } from "uuid";
 
 import HighlightedTypography from "components/Common/HighlightedTypography";
 
-const List = ({
+const FilteredArticles = ({
   filteredArticles,
   setSearchTerm,
   searchTerm,
@@ -55,7 +55,7 @@ const List = ({
           )
         )}
       {isEmpty(filteredArticles) && !isEmpty(debouncedSearchTerm) && (
-        <Typography className="neeto-ui-text-gray-300 w-full p-5" style="body3">
+        <Typography className="neeto-ui-text-gray-800 w-full p-5" style="body3">
           {t("noData.searchResultTitle", { searchTerm: debouncedSearchTerm })}
         </Typography>
       )}
@@ -63,4 +63,4 @@ const List = ({
   );
 };
 
-export default List;
+export default FilteredArticles;

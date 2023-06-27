@@ -6,6 +6,8 @@ module Versionable
   included do
     before_save :set_paper_trail_event
     before_destroy :delete_article_versions
+
+    has_paper_trail on: %i[create update]
   end
 
   private

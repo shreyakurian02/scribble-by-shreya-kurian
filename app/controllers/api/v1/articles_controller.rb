@@ -36,7 +36,7 @@ class Api::V1::ArticlesController < ApplicationController
     end
 
     def load_article!
-      @article = current_user.articles.find_by!(slug: params[:slug])
+      @article = current_user.articles.find(params[:id])
     end
 
     def filter_params

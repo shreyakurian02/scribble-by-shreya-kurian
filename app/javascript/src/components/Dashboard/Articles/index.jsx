@@ -83,6 +83,7 @@ const Articles = () => {
         categorySearchTerm={categorySearchTerm}
         setCategorySearchTerm={setCategorySearchTerm}
         setIsNewCategoryModalOpen={setIsNewCategoryModalOpen}
+        setPageProperties={setPageProperties}
         showMenu={isMenuOpen}
       />
       <Container>
