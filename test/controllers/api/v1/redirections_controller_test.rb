@@ -9,7 +9,7 @@ class Api::V1::RedirectionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_should_list_all_redirections
-    create_list(:redirection, 5, site: @site)
+    create_list :redirection, 5, site: @site
     get(api_v1_redirections_path, headers:)
     assert_response :success
     assert_equal @site.redirections.length, response_json["redirections"].length

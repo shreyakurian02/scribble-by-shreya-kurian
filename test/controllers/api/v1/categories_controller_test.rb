@@ -9,7 +9,7 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_should_list_all_categories
-    create_list(:category, 5, site: @site)
+    create_list :category, 5, site: @site
     get(api_v1_categories_path, headers:)
     assert_response :success
     assert_equal @site.categories.length, response_json["categories"].length

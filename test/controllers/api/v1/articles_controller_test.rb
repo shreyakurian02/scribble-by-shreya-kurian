@@ -11,7 +11,7 @@ class Api::V1::ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_should_list_all_articles
-    create_list(:article, 5, category: @category, user: @current_user)
+    create_list :article, 5, category: @category, user: @current_user
     get(api_v1_articles_path, headers:)
     assert_response :success
     assert_equal @current_user.articles.length, response_json["articles"].length

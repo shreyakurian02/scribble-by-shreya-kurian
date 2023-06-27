@@ -136,14 +136,14 @@ class ArticleTest < ActiveSupport::TestCase
   end
 
   def test_last_published_at_updates_when_status_is_published
-    article = create(:article, status: "draft")
+    article = create(:article, :draft)
     assert_nil article.last_published_at
     article.published!
     assert_not_nil article.last_published_at
   end
 
   def test_last_published_at_does_not_update_when_status_was_already_published
-    article = create(:article, status: "published")
+    article = create :article
     last_published_at = article.last_published_at
     article.published!
     assert_equal last_published_at, article.reload.last_published_at

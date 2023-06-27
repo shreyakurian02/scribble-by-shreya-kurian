@@ -4,7 +4,7 @@ require "test_helper"
 
 class SiteTest < ActiveSupport::TestCase
   def setup
-    @site = create(:site)
+    @site = create :site
   end
 
   def test_site_should_not_be_valid_without_title

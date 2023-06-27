@@ -4,7 +4,7 @@ require "test_helper"
 
 class Api::V1::Public::SessionsControllerTest < ActionDispatch::IntegrationTest
   def setup
-    @site = create(:site)
+    @site = create :site
   end
 
   def test_should_login_into_site_with_valid_credentials

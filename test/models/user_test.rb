@@ -4,7 +4,7 @@ require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
   def setup
-    @user = create(:user)
+    @user = create :user
   end
 
   def test_user_should_not_valid_without_first_name

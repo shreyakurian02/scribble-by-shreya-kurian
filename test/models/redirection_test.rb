@@ -4,7 +4,7 @@ require "test_helper"
 
 class RedirectionTest < ActiveSupport::TestCase
   def setup
-    @redirection = create(:redirection)
+    @redirection = create :redirection
     @site = @redirection.site
   end
 
@@ -31,40 +31,40 @@ class RedirectionTest < ActiveSupport::TestCase
 
   def test_from_and_to_path_cannot_be_same_with_same_host
     path = "/about"
-    redirection = build(:redirection, from_path: path, to_path: path)
+    redirection = build :redirection, from_path: path, to_path: path
     assert_not redirection.valid?
     assert_includes redirection.errors.full_messages, "To path #{I18n.t("errors.same_path")}"
 
-    redirection = build(:redirection, from_path: path, to_path: "https://#{Rails.application.secrets[:host]}#{path}")
+    redirection = build :redirection, from_path: path, to_path: "https://#{Rails.application.secrets[:host]}#{path}"
     assert_not redirection.valid?
     assert_includes redirection.errors.full_messages, "To path #{I18n.t("errors.same_path")}"
   end
 
   def test_redirection_shouldnt_form_cyclic_path
-    first_redirection = create(:redirection, from_path: "/article", to_path: "/article-1")
-    second_redirection = build(:redirection, from_path: "/article-1", to_path: "/article", site: first_redirection.site)
+    first_redirection = create :redirection, from_path: "/article", to_path: "/article-1"
+    second_redirection = build :redirection, from_path: "/article-1", to_path: "/article", site: first_redirection.site
     assert_not second_redirection.valid?
     assert_includes second_redirection.errors.full_messages, "To path #{I18n.t("errors.loop")}"
   end
 
   def test_shouldnt_allow_chained_paths
-    first_redirection = create(:redirection, from_path: "/one", to_path: "/two", site: @site)
-    second_redirection = create(:redirection, from_path: "/three", to_path: "/four", site: @site)
+    first_redirection = create :redirection, from_path: "/one", to_path: "/two", site: @site
+    second_redirection = create :redirection, from_path: "/three", to_path: "/four", site: @site
     assert first_redirection.valid?
     assert second_redirection.valid?
 
-    third_redirection = build(:redirection, from_path: "/four", to_path: "/one", site: @site)
+    third_redirection = build :redirection, from_path: "/four", to_path: "/one", site: @site
     assert_not third_redirection.valid?
     assert_includes third_redirection.errors.full_messages, "From path #{I18n.t("errors.chain_path", path: "to")}"
     assert_includes third_redirection.errors.full_messages, "To path #{I18n.t("errors.chain_path", path: "from")}"
 
-    fourth_redirection = build(:redirection, from_path: "/two", to_path: "/five", site: @site)
+    fourth_redirection = build :redirection, from_path: "/two", to_path: "/five", site: @site
     assert_not third_redirection.valid?
     assert_includes third_redirection.errors.full_messages, "From path #{I18n.t("errors.chain_path", path: "to")}"
   end
 
   def test_from_and_to_path_can_be_same_with_different_host
-    redirection = build(:redirection, from_path: "/about", to_path: "https://sample.com/about")
+    redirection = build :redirection, from_path: "/about", to_path: "https://sample.com/about"
     assert redirection.valid?
   end
 
