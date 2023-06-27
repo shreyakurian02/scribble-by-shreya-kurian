@@ -8,6 +8,8 @@ export const EDIT_ARTICLE_URL = `${ADMIN_URL}/articles/:slug/edit`;
 
 export const SETTINGS_URL = `${ADMIN_URL}/settings`;
 
+export const ANALYTICS_URL = `${ADMIN_URL}/analytics`;
+
 export const PREVIEW_URL = "/";
 
 export const EUI_LOGIN_URL = "/login";

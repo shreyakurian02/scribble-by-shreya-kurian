@@ -32,7 +32,7 @@ const SaveButton = ({ status, setStatus }) => {
   return (
     <ActionDropdown
       buttonProps={{ type: "submit", loading: isSubmitting }}
-      disabled={!dirty}
+      disabled={!dirty || isSubmitting}
       label={
         isArticleStatusDraft ? t("button.saveAsDraft") : t("common.publish")
       }
