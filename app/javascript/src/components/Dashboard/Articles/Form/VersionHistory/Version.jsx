@@ -24,7 +24,7 @@ const Version = ({ isOpen, onClose, versionId, article, fetchArticle }) => {
 
   const { t } = useTranslation();
 
-  const { slug: articleSlug } = article;
+  const { id: articleId } = article;
   const {
     version_category: versionCategory,
     article_category: articleCategory,
@@ -35,7 +35,7 @@ const Version = ({ isOpen, onClose, versionId, article, fetchArticle }) => {
   const handleVersionRestore = async () => {
     setIsRestoring(true);
     try {
-      await versionsApi.restore({ versionId, articleSlug });
+      await versionsApi.restore({ versionId, articleId });
       onClose();
       fetchArticle();
     } catch (error) {
@@ -50,7 +50,7 @@ const Version = ({ isOpen, onClose, versionId, article, fetchArticle }) => {
     try {
       const {
         data: { version },
-      } = await versionsApi.show({ versionId, articleSlug });
+      } = await versionsApi.show({ versionId, articleId });
       setVersion(version);
     } catch (error) {
       logger.error(error);

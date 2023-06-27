@@ -4,7 +4,7 @@ require "test_helper"
 
 class ArticleTest < ActiveSupport::TestCase
   def setup
-    @article = create(:article)
+    @article = create :article
   end
 
   def test_article_should_not_be_saved_without_title
@@ -19,7 +19,14 @@ class ArticleTest < ActiveSupport::TestCase
     assert_includes @article.errors.full_messages, "Description can't be blank"
   end
 
-  def test_slug_is_immutable
+  def test_slug_is_created_when_article_is_published_for_the_first_time
+    article = create :article, :draft
+    assert_nil article.slug
+    article.published!
+    assert_not_nil article.reload.slug
+  end
+
+  def test_slug_is_immutable_after_publishing_article
     assert_raises ActiveRecord::RecordInvalid do
       @article.update!(slug: "modified-slug")
     end
@@ -152,11 +159,11 @@ class ArticleTest < ActiveSupport::TestCase
   end
 
   def test_version_event_is_same_as_status_when_status_is_updated
-    @article.published!
-    assert_equal "published", article_last_version_event
-
     @article.draft!
     assert_equal "drafted", article_last_version_event
+
+    @article.published!
+    assert_equal "published", article_last_version_event
   end
 
   private

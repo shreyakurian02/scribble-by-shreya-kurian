@@ -4,7 +4,7 @@ export const ARTICLES_URL = `${ADMIN_URL}/articles`;
 
 export const NEW_ARTICLE_URL = `${ADMIN_URL}/articles/create`;
 
-export const EDIT_ARTICLE_URL = `${ADMIN_URL}/articles/:slug/edit`;
+export const EDIT_ARTICLE_URL = `${ADMIN_URL}/articles/:id/edit`;
 
 export const SETTINGS_URL = `${ADMIN_URL}/settings`;
 

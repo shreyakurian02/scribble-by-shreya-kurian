@@ -34,8 +34,9 @@ class Api::V1::Public::ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   def test_shouldnt_show_draft_article
-    draft_article = create :article, category: @category, user: @current_user
-    get api_v1_public_article_path(draft_article.slug), headers: @headers
+    article = create :article, category: @category, user: @current_user
+    article.draft!
+    get api_v1_public_article_path(article.slug), headers: @headers
     assert_response :not_found
     assert_includes response_json["error"], "Article not found"
   end

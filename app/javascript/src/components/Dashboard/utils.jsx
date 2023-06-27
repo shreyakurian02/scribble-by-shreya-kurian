@@ -12,12 +12,12 @@ export const getCategoryOptions = categories =>
 
 export const formatDate = date => dayjs(date).format("MMM DD, YYYY, hh:mm A");
 
-export const renderArticleTitle = ({ title, slug }) => (
+export const renderArticleTitle = ({ title, id }) => (
   <div className="py-1">
     <Tooltip content={title} followCursor="horizontal" position="bottom">
       <Link
         className="neeto-ui-text-primary-500"
-        to={`/admin/articles/${slug}/edit`}
+        to={`/admin/articles/${id}/edit`}
       >
         {title}
       </Link>

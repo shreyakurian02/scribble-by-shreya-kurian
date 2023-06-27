@@ -26,6 +26,6 @@ class Api::V1::Articles::VersionsController < ApplicationController
     end
 
     def load_article!
-      @article = current_user.articles.find_by!(slug: params[:article_slug])
+      @article = current_user.articles.find(params[:article_id])
     end
 end

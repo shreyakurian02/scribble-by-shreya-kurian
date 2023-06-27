@@ -16,14 +16,14 @@ const Update = ({
 
   const {
     isOpen,
-    article: { slug, title: articleTitle },
+    article: { id, title: articleTitle },
     status,
   } = manageUpdateModal;
 
   const handleUpdate = async () => {
     try {
       const payload = { status };
-      await articlesApi.update({ slug, payload });
+      await articlesApi.update({ id, payload });
       refetchArticles();
       setSelectedArticles([]);
       onClose();

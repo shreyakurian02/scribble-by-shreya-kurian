@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_25_070253) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_27_060957) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -18,7 +18,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_25_070253) do
 
   create_table "articles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
-    t.string "slug", null: false
+    t.string "slug"
     t.text "description", null: false
     t.datetime "last_published_at"
     t.string "status", default: "draft", null: false

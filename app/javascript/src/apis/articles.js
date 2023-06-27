@@ -6,13 +6,12 @@ const fetch = params => axios.get(ARTICLES_BASE_URL, { params });
 
 const create = payload => axios.post(ARTICLES_BASE_URL, { article: payload });
 
-const show = slug => axios.get(`${ARTICLES_BASE_URL}/${slug}`);
+const show = id => axios.get(`${ARTICLES_BASE_URL}/${id}`);
 
-const update = ({ slug, payload }) =>
-  axios.put(`${ARTICLES_BASE_URL}/${slug}`, { article: payload });
+const update = ({ id, payload }) =>
+  axios.put(`${ARTICLES_BASE_URL}/${id}`, { article: payload });
 
-const destroy = articleSlug =>
-  axios.delete(`${ARTICLES_BASE_URL}/${articleSlug}`);
+const destroy = id => axios.delete(`${ARTICLES_BASE_URL}/${id}`);
 
 const bulkDestroy = params => axios.delete(BULK_ARTICLES_BASE_URL, { params });
 

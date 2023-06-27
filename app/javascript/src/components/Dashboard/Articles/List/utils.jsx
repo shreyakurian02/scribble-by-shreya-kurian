@@ -62,7 +62,7 @@ export const getColumnData = () => [
     key: "title",
     width: "15%",
     ellipsis: true,
-    render: (title, record) => renderArticleTitle({ title, slug: record.slug }),
+    render: (title, { id }) => renderArticleTitle({ title, id }),
   },
   {
     dataIndex: "category",

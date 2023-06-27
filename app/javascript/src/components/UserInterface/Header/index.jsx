@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import articlesApi from "apis/public/articles";
 import useDebounce from "hooks/useDebounce";
 
-import List from "./List";
+import FilteredArticles from "./FilteredArticles";
 
 const Header = ({ siteTitle }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -63,7 +63,7 @@ const Header = ({ siteTitle }) => {
           value={searchTerm}
           onChange={({ target: { value } }) => setSearchTerm(value)}
         />
-        <List
+        <FilteredArticles
           debouncedSearchTerm={debouncedSearchTerm}
           filteredArticles={filteredArticles}
           isLoading={isLoading}
