@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 class Api::V1::Public::ArticlesController < Api::V1::Public::BaseController
-  include PublicArticlesQueryHelper
-
   before_action :load_article!, only: :show
+  before_action :increment_article_views, only: :show
 
   def index
-    @articles = filter_by_search_in_title_and_description(published_articles, params[:search])
+    @articles = published_articles.search_by_term_in_title_and_description(params[:search])
   end
 
   def show
@@ -17,6 +16,10 @@ class Api::V1::Public::ArticlesController < Api::V1::Public::BaseController
 
   def load_article!
     @article = published_articles.find_by!(slug: params[:slug])
+  end
+
+  def increment_article_views
+    @article.increment!(:views)
   end
 
   def published_articles

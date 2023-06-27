@@ -1,9 +1,14 @@
 import { PLURAL } from "constants";
 
 import { t } from "i18next";
-import { Notes, Settings, ExternalLink } from "neetoicons";
+import { Notes, Settings, ExternalLink, NeetoAnalytics } from "neetoicons";
 
-import { ARTICLES_URL, SETTINGS_URL, PREVIEW_URL } from "constants/urls";
+import {
+  ARTICLES_URL,
+  SETTINGS_URL,
+  PREVIEW_URL,
+  ANALYTICS_URL,
+} from "constants/urls";
 
 export const NAV_LINKS = [
   {
@@ -17,6 +22,12 @@ export const NAV_LINKS = [
     to: SETTINGS_URL,
     icon: Settings,
     description: t("sidebarDescription.settings"),
+  },
+  {
+    label: t("common.analytics"),
+    to: ANALYTICS_URL,
+    icon: NeetoAnalytics,
+    description: t("sidebarDescription.analytics"),
   },
   {
     label: t("common.preview"),

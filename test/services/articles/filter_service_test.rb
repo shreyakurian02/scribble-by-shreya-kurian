@@ -32,7 +32,7 @@ class Articles::FilterServiceTest < ActiveSupport::TestCase
     possible_search_terms = [search_term.upcase, search_term.downcase]
 
     possible_search_terms.each do |search|
-      expected_articles_with_search_term = Article.where("title ILIKE ?", "%#{search}%")
+      expected_articles_with_search_term = @current_user.articles.where("title ILIKE ?", "%#{search}%")
       process_service({ search: })
       assert_equal expected_articles_with_search_term.ids.sort, @filtered_articles.ids.sort
       assert_equal expected_articles_with_search_term.size, @filtered_count
@@ -46,9 +46,21 @@ class Articles::FilterServiceTest < ActiveSupport::TestCase
     assert_equal expected_paginated_articles.ids.sort, @filtered_articles.ids.sort
   end
 
+  def test_articles_are_ordered_by_updated_at_if_order_not_specified
+    ordered_articles = @current_user.articles.order(updated_at: :desc)
+    process_service
+    assert_equal ordered_articles.ids, @filtered_articles.ids
+  end
+
+  def test_articles_are_ordered_by_specified_column_if_present
+    ordered_articles = @current_user.articles.order(views: :desc)
+    process_service({ order_by: "views", sort_order: "desc" })
+    assert_equal ordered_articles.ids, @filtered_articles.ids
+  end
+
   private
 
-    def process_service(options)
+    def process_service(options = {})
       @filtered_articles, @filtered_count = Articles::FilterService.new(@category.site, options).process.values_at(
         :articles,
         :filtered_count)

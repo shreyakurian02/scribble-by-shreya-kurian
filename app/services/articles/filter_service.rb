@@ -19,7 +19,7 @@ module Articles
     private
 
       def filter_by_status
-        @articles = current_user.articles.send(status).order(updated_at: :desc)
+        @articles = current_user.articles.send(status).order(column_direction)
       end
 
       def filter_by_category
@@ -42,6 +42,10 @@ module Articles
         { articles: @articles.page(page_number).per(per_page), filtered_count: @articles.size }
       end
 
+      def column_direction
+        "articles.#{order_by} #{sort_order}"
+      end
+
       def categories
         options[:categories] || []
       end
@@ -56,6 +60,16 @@ module Articles
 
       def per_page
         options[:per_page]
+      end
+
+      def order_by
+        options[:order_by] || "updated_at"
+      end
+
+      def sort_order
+        return options[:sort_order] if %w[asc desc].include? options[:sort_order]
+
+        "desc"
       end
   end
 end

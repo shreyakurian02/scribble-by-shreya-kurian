@@ -40,6 +40,6 @@ class Api::V1::ArticlesController < ApplicationController
     end
 
     def filter_params
-      params.permit(:status, :search, :per_page, :page_number, categories: [])
+      params.permit(:status, :search, :per_page, :page_number, :order_by, :sort_order, categories: [])
     end
 end
