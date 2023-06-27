@@ -29,7 +29,9 @@
     "redirection_one": "Redirection",
     "redirections": "Redirections",
     "from": "From",
-    "to": "To"
+    "to": "To",
+    "analytics": "Analytics",
+    "visits": "Visits"
   },
   "button": {
     "addEntity": "Add {{entity}}",
@@ -133,7 +135,8 @@
   "sidebarDescription": {
     "articles": "Manage and list all your KB articles",
     "settings": "Configure KB settings",
-    "preview": "Launch your KB preview"
+    "preview": "Launch your KB preview",
+    "analytics": "View the analytics of your KB articles"
   },
   "headers": {
     "addCategoryHeader": "New category",
@@ -145,6 +148,8 @@
     "versionHistoryDescription": "Version history of setting up an account in scribble."
   },
   "errors": {
-    "pageNotFound": "The page you're looking for can't be found."
+    "pageNotFound": "The page you're looking for can't be found.",
+    "sameAsLastVersion": "The version is same as the current version.",
+    "versionRestore": "The category of this version has been deleted. Restoring to this version will cause the article to be assigned the category of the latest article version."
   }
 }

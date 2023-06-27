@@ -4,6 +4,9 @@ class Article < ApplicationRecord
   include Versionable
   include Sluggable
 
+  scope :search_by_term_in_title_and_description, ->(search) {
+ where("description ILIKE :search OR title ILIKE :search", search: "%#{search}%") }
+
   MAXIMUM_TITLE_LENGTH = 80
 
   enum :status, { draft: "draft", published: "published" }, default: "draft"
@@ -21,6 +24,10 @@ class Article < ApplicationRecord
   before_save :set_last_published_at
 
   has_paper_trail on: [:create, :update]
+
+  def matched_description_content(search_term)
+    description.gsub(/<[^>]+>/, "").scan(/(?i)(#{search_term}(?:[^ ]* ){0,3})/).flatten
+  end
 
   private
 

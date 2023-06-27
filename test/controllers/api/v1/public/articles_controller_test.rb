@@ -2,8 +2,6 @@
 
 require "test_helper"
 
-include PublicArticlesQueryHelper
-
 class Api::V1::Public::ArticlesControllerTest < ActionDispatch::IntegrationTest
   def setup
     @site = create :site
@@ -22,7 +20,7 @@ class Api::V1::Public::ArticlesControllerTest < ActionDispatch::IntegrationTest
   def test_list_filtered_articles
     articles = create_list(:article, 5, :published, category: @category, user: @current_user)
     search_term = articles.first.title
-    articles_with_search_term = filter_by_search_in_title_and_description(@site.articles.published, search_term)
+    articles_with_search_term = @current_user.articles.published.search_by_term_in_title_and_description(search_term)
     get api_v1_public_articles_path, params: {search: search_term}, headers: @headers
 
     assert_equal articles_with_search_term.ids.sort, response_json["articles"].pluck("id").sort
@@ -40,5 +38,12 @@ class Api::V1::Public::ArticlesControllerTest < ActionDispatch::IntegrationTest
     get api_v1_public_article_path(draft_article.slug), headers: @headers
     assert_response :not_found
     assert_includes response_json["error"], "Article not found"
+  end
+
+  def test_article_show_increases_view_count
+    view_count_before_show = @article.views
+    get api_v1_public_article_path(@article.slug), headers: @headers
+    assert_response :success
+    assert_equal view_count_before_show + 1, @article.reload.views
   end
 end

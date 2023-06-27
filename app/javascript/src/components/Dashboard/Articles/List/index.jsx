@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import classnames from "classnames";
-import { Table, Spinner } from "neetoui";
+import { Table } from "neetoui";
 import { isEmpty, pluck } from "ramda";
 
 import { Update, Delete } from "./Actions";
@@ -35,20 +35,13 @@ const List = ({
     MANAGE_DELETE_ALERT_INITIAL_VALUE
   );
 
+  const { size: pageSize, page: currentPageNumber } = pageProperties;
   const {
     articles,
     count: { filtered: filteredArticlesCount },
   } = articlesData;
 
-  if (isArticlesLoading) {
-    return (
-      <div className="flex h-screen w-full items-center justify-center">
-        <Spinner />
-      </div>
-    );
-  }
-
-  if (isEmpty(articles)) {
+  if (isEmpty(articles) && !isArticlesLoading) {
     return (
       <div className="flex h-full w-full items-center justify-center">
         <EmptyState setArticleSearchTerm={setArticleSearchTerm} />
@@ -69,8 +62,8 @@ const List = ({
       <Table
         fixedHeight
         rowSelection
-        currentPageNumber={pageProperties.page}
-        defaultPageSize={pageProperties.size}
+        currentPageNumber={currentPageNumber}
+        defaultPageSize={pageSize}
         handlePageChange={(page, size) => setPageProperties({ page, size })}
         loading={isArticlesLoading}
         rowData={articles}

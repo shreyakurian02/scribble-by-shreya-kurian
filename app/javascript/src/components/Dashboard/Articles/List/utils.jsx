@@ -1,11 +1,11 @@
 import React from "react";
 
-import dayjs from "dayjs";
 import { t } from "i18next";
 import { MenuHorizontal } from "neetoicons";
-import { Dropdown, Tooltip } from "neetoui";
-import { Link } from "react-router-dom";
+import { Dropdown } from "neetoui";
 import { SINGULAR } from "src/constants";
+
+import { renderArticleTitle, formatDate } from "components/Dashboard/utils";
 
 import { ARTICLE_STATUS } from "../constants";
 
@@ -16,8 +16,6 @@ const {
 } = Dropdown;
 
 export const isArticleStatusDraft = status => status === ARTICLE_STATUS.draft;
-
-export const formatDate = date => dayjs(date).format("MMM DD, YYYY, hh:mm A");
 
 export const renderAction = ({
   article,
@@ -57,17 +55,6 @@ export const renderStatus = status => (
   <span className="capitalize">{status}</span>
 );
 
-export const renderTitle = ({ title, slug }) => (
-  <Tooltip content={title} followCursor="horizontal" position="bottom">
-    <Link
-      className="neeto-ui-text-primary-500"
-      to={`/admin/articles/${slug}/edit`}
-    >
-      {title}
-    </Link>
-  </Tooltip>
-);
-
 export const getColumnData = () => [
   {
     dataIndex: "title",
@@ -75,7 +62,7 @@ export const getColumnData = () => [
     key: "title",
     width: "15%",
     ellipsis: true,
-    render: (title, record) => renderTitle({ title, slug: record.slug }),
+    render: (title, record) => renderArticleTitle({ title, slug: record.slug }),
   },
   {
     dataIndex: "category",

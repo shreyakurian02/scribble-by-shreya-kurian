@@ -9,15 +9,12 @@ import { useLocation, useHistory } from "react-router-dom";
 
 import articlesApi from "apis/articles";
 import AddCategory from "components/Dashboard/CategoryForm";
+import { DEFAULT_PAGE_PROPERTIES } from "components/Dashboard/constants";
 import { NEW_ARTICLE_URL } from "constants/urls";
 import { useCategoriesDispatch } from "contexts/categories";
 import useDebounce from "hooks/useDebounce";
 
-import {
-  ARTICLES_INITIAL_VALUE,
-  DEFAULT_PAGE_PROPERTIES,
-  HEADER_TITLE,
-} from "./constants";
+import { ARTICLES_INITIAL_VALUE, HEADER_TITLE } from "./constants";
 import List from "./List";
 import MenuBar from "./MenuBar";
 import { pushUrlSearchParams, getSearchParams } from "./utils";

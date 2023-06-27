@@ -4,6 +4,7 @@ import { Typography, Spinner } from "neetoui";
 import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { v4 as uuid } from "uuid";
 
 import HighlightedTypography from "components/Common/HighlightedTypography";
 
@@ -40,11 +41,14 @@ const List = ({
                     style="h6"
                     text={title}
                   />
-                  <HighlightedTypography
-                    className="neeto-ui-text-gray-400"
-                    searchTerm={debouncedSearchTerm}
-                    text={matchedContent}
-                  />
+                  {matchedContent?.map(content => (
+                    <HighlightedTypography
+                      className="neeto-ui-text-gray-600"
+                      key={uuid()}
+                      searchTerm={debouncedSearchTerm}
+                      text={content}
+                    />
+                  ))}
                 </div>
               </Link>
             </div>

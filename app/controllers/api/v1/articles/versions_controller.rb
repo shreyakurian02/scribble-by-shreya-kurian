@@ -21,7 +21,8 @@ class Api::V1::Articles::VersionsController < ApplicationController
     end
 
     def article_params
-      @version.as_json.extract!("title", "category_id ", "description")
+      category = @version.category || @article.category
+      @version.as_json.extract!("title", "description").merge!(status: :draft, category_id: category.id)
     end
 
     def load_article!

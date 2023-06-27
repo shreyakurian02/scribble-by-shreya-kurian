@@ -72,7 +72,7 @@ const General = () => {
               </Typography>
               <div className="flex space-x-2">
                 <Button
-                  disabled={!dirty}
+                  disabled={!dirty || isSubmitting}
                   label={t("button.saveChanges")}
                   loading={isSubmitting}
                   type="submit"

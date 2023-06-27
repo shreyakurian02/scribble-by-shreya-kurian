@@ -4,9 +4,9 @@ require "test_helper"
 
 class Api::V1::Articles::VersionsControllerTest < ActionDispatch::IntegrationTest
   def setup
-    site = create :site
-    user = create(:user, site:)
-    category = create(:category, site:)
+    @site = create :site
+    user = create :user, site: @site
+    category = create :category, site: @site
     @article = create(:article, user:, category:)
   end
 
@@ -14,7 +14,7 @@ class Api::V1::Articles::VersionsControllerTest < ActionDispatch::IntegrationTes
     @article.update!(title: Faker::Name.first_name)
     get(api_v1_article_version_path(@article.slug, @article.versions.first.id), headers:)
     assert_response :success
-    assert_equal %w[category description title], response_json["version"].keys.sort
+    assert_equal %w[article_category description title version_category], response_json["version"].keys.sort
   end
 
   def test_can_restore_article_to_old_version
@@ -24,6 +24,18 @@ class Api::V1::Articles::VersionsControllerTest < ActionDispatch::IntegrationTes
     assert_response :success
     assert_equal I18n.t("successfully_restored", entity: "Article"), response_json["notice"]
     assert_equal title_before_updating, @article.reload.title
+  end
+
+  def test_restore_to_latest_versions_category_when_old_version_category_is_deleted
+    category_before_updating = @article.category
+    new_category = create :category, site: @site
+    @article.update!(category: new_category)
+    category_before_updating.destroy!
+    put(restore_api_v1_article_version_path(@article.slug, @article.versions.first.id), headers:)
+
+    assert_response :success
+    assert_equal I18n.t("successfully_restored", entity: "Article"), response_json["notice"]
+    assert_equal new_category, @article.category
   end
 
   def test_cannot_show_article_version_for_invalid_params
