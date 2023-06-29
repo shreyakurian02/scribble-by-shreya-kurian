@@ -8,7 +8,7 @@ import { setAuthHeaders, registerIntercepts } from "apis/axios";
 import "common/i18n";
 import { initializeLogger } from "common/logger";
 import Dashboard from "components/Dashboard";
-import UserInterface from "components/UserInterface";
+import EndUserInterface from "components/EndUserInterface";
 import { PREVIEW_URL, ADMIN_URL } from "constants/urls";
 import { CategoriesProvider } from "contexts/categories";
 
@@ -49,7 +49,7 @@ const App = () => {
           <Route
             path={PREVIEW_URL}
             render={() => (
-              <UserInterface
+              <EndUserInterface
                 notFoundError={notFoundError}
                 setNotFoundError={setNotFoundError}
               />

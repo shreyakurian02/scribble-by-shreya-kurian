@@ -4,7 +4,7 @@ import { PageLoader } from "neetoui";
 import { isEmpty, isNil, either } from "ramda";
 import { Route, Switch, Redirect } from "react-router";
 
-import siteApi from "apis/site";
+import siteApi from "apis/public/site";
 import ErrorPage from "components/Common/ErrorPage";
 import {
   PREVIEW_URL,
@@ -13,22 +13,28 @@ import {
   EUI_INVALID_URL,
   PUBLIC_ARTICLES_URL,
 } from "constants/urls";
-import { getFromSessionStorage } from "utils/storage";
+import { getFromLocalStorage } from "utils/storage";
 
 import Authentication from "./Authentication";
 import Preview from "./Preview";
 import PrivateRoute from "./PrivateRoute";
 
-const UserInterface = ({ notFoundError, setNotFoundError }) => {
+const EndUserInterface = ({ notFoundError, setNotFoundError }) => {
   const [site, setSite] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  const authToken = getFromSessionStorage("authToken");
+  const authToken = getFromLocalStorage("authToken");
 
-  const isLoggedIn = !either(isNil, isEmpty)(authToken) && authToken !== "null";
-  const { is_password_protected: isPasswordProtected = false } = site;
-  const hasAccess = (isPasswordProtected && isLoggedIn) || !isPasswordProtected;
   const { show: show404Error } = notFoundError;
+  const isLoggedIn = !either(isNil, isEmpty)(authToken) && authToken !== "null";
+  const {
+    is_password_protected: isPasswordProtected = false,
+    is_valid_token: isAuthTokenValid,
+  } = site;
+
+  const hasAccess =
+    (isPasswordProtected && isLoggedIn && isAuthTokenValid) ||
+    !isPasswordProtected;
 
   const fetchSite = async () => {
     setIsLoading(true);
@@ -96,4 +102,4 @@ const UserInterface = ({ notFoundError, setNotFoundError }) => {
   );
 };
 
-export default UserInterface;
+export default EndUserInterface;

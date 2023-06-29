@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import { setAuthHeaders } from "apis/axios";
 import sessionApi from "apis/public/session";
 import { PREVIEW_URL } from "constants/urls";
-import { setToSessionStorage } from "utils/storage";
+import { setToLocalStorage } from "utils/storage";
 
 import { LOGIN_INTIAL_VALUES, LOGIN_VALIDATION_SCHEMA } from "./constants";
 
@@ -24,7 +24,7 @@ const Authentication = ({ site }) => {
       const {
         data: { authentication_token },
       } = await sessionApi.login({ password });
-      setToSessionStorage({ key: "authToken", value: authentication_token });
+      setToLocalStorage({ key: "authToken", value: authentication_token });
       setAuthHeaders();
       window.location.href = PREVIEW_URL;
     } catch (error) {
