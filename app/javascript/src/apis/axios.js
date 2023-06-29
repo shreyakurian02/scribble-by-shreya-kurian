@@ -3,7 +3,7 @@ import { DEFAULT_ERROR_NOTIFICATION } from "constants";
 import axios from "axios";
 import { Toastr } from "neetoui";
 
-import { getFromSessionStorage } from "../utils/storage";
+import { getFromLocalStorage } from "../utils/storage";
 
 axios.defaults.baseURL = "/";
 
@@ -15,7 +15,7 @@ const setAuthHeaders = (setIsLoading = () => null) => {
       .querySelector('[name="csrf-token"]')
       .getAttribute("content"),
   };
-  const token = getFromSessionStorage("authToken");
+  const token = getFromLocalStorage("authToken");
   if (token) {
     axios.defaults.headers["X-Auth-Token"] = token;
   }
@@ -46,7 +46,9 @@ const handleErrorResponse = (axiosErrorObject, setNotFoundError) => {
     Toastr.error(errorMessage || DEFAULT_ERROR_NOTIFICATION);
   }
 
-  if (errorStatus === 423) {
+  if (errorStatus === 401) {
+    localStorage.removeItem("authToken");
+  } else if (errorStatus === 423) {
     window.location.href = "/";
   }
 
