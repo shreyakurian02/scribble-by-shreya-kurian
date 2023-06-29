@@ -18,7 +18,7 @@ const Block = ({ version, handleShowVersion, lastVersionId }, ref) => {
       className={classnames(
         "neeto-ui-bg-info-100 hover:neeto-ui-bg-gray-400 neeto-ui-rounded-sm flex w-full cursor-pointer flex-col space-y-1 p-3",
         {
-          "cursor-not-allowed": lastVersionId === id,
+          "neeto-ui-bg-pastel-red cursor-not-allowed": lastVersionId === id,
         }
       )}
       onClick={() => handleShowVersion(id)}
