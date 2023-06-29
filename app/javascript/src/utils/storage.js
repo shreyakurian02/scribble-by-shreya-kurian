@@ -1,10 +1,10 @@
-const setToSessionStorage = ({ key, value }) =>
-  sessionStorage.setItem(key, JSON.stringify(value));
+const setToLocalStorage = ({ key, value }) =>
+  localStorage.setItem(key, JSON.stringify(value));
 
-const getFromSessionStorage = key => {
+const getFromLocalStorage = key => {
   let response = "";
   try {
-    const value = sessionStorage.getItem(key);
+    const value = localStorage.getItem(key);
     response = value ? JSON.parse(value) : "";
   } catch (error) {
     logger.error(error);
@@ -14,4 +14,4 @@ const getFromSessionStorage = key => {
   return response;
 };
 
-export { setToSessionStorage, getFromSessionStorage };
+export { setToLocalStorage, getFromLocalStorage };
