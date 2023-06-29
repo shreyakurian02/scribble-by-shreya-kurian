@@ -84,7 +84,7 @@ class RedirectionTest < ActiveSupport::TestCase
   end
 
   def test_redirection_shouldnt_be_saved_with_invalid_to_path
-    invalid_paths = ["invalid-path", "https://invalid-path", "https//google.com"]
+    invalid_paths = ["invalid-path", "https//google.com", "http",]
 
     invalid_paths.each do |path|
       redirection = build :redirection, to_path: "invalid-path"
@@ -94,7 +94,7 @@ class RedirectionTest < ActiveSupport::TestCase
   end
 
   def test_redirection_should_be_saved_with_valid_to_path
-    valid_paths = ["/settings", "http://google.com"]
+    valid_paths = ["/settings", "http://google.com", "http://127.0.0.1:3000"]
 
     valid_paths.each do |path|
       redirection = build :redirection, to_path: "/settings"
