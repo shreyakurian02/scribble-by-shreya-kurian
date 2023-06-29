@@ -14,7 +14,7 @@ export const VALIDATION_SCHEMA = yup.object().shape({
   toPath: yup
     .string()
     .matches(
-      /^(https?:\/\/)?([a-zA-Z0-9-]+\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}(:[0-9]+)?(\/.*)?$|^\/.*$/,
+      /^(?:https?:\/\/)?(?:(?:www\.)?(?:(?:\d{1,3}\.){3}\d{1,3}|localhost|(?:[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*\.[a-zA-Z]{2,})))?(?::\d+)?(?:\/[\w\-./]*)?(?:\?[\w\-./=&]*)?$/,
       t("validations.invalidToPath")
     )
     .required(t("validations.required", { entity: "To path" })),

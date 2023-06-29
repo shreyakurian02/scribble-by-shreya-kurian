@@ -16,4 +16,6 @@ export const PUBLIC_CATEGORIES_BASE_URL = `${PUBLIC_BASE_URL}/categories`;
 
 export const PUBLIC_ARTICLES_BASE_URL = `${PUBLIC_BASE_URL}/articles`;
 
+export const PUBLIC_SITE_BASE_URL = `${PUBLIC_BASE_URL}/site`;
+
 export const SESSIONS_BASE_URL = `${PUBLIC_BASE_URL}/session`;

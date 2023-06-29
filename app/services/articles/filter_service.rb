@@ -13,7 +13,7 @@ module Articles
       filter_by_status
       filter_by_category
       filter_by_search
-      paginate
+      paginated_articles
     end
 
     private
@@ -38,7 +38,7 @@ module Articles
         "all"
       end
 
-      def paginate
+      def paginated_articles
         { articles: @articles.page(page_number).per(per_page), filtered_count: @articles.size }
       end
 

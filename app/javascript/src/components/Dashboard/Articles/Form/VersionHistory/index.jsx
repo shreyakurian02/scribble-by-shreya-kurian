@@ -8,13 +8,14 @@ import Block from "./Block";
 import Version from "./Version";
 
 const VersionHistory = ({ isOpen, onClose, article, fetchArticle }) => {
+  const { t } = useTranslation();
+
   const [isVersionModalOpen, setIsVersionModalOpen] = useState(false);
   const [selectedVersionId, setSelectedVersionId] = useState("");
 
-  const { t } = useTranslation();
-
   const { versions = [] } = article;
   const lastVersionId = last(versions)?.id;
+  const orderedVersions = [...versions.slice(-1), ...versions.slice(0, -1)];
 
   const handleShowVersion = id => {
     if (lastVersionId !== id) {
@@ -30,18 +31,20 @@ const VersionHistory = ({ isOpen, onClose, article, fetchArticle }) => {
           <Typography style="h2">{t("headers.versionHistory")}</Typography>
         </Pane.Header>
         <Pane.Body className="space-y-2">
-          {versions?.map(version =>
+          {orderedVersions?.map(version =>
             version.id === lastVersionId ? (
               <Tooltip
                 content={t("errors.sameAsLastVersion")}
                 key={version.id}
                 position="bottom"
               >
-                <Block
-                  handleShowVersion={handleShowVersion}
-                  lastVersionId={lastVersionId}
-                  version={version}
-                />
+                <div className="mb-3 w-full border-b-4 border-black pb-3">
+                  <Block
+                    handleShowVersion={handleShowVersion}
+                    lastVersionId={lastVersionId}
+                    version={version}
+                  />
+                </div>
               </Tooltip>
             ) : (
               <Block
