@@ -32,7 +32,8 @@ class Api::V1::ArticlesController < ApplicationController
   private
 
     def article_params
-      params.require(:article).permit(:title, :description, :status, :category_id)
+      params.require(:article).permit(
+        :title, :description, :status, :category_id, article_schedules_attributes: [:id, :datetime, :kind, :_destroy])
     end
 
     def load_article!

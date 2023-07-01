@@ -10,11 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_27_060957) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_29_061251) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "article_schedules", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "article_id", null: false
+    t.datetime "datetime", null: false
+    t.string "kind", default: "publish", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_article_schedules_on_article_id"
+  end
 
   create_table "articles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", null: false
@@ -83,6 +92,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_060957) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "article_schedules", "articles", on_delete: :cascade
   add_foreign_key "articles", "categories"
   add_foreign_key "articles", "users", on_delete: :cascade
   add_foreign_key "categories", "sites", on_delete: :cascade
