@@ -22,8 +22,6 @@ class ArticleSchedule < ApplicationRecord
     def validate_schedule
       return unless article.publish_schedule.present? && publish? || article.unpublish_schedule.present? && unpublish?
 
-      errors.add(
-        :base,
-        I18n.t("errors.schedule_exists"))
+      errors.add(:base, I18n.t("errors.schedule_exists"))
     end
 end

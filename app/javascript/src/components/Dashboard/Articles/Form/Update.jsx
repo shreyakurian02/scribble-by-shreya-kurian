@@ -10,7 +10,7 @@ import { ADMIN_URL, ARTICLES_URL } from "constants/urls";
 import { VALIDATION_SCHEMA } from "./constants";
 import Editor from "./Editor";
 import Header from "./Header";
-import { buildInitialValues } from "./utils";
+import { buildInitialValues, buildUpdateArticlePayload } from "./utils";
 
 import { ARTICLE_STATUS } from "../constants";
 
@@ -24,9 +24,11 @@ const Update = () => {
   const { id } = useParams();
 
   const handleSubmit = async values => {
-    const payload = { ...values, status, category_id: values.category.value };
     try {
-      await articlesApi.update({ id, payload });
+      await articlesApi.update({
+        id,
+        payload: buildUpdateArticlePayload({ values, article }),
+      });
       history.push(ADMIN_URL);
     } catch (error) {
       logger.error(error);
@@ -67,7 +69,6 @@ const Update = () => {
   return (
     <div className="w-full pt-5">
       <Formik
-        enableReinitialize
         initialValues={buildInitialValues(article)}
         validationSchema={VALIDATION_SCHEMA}
         onReset={handleReset}

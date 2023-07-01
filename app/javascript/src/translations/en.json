@@ -6,6 +6,7 @@
     "allArticles": "All articles",
     "published": "Published",
     "publish": "Publish",
+    "unpublish": "Unpublish",
     "draft": "Draft",
     "title": "Title",
     "columns": "Columns",
@@ -88,6 +89,10 @@
   },
   "labels": {
     "content": "Content",
+    "date": "Date",
+    "time": "Time",
+    "publishLater": "Publish later",
+    "unpublishLater": "Unpublish later",
     "passwordProtect": "Password protect your site",
     "articleSavedDate": "{{status}} saved at <strong>{{date}}</strong>"
   },
@@ -95,6 +100,8 @@
     "required": "{{entity}} is required",
     "invalidFromPath": "Invalid path",
     "invalidToPath": "Invalid URL",
+    "futureDate": "Date should be from future",
+    "futureTime": "Time should be from future",
     "minimum": "Atleast {{value}} {{entity}} is required",
     "invalidEmail": "Email address must be valid",
     "validAlphaNumeric": "Must contain at least one alphanumeric character",
@@ -145,11 +152,15 @@
     "enterPassword": "Enter the password to gain access to {{site}}.",
     "versionHistory": "Version history",
     "versionEvent": "Article {{event}}",
+    "publishArticle": "Publish article",
+    "unpublishArticle": "Unpublish article",
     "versionHistoryDescription": "Version history of setting up an account in scribble."
   },
   "errors": {
     "pageNotFound": "The page you're looking for can't be found.",
     "sameAsLastVersion": "The version is same as the current version.",
-    "versionRestore": "The category of this version has been deleted. Restoring to this version will cause the article to be assigned the category of the latest article version."
+    "invalidPublishSchedule": "Unpublish later schedule required for creating a publish schedule of a published article.",
+    "invalidUnpublishSchedule": "Publish later schedule required for creating a unpublish schedule of a draft article.",
+    "versionRestore": "The category of this version has been deleted. Restoring to this version will cause the article to be assigned to the category of the latest article version."
   }
 }

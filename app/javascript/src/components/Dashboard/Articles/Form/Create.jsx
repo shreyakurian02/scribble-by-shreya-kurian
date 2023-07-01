@@ -9,6 +9,7 @@ import { ARTICLES_URL } from "constants/urls";
 import { INITIAL_VALUES, VALIDATION_SCHEMA } from "./constants";
 import Editor from "./Editor";
 import Header from "./Header";
+import { buildCreateArticlePayload } from "./utils";
 
 import { ARTICLE_STATUS } from "../constants";
 
@@ -18,16 +19,9 @@ const Create = () => {
   const editorRef = useRef(null);
   const history = useHistory();
 
-  const handleSubmit = async ({ title, description, category: { value } }) => {
-    const payload = {
-      title,
-      description,
-      category_id: value,
-      status,
-    };
-
+  const handleSubmit = async values => {
     try {
-      await articlesApi.create(payload);
+      await articlesApi.create(buildCreateArticlePayload(values));
       history.push(ARTICLES_URL);
     } catch (error) {
       logger.error(error);
@@ -42,6 +36,7 @@ const Create = () => {
   return (
     <div className="w-full pt-5">
       <Formik
+        enableReinitialize
         initialValues={INITIAL_VALUES}
         validationSchema={VALIDATION_SCHEMA}
         onReset={handleReset}
