@@ -6,7 +6,7 @@ const TooltipWrapper = ({ children, condition, message }) => {
   if (!condition) return children;
 
   return (
-    <Tooltip content={message} followCursor="horizontal" position="right">
+    <Tooltip content={message} position="bottom">
       <div>{children}</div>
     </Tooltip>
   );

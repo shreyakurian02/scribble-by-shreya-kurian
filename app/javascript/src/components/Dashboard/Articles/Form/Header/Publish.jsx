@@ -23,12 +23,13 @@ const Publish = ({ isOpen, onClose, article }) => {
     setFieldValue,
   } = useFormikContext();
 
+  const { publishLater } = values;
   const isPublishLaterEnabled =
     article.status === ARTICLE_STATUS.publish && !article?.unpublish_schedule;
 
   const handleClose = () => {
-    const { publishLater, date, time } = initialValues;
-    setValues({ ...values, publishLater, date, time });
+    const { publishLater, publishDate, publishTime } = initialValues;
+    setValues({ ...values, publishLater, publishDate, publishTime });
     onClose();
   };
 
@@ -51,24 +52,23 @@ const Publish = ({ isOpen, onClose, article }) => {
               name="publishLater"
             />
           </TooltipWrapper>
-          {values.publishLater && (
+          {publishLater && (
             <>
               <DatePicker
-                error={errors?.date}
+                error={errors?.publishDate}
                 format={DATE_FORMAT}
                 getPopupContainer={prop("parentNode")}
                 label={t("labels.date")}
-                type="date"
-                value={values.date}
-                onChange={date => setFieldValue("date", date)}
+                value={values.publishDate}
+                onChange={date => setFieldValue("publishDate", date)}
               />
               <TimePicker
-                error={errors?.time}
+                error={errors?.publishTime}
                 format={TIME_FORMAT}
                 getPopupContainer={prop("parentNode")}
                 label={t("labels.time")}
-                value={values.time}
-                onChange={time => setFieldValue("time", time)}
+                value={values.publishTime}
+                onChange={time => setFieldValue("publishTime", time)}
               />
             </>
           )}
@@ -77,9 +77,11 @@ const Publish = ({ isOpen, onClose, article }) => {
       <Pane.Footer className="flex items-center space-x-2">
         <Button
           disabled={isSubmitting}
-          label={t("common.publish")}
           loading={isSubmitting}
           type="submit"
+          label={
+            publishLater ? t("labels.publishLater") : t("labels.publishNow")
+          }
           onClick={submitForm}
         />
         <Button

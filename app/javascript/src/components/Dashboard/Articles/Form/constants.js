@@ -11,12 +11,12 @@ export const INITIAL_VALUES = {
   category: null,
   title: "",
   description: "<p></p>",
-  date: CURRENT_DATETIME,
   publishLater: false,
+  publishDate: CURRENT_DATETIME,
+  publishTime: CURRENT_DATETIME,
   unpublishLater: false,
   unpublishDate: CURRENT_DATETIME,
   unpublishTime: CURRENT_DATETIME,
-  time: CURRENT_DATETIME,
 };
 
 export const DATE_FORMAT = "MM/DD/YYYY";
@@ -70,22 +70,22 @@ export const VALIDATION_SCHEMA = yup.object().shape({
         t("validations.futureTime"),
         (unpublishTime, { parent: { unpublishDate } }) =>
           dayjs().isBefore(
-            dayjs(`${unpublishDate} ${dayjs(unpublishTime).format("h")}`)
+            dayjs(unpublishDate).set("hour", dayjs(unpublishTime).hour())
           )
       )
       .required(t("validations.required", { entity: t("labels.time") })),
   }),
-  date: yup.string().when("publishLater", {
+  publishDate: yup.string().when("publishLater", {
     is: true,
     then: yup
       .string()
       .nullable()
-      .test("validDate", t("validations.futureDate"), date =>
-        date ? dayjs().isBefore(dayjs(date).hour(23)) : true
+      .test("validDate", t("validations.futureDate"), publishDate =>
+        publishDate ? dayjs().isBefore(dayjs(publishDate).hour(23)) : true
       )
       .required(t("validations.required", { entity: t("labels.date") })),
   }),
-  time: yup.string().when("publishLater", {
+  publishTime: yup.string().when("publishLater", {
     is: true,
     then: yup
       .string()
@@ -94,8 +94,10 @@ export const VALIDATION_SCHEMA = yup.object().shape({
       .test(
         "futureTime",
         t("validations.futureTime"),
-        (time, { parent: { date } }) =>
-          dayjs().isBefore(dayjs(`${date} ${dayjs(time).format("h")}`))
+        (publishTime, { parent: { publishDate } }) =>
+          dayjs().isBefore(
+            dayjs(publishDate).set("hour", dayjs(publishTime).hour())
+          )
       ),
   }),
 });

@@ -24,8 +24,8 @@ export const buildInitialValues = article => {
     description,
     category: { label: name, value: id },
     publishLater: Boolean(publish_schedule?.datetime),
-    date: publishDatetime,
-    time: publishDatetime,
+    publishDate: publishDatetime,
+    publishTime: publishDatetime,
     unpublishDate: unpublishDatetime,
     unpublishTime: unpublishDatetime,
     unpublishLater: Boolean(unpublish_schedule?.datetime),
@@ -40,11 +40,11 @@ export const titlize = ([firstLetter, ...rest]) =>
 export const formatDatetime = ({ date, time }) =>
   `${dayjs(date).format("YYYY-MM-DD")} ${dayjs(time).format("HH")}`;
 
-export const buildCreateArticlePayload = values => {
+export const buildCreateArticlePayload = ({ values, status }) => {
   const {
     category,
-    date,
-    time,
+    publishDate,
+    publishTime,
     publishLater,
     unpublishLater,
     unpublishDate,
@@ -66,17 +66,14 @@ export const buildCreateArticlePayload = values => {
     if (publishLater) {
       payload.article_schedules_attributes.push({
         kind: "publish",
-        datetime: formatDatetime({ date, time }),
+        datetime: formatDatetime({ date: publishDate, time: publishTime }),
       });
     }
 
     if (unpublishLater) {
       payload.article_schedules_attributes.push({
         kind: "unpublish",
-        datetime: formatDatetime({
-          date: unpublishDate,
-          time: unpublishTime,
-        }),
+        datetime: formatDatetime({ date: unpublishDate, time: unpublishTime }),
       });
     }
   }
@@ -84,10 +81,10 @@ export const buildCreateArticlePayload = values => {
   return payload;
 };
 
-export const buildUpdateArticlePayload = ({ values, article }) => {
+export const buildUpdateArticlePayload = ({ values, article, status }) => {
   const {
-    time,
-    date,
+    publishDate,
+    publishTime,
     category,
     publishLater,
     unpublishLater,
@@ -106,7 +103,7 @@ export const buildUpdateArticlePayload = ({ values, article }) => {
       payload.article_schedules_attributes.push({
         id: article?.publish_schedule?.id,
         kind: "publish",
-        datetime: formatDatetime({ date, time }),
+        datetime: formatDatetime({ date: publishDate, time: publishTime }),
       });
     }
 
@@ -114,10 +111,7 @@ export const buildUpdateArticlePayload = ({ values, article }) => {
       payload.article_schedules_attributes.push({
         id: article?.unpublish_schedule?.id,
         kind: "unpublish",
-        datetime: formatDatetime({
-          date: unpublishDate,
-          time: unpublishTime,
-        }),
+        datetime: formatDatetime({ date: unpublishDate, time: unpublishTime }),
       });
     }
   } else {

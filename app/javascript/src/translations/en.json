@@ -92,6 +92,7 @@
     "date": "Date",
     "time": "Time",
     "publishLater": "Publish later",
+    "publishNow": "Publish now",
     "unpublishLater": "Unpublish later",
     "passwordProtect": "Password protect your site",
     "articleSavedDate": "{{status}} saved at <strong>{{date}}</strong>"

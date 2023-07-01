@@ -21,7 +21,7 @@ const Create = () => {
 
   const handleSubmit = async values => {
     try {
-      await articlesApi.create(buildCreateArticlePayload(values));
+      await articlesApi.create(buildCreateArticlePayload({ values, status }));
       history.push(ARTICLES_URL);
     } catch (error) {
       logger.error(error);

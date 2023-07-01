@@ -23,6 +23,7 @@ const Unpublish = ({ isOpen, onClose, isEdit, article }) => {
     setFieldValue,
   } = useFormikContext();
 
+  const { unpublishLater } = values;
   const isUnpublishLaterEnabled =
     !isEdit ||
     (article.status === ARTICLE_STATUS.draft && !article?.publish_schedule);
@@ -52,7 +53,7 @@ const Unpublish = ({ isOpen, onClose, isEdit, article }) => {
               name="unpublishLater"
             />
           </TooltipWrapper>
-          {values.unpublishLater && (
+          {unpublishLater && (
             <>
               <DatePicker
                 error={errors?.unpublishDate}
@@ -78,9 +79,11 @@ const Unpublish = ({ isOpen, onClose, isEdit, article }) => {
       <Pane.Footer className="flex items-center space-x-2">
         <Button
           disabled={isSubmitting}
-          label={t("common.unpublish")}
           loading={isSubmitting}
           type="submit"
+          label={
+            unpublishLater ? t("labels.unpublishLater") : t("common.draft")
+          }
           onClick={submitForm}
         />
         <Button

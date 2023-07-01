@@ -27,7 +27,7 @@ const Update = () => {
     try {
       await articlesApi.update({
         id,
-        payload: buildUpdateArticlePayload({ values, article }),
+        payload: buildUpdateArticlePayload({ values, article, status }),
       });
       history.push(ADMIN_URL);
     } catch (error) {
