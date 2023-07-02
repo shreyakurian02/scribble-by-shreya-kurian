@@ -39,4 +39,8 @@ class ActiveSupport::TestCase
   def public_headers(site)
     headers.merge({ "X-Auth-Token": site.authentication_token })
   end
+
+  def convert_to_ist(datetime)
+    datetime.in_time_zone("Kolkata").strftime("%d-%m-%Y %H:%M:%S")
+  end
 end

@@ -5,7 +5,7 @@ class Articles::ScheduleService
     ArticleSchedule.includes(:article).where("datetime < ?", DateTime.current).find_each do |schedule|
       status = schedule.unpublish? ? Article.statuses["draft"] : Article.statuses["published"]
       schedule.article.update!(status:)
-      schedule.destroy
+      schedule.destroy!
     end
   end
 end
