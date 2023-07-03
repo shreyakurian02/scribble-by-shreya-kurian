@@ -11,9 +11,10 @@ import { useCategoriesDispatch } from "contexts/categories";
 import Message from "./Message";
 
 const Delete = ({ isOpen, onClose, selectedCategory }) => {
+  const { t } = useTranslation();
+
   const [selectedMoveToCategory, setSelectedMoveToCategory] = useState({});
 
-  const { t } = useTranslation();
   const { fetchCategories } = useCategoriesDispatch();
 
   const { id: selectedCategoryId } = selectedCategory;

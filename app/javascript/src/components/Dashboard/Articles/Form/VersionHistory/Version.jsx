@@ -18,11 +18,11 @@ import { SINGULAR } from "src/constants";
 import versionsApi from "apis/articles/versions";
 
 const Version = ({ isOpen, onClose, versionId, article, fetchArticle }) => {
+  const { t } = useTranslation();
+
   const [version, setVersion] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [isRestoring, setIsRestoring] = useState(false);
-
-  const { t } = useTranslation();
 
   const { id: articleId } = article;
   const {

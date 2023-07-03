@@ -11,12 +11,12 @@ import { DEFAULT_PAGE_PROPERTIES } from "components/Dashboard/constants";
 import { COLUMN_DATA, SORT_ORDER } from "./constants";
 
 const Analytics = () => {
+  const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState(false);
   const [articles, setArticles] = useState({ data: [], count: 0 });
   const [sortOrder, setSortOrder] = useState(SORT_ORDER.descend);
   const [pageProperties, setPageProperties] = useState(DEFAULT_PAGE_PROPERTIES);
-
-  const { t } = useTranslation();
 
   const { size: pageSize, page: currentPageNumber } = pageProperties;
 
