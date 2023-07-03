@@ -52,7 +52,7 @@ class ArticleScheduleTest < ActiveSupport::TestCase
       datetime: publish_schedule.reload.datetime - 1.minute
     assert_not unpublish_schedule.valid?
     assert_includes unpublish_schedule.errors.full_messages,
-      "Datetime #{I18n.t("errors.invalid_schedule_datetime", kind: ArticleSchedule.kinds["publish"])}"
+      "Datetime #{I18n.t("errors.unpublish_schedule_later_than_publish_schedule", kind: ArticleSchedule.kinds["publish"])}"
   end
 
   def test_shouldnt_save_publish_schedule_for_published_article_unless_unpublish_later_schedule_is_present
@@ -72,6 +72,6 @@ class ArticleScheduleTest < ActiveSupport::TestCase
       datetime: unpublish_schedule.reload.datetime - 1.minute
     assert_not publish_schedule.valid?
     assert_includes publish_schedule.errors.full_messages,
-      "Datetime #{I18n.t("errors.invalid_schedule_datetime", kind: ArticleSchedule.kinds["unpublish"])}"
+      "Datetime #{I18n.t("errors.publish_schedule_later_than_unpublish_schedule", kind: ArticleSchedule.kinds["unpublish"])}"
   end
 end

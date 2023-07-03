@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ArticleSchedule < ApplicationRecord
-  include ActiveModel::Validations
-
   enum :kind, { publish: "publish", unpublish: "unpublish" }, default: "publish"
 
   belongs_to :article

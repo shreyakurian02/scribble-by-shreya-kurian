@@ -92,30 +92,26 @@ export const buildUpdateArticlePayload = ({ values, article, status }) => {
     unpublishTime,
   } = values;
 
-  let payload = {
+  const payload = {
     ...values,
     article_schedules_attributes: [],
     category_id: category.value,
   };
 
-  if (publishLater || unpublishLater) {
-    if (publishLater) {
-      payload.article_schedules_attributes.push({
-        id: article?.publish_schedule?.id,
-        kind: "publish",
-        datetime: formatDatetime({ date: publishDate, time: publishTime }),
-      });
-    }
+  if (publishLater) {
+    payload.article_schedules_attributes.push({
+      id: article?.publish_schedule?.id,
+      kind: "publish",
+      datetime: formatDatetime({ date: publishDate, time: publishTime }),
+    });
+  }
 
-    if (unpublishLater) {
-      payload.article_schedules_attributes.push({
-        id: article?.unpublish_schedule?.id,
-        kind: "unpublish",
-        datetime: formatDatetime({ date: unpublishDate, time: unpublishTime }),
-      });
-    }
-  } else {
-    payload = { ...payload, status };
+  if (unpublishLater) {
+    payload.article_schedules_attributes.push({
+      id: article?.unpublish_schedule?.id,
+      kind: "unpublish",
+      datetime: formatDatetime({ date: unpublishDate, time: unpublishTime }),
+    });
   }
 
   if (!publishLater && article?.publish_schedule) {
@@ -123,6 +119,7 @@ export const buildUpdateArticlePayload = ({ values, article, status }) => {
       id: article?.publish_schedule?.id,
       _destroy: true,
     });
+    payload["status"] = status;
   }
 
   if (!unpublishLater && article?.unpublish_schedule) {
@@ -130,6 +127,11 @@ export const buildUpdateArticlePayload = ({ values, article, status }) => {
       id: article?.unpublish_schedule?.id,
       _destroy: true,
     });
+    payload["status"] = status;
+  }
+
+  if (!unpublishLater && !publishLater) {
+    payload["status"] = status;
   }
 
   return payload;

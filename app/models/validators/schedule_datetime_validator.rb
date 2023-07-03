@@ -3,9 +3,11 @@
  module Validators
    class ScheduleDatetimeValidator < ActiveModel::Validator
      def validate(record)
+       return unless record.new_record? || record.changed?
+
        future_datetime(record)
-       unpublish_schedule(record)
-       publish_schedule(record)
+       unpublish_schedule(record) if record.unpublish?
+       publish_schedule(record) if record.publish?
      end
 
      private
@@ -18,29 +20,47 @@
        end
 
        def unpublish_schedule(record)
-         return unless record.article.draft? && record.unpublish?
-         return invalid_schedule(record) unless record.article.publish_schedule.present?
+         if record.article.published?
+           return unless record.article.publish_schedule.present?
 
-         invalid_schedule_datetime(record) if record.datetime <= record.article.publish_schedule.datetime
+           invalid_schedule_datetime(record) if record.datetime > record.article.publish_schedule.datetime
+         else
+           return invalid_schedule(record) unless record.article.publish_schedule.present?
+
+           invalid_schedule_datetime(record, false) if record.datetime <= record.article.publish_schedule.datetime
+         end
         end
 
+\
        def publish_schedule(record)
-         return unless record.article.published? && record.publish?
-         return invalid_schedule(record) unless record.article.unpublish_schedule.present?
+         if record.article.draft?
+           return unless record.article.unpublish_schedule.present?
 
-         invalid_schedule_datetime(record) if record.datetime <= record.article.unpublish_schedule.datetime
-        end
+           invalid_schedule_datetime(record, false) if record.datetime > record.article.unpublish_schedule.datetime
+         else
+           return invalid_schedule(record) unless record.article.unpublish_schedule.present?
+
+           invalid_schedule_datetime(record) if record.datetime <= record.article.unpublish_schedule.datetime
+         end
+       end
+
+       def article_schedules_exists?(record)
+         record.article.article_schedules.exists?(id: record.id)
+       end
 
        def invalid_schedule(record)
          record.errors.add(
            :base,
            I18n.t("errors.invalid_schedule", kind: inverse_kind(record), status: record.article.status))
-         throw(:abort)
+         throw :abort
        end
 
-       def invalid_schedule_datetime(record)
-         record.errors.add(:datetime, I18n.t("errors.invalid_schedule_datetime", kind: inverse_kind(record)))
-         throw(:abort)
+       def invalid_schedule_datetime(record, publish_later = true)
+         message = publish_later ?
+           I18n.t("errors.publish_schedule_later_than_unpublish_schedule") :
+           I18n.t("errors.unpublish_schedule_later_than_publish_schedule")
+         record.errors.add(:datetime, message)
+         throw :abort
       end
 
        def inverse_kind(record)

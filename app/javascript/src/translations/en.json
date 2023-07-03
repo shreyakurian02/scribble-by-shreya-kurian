@@ -161,7 +161,7 @@
     "pageNotFound": "The page you're looking for can't be found.",
     "sameAsLastVersion": "The version is same as the current version.",
     "invalidPublishSchedule": "Unpublish later schedule required for creating a publish schedule of a published article.",
-    "invalidUnpublishSchedule": "Publish later schedule required for creating a unpublish schedule of a draft article.",
+    "invalidUnpublishSchedule": "Publish later schedule required for creating an unpublish schedule of a draft article.",
     "versionRestore": "The category of this version has been deleted. Restoring to this version will cause the article to be assigned to the category of the latest article version."
   }
 }
