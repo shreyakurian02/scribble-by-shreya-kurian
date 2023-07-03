@@ -35,7 +35,7 @@ class RedirectionTest < ActiveSupport::TestCase
     assert_not redirection.valid?
     assert_includes redirection.errors.full_messages, "To path #{I18n.t("errors.same_path")}"
 
-    redirection = build :redirection, from_path: path, to_path: "https://#{Rails.application.secrets[:host]}#{path}"
+    redirection = build :redirection, from_path: path, to_path: "#{Rails.application.secrets[:host]}#{path}"
     assert_not redirection.valid?
     assert_includes redirection.errors.full_messages, "To path #{I18n.t("errors.same_path")}"
   end

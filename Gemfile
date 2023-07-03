@@ -45,11 +45,18 @@ gem "kaminari"
 # For reordering list
 gem "acts_as_list"
 
-# Use Sass to process CSS
-# gem "sassc-rails"
+# For compiling and bundling JavaScript. Read more: https://github.com/rails/webpacker
+gem "webpacker"
 
-# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem "react-rails"
+
+# versioning
+gem "paper_trail"
+
+gem "sidekiq", "<7"
+
+# For periodic sidekiq jobs
+gem "sidekiq-cron"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -66,6 +73,9 @@ group :development, :test do
   gem "faker"
 
   gem "byebug"
+
+  # For cleaning the database
+  gem "database_cleaner"
 end
 
 group :development do
@@ -86,16 +96,3 @@ group :test do
   gem "simplecov", require: false
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
 end
-
-# For compiling and bundling JavaScript. Read more: https://github.com/rails/webpacker
-gem "webpacker"
-
-gem "react-rails"
-
-# versioning
-gem "paper_trail"
-
-gem "sidekiq", "<7"
-
-# For periodic sidekiq jobs
-gem "sidekiq-cron"

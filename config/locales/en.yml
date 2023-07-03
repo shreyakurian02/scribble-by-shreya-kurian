@@ -13,8 +13,10 @@ en:
     future_date: "should be from future"
     invalid_schedule:
       No %{kind} later schedule exists for the %{status} article.
-    invalid_schedule_datetime:
-      "should be later than the %{kind} later schedule's datetime"
+    publish_schedule_later_than_unpublish_schedule:
+      "Publish schedule datetime should be later than unpublish schedule"
+    unpublish_schedule_later_than_publish_schedule:
+      "Unpublish schedule datetime should be later than publish schedule"
     default_category_deletion: "Default category cannot be deleted"
     must_exist: "%{entity} must exist"
     loop: "forms a loop with existing redirection"

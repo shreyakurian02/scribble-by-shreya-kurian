@@ -14,6 +14,6 @@ end
 
 def create_sample_data!
   puts 'Seeding with sample data...'
-  SeederService.new.process!
+  SampleData::LoaderService.new.process!
 end
 

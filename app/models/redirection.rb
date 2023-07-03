@@ -14,30 +14,39 @@ class Redirection < ApplicationRecord
   private
 
     def validate_redirection
-      errors.add(:to_path, I18n.t("errors.same_path")) if urls_equal? || paths_equal_if_host_nil?
+      errors.add(:to_path, I18n.t("errors.same_path")) if from_path == shortened_to_path
 
-      if site.redirections.exists? from_path: to_path, to_path: from_path
+      if redirections_with_to_path_same_as_from_path.where(from_path: shortened_to_path).present?
         errors.add(:to_path, I18n.t("errors.loop"))
       else
-        errors.add(:to_path, I18n.t("errors.chain_path", path: "from")) if site.redirections.exists? from_path: to_path
-        errors.add(:from_path, I18n.t("errors.chain_path", path: "to")) if site.redirections.exists? to_path: from_path
+        errors.add(
+          :to_path,
+          I18n.t("errors.chain_path", path: "from")) if site.redirections.exists? from_path: shortened_to_path
+        errors.add(
+          :from_path,
+          I18n.t("errors.chain_path", path: "to")) if redirections_with_to_path_same_as_from_path.present?
       end
     end
 
-    def urls_equal?
-      to_path_host_same_as_app_host? && paths_equal?
+    def redirections_with_to_path_same_as_from_path
+      site.redirections.where(
+        "to_path = :from_path_with_host OR to_path = :from_path OR to_path = :from_path_with_dev_host", from_path_with_host:, from_path:, from_path_with_dev_host:)
     end
 
-    def paths_equal_if_host_nil?
-      to_path_host.nil? && paths_equal?
+    def from_path_with_dev_host
+      "http://127.0.0.1:3000#{from_path}"
     end
 
-    def paths_equal?
-      parsed_to_path.path == from_path
+    def from_path_with_host
+      "#{Rails.application.secrets[:host]}#{from_path}"
     end
 
-    def to_path_host_same_as_app_host?
-      to_path_host == Rails.application.secrets[:host]
+    def shortened_to_path
+      [app_host, "127.0.0.1"].include?(to_path_host) ? parsed_to_path.path : to_path
+    end
+
+    def app_host
+      URI.parse(Rails.application.secrets[:host]).host
     end
 
     def parsed_to_path
