@@ -31,6 +31,8 @@ const Header = ({
   isEdit = false,
   fetchArticle,
 }) => {
+  const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState(false);
   const [isVersionHistoryPaneOpen, setIsVersionHistoryPaneOpen] =
     useState(false);
@@ -39,7 +41,6 @@ const Header = ({
     MANAGE_DELETE_ALERT_INITIAL_VALUE
   );
 
-  const { t } = useTranslation();
   const history = useHistory();
   const [categories, { fetchCategories }] = useCategories();
 

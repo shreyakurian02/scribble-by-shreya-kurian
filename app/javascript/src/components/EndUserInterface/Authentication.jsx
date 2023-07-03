@@ -12,9 +12,9 @@ import { setToLocalStorage } from "utils/storage";
 import { LOGIN_INTIAL_VALUES, LOGIN_VALIDATION_SCHEMA } from "./constants";
 
 const Authentication = ({ site }) => {
-  const [isLoading, setIsLoading] = useState(false);
-
   const { t } = useTranslation();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const { title } = site;
 

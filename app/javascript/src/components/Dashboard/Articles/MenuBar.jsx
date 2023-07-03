@@ -30,9 +30,10 @@ const MenuBar = ({
   setIsNewCategoryModalOpen,
   setPageProperties,
 }) => {
+  const { t } = useTranslation();
+
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
 
-  const { t } = useTranslation();
   const history = useHistory();
   const categories = useCategoriesState();
 

@@ -10,12 +10,12 @@ import Password from "./Password";
 import Header from "../Header";
 
 const Security = () => {
+  const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState(true);
   const [isSecurityEnabled, setIsSecurityEnabled] = useState(false);
   const [isChangePasswordEnabled, setIsChangePasswordEnabled] = useState(false);
   const [siteSettings, setSiteSettings] = useState({});
-
-  const { t } = useTranslation();
 
   const { is_password_protected: isSitePasswordProtected } = siteSettings;
 

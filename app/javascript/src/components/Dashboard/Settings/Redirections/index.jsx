@@ -11,14 +11,14 @@ import List from "./List";
 import Header from "../Header";
 
 const Redirections = () => {
+  const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState(true);
   const [redirections, setRedirections] = useState([]);
   const [isAddFormOpen, setIsAddFormOpen] = useState(false);
   const [manageRedirection, setManageRedirection] = useState(
     DEFAULT_REDIRECTION_VALUE
   );
-
-  const { t } = useTranslation();
 
   const fetchRedirections = async () => {
     try {

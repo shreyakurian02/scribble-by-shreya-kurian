@@ -11,11 +11,12 @@ import useDebounce from "hooks/useDebounce";
 import FilteredArticles from "./FilteredArticles";
 
 const Header = ({ siteTitle }) => {
+  const { t } = useTranslation();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredArticles, setFilteredArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { t } = useTranslation();
   const inputRef = useRef(null);
   const debouncedSearchTerm = useDebounce(searchTerm);
 

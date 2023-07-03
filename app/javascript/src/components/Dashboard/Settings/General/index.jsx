@@ -11,10 +11,10 @@ import { VALIDATION_SCHEMA } from "./constants";
 import Header from "../Header";
 
 const General = () => {
+  const { t } = useTranslation();
+
   const [isLoading, setIsLoading] = useState(true);
   const [site, setSite] = useState({});
-
-  const { t } = useTranslation();
 
   const fetchSite = async () => {
     try {

@@ -16,10 +16,10 @@ const {
 } = Dropdown;
 
 const Item = ({ category, categoriesCount }) => {
+  const { t } = useTranslation();
+
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteAlertOpen, setIsDeleteAlertOpen] = useState(false);
-
-  const { t } = useTranslation();
 
   const { name, articles_count: articlesCount } = category;
   const isDefaultCategoryLastCategory =

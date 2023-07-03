@@ -17,10 +17,10 @@ import { renderPasswordVisibilityIcon } from "./utils";
 import Validation from "./Validation";
 
 const Form = ({ fetchSecurityDetails, setIsChangePasswordEnabled }) => {
+  const { t } = useTranslation();
+
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [inputType, setInputType] = useState(INPUT_TYPE.password);
-
-  const { t } = useTranslation();
 
   const handleSubmit = async ({ password }) => {
     try {

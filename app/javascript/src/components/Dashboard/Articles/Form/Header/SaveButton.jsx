@@ -17,9 +17,10 @@ const {
 } = ActionDropdown;
 
 const SaveButton = ({ status, setStatus, article, isEdit }) => {
+  const { t } = useTranslation();
+
   const [isSaveFormPaneOpen, setIsSaveFormPaneOpen] = useState(false);
 
-  const { t } = useTranslation();
   const { isSubmitting, dirty } = useFormikContext();
 
   const isArticleStatusDraft = status === ARTICLE_STATUS.draft;

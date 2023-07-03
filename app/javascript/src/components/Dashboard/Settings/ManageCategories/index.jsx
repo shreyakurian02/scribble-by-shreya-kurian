@@ -12,9 +12,10 @@ import List from "./List";
 import Header from "../Header";
 
 const ManageCategories = () => {
+  const { t } = useTranslation();
+
   const [isAddCategoryModalOpen, setIsAddCategoryModalOpen] = useState(false);
 
-  const { t } = useTranslation();
   const categories = useCategoriesState();
 
   return (

@@ -20,6 +20,7 @@ import MenuBar from "./MenuBar";
 import { pushUrlSearchParams, getSearchParams } from "./utils";
 
 const Articles = () => {
+  const { t } = useTranslation();
   const { status, categories: queryCategories, search } = getSearchParams();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,7 +31,6 @@ const Articles = () => {
   const [isNewCategoryModalOpen, setIsNewCategoryModalOpen] = useState(false);
   const [articles, setArticles] = useState(ARTICLES_INITIAL_VALUE);
 
-  const { t } = useTranslation();
   const { search: locationSearch } = useLocation();
   const history = useHistory();
   const debouncedCategorySearchTerm = useDebounce(categorySearchTerm);

@@ -9,8 +9,8 @@ import { useParams } from "react-router";
 import articlesApi from "apis/public/articles";
 
 const Article = ({ article, setArticle }) => {
-  const { slug } = useParams();
   const { t } = useTranslation();
+  const { slug } = useParams();
 
   const { title, description } = article;
 
