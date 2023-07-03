@@ -9,6 +9,12 @@ en:
     incorrect_credentials: "Incorrect credentials, try again."
   errors:
     presence: "%{entity} can't be blank"
+    schedule_exists: "Schedule already exists"
+    future_date: "should be from future"
+    invalid_schedule:
+      No %{kind} later schedule exists for the %{status} article.
+    invalid_schedule_datetime:
+      "should be later than the %{kind} later schedule's datetime"
     default_category_deletion: "Default category cannot be deleted"
     must_exist: "%{entity} must exist"
     loop: "forms a loop with existing redirection"

@@ -106,7 +106,12 @@ const Header = ({
           </Typography>
         )}
         <Button label={t("button.cancel")} style="secondary" type="reset" />
-        <SaveButton setStatus={setStatus} status={status} />
+        <SaveButton
+          article={article}
+          isEdit={isEdit}
+          setStatus={setStatus}
+          status={status}
+        />
         {isEdit && (
           <Dropdown buttonStyle="text" icon={MenuHorizontal}>
             <Menu>

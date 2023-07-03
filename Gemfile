@@ -94,3 +94,8 @@ gem "react-rails"
 
 # versioning
 gem "paper_trail"
+
+gem "sidekiq", "<7"
+
+# For periodic sidekiq jobs
+gem "sidekiq-cron"

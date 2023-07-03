@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 
 import classnames from "classnames";
 import { useFormikContext } from "formik";
 import { Check } from "neetoicons";
 import { ActionDropdown } from "neetoui";
 import { useTranslation } from "react-i18next";
+
+import Publish from "./Publish";
+import Unpublish from "./Unpublish";
 
 import { ARTICLE_STATUS } from "../../constants";
 
@@ -13,7 +16,9 @@ const {
   MenuItem: { Button: MenuButton },
 } = ActionDropdown;
 
-const SaveButton = ({ status, setStatus }) => {
+const SaveButton = ({ status, setStatus, article, isEdit }) => {
+  const [isSaveFormPaneOpen, setIsSaveFormPaneOpen] = useState(false);
+
   const { t } = useTranslation();
   const { isSubmitting, dirty } = useFormikContext();
 
@@ -29,30 +34,49 @@ const SaveButton = ({ status, setStatus }) => {
     "font-semibold": !isArticleStatusDraft,
   });
 
+  const handleSave = status => {
+    setStatus(status);
+    setIsSaveFormPaneOpen(true);
+  };
+
   return (
-    <ActionDropdown
-      buttonProps={{ type: "submit", loading: isSubmitting }}
-      disabled={!dirty || isSubmitting}
-      label={
-        isArticleStatusDraft ? t("button.saveAsDraft") : t("common.publish")
-      }
-    >
-      <Menu>
-        <MenuButton
-          prefix={!isArticleStatusDraft && <Check size={20} />}
-          onClick={() => setStatus(ARTICLE_STATUS.publish)}
-        >
-          <div className={publishOptionStyle}>{t("common.publish")}</div>
-        </MenuButton>
-        <MenuButton
-          className="pl-6"
-          prefix={isArticleStatusDraft && <Check size={20} />}
-          onClick={() => setStatus(ARTICLE_STATUS.draft)}
-        >
-          <div className={draftOptionStyle}>{t("button.saveAsDraft")}</div>
-        </MenuButton>
-      </Menu>
-    </ActionDropdown>
+    <>
+      <ActionDropdown
+        buttonProps={{ type: "submit", loading: isSubmitting }}
+        disabled={!dirty || isSubmitting}
+        label={
+          isArticleStatusDraft ? t("button.saveAsDraft") : t("common.publish")
+        }
+      >
+        <Menu>
+          <MenuButton
+            prefix={!isArticleStatusDraft && <Check size={20} />}
+            onClick={() => handleSave(ARTICLE_STATUS.publish)}
+          >
+            <div className={publishOptionStyle}>{t("common.publish")}</div>
+          </MenuButton>
+          <MenuButton
+            className="pl-6"
+            prefix={isArticleStatusDraft && <Check size={20} />}
+            onClick={() => handleSave(ARTICLE_STATUS.draft)}
+          >
+            <div className={draftOptionStyle}>{t("button.saveAsDraft")}</div>
+          </MenuButton>
+        </Menu>
+      </ActionDropdown>
+      <Publish
+        article={article}
+        isEdit={isEdit}
+        isOpen={status === ARTICLE_STATUS.publish && isSaveFormPaneOpen}
+        onClose={() => setIsSaveFormPaneOpen(false)}
+      />
+      <Unpublish
+        article={article}
+        isEdit={isEdit}
+        isOpen={status === ARTICLE_STATUS.draft && isSaveFormPaneOpen}
+        onClose={() => setIsSaveFormPaneOpen(false)}
+      />
+    </>
   );
 };
 

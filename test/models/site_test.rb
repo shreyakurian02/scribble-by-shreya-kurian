@@ -52,6 +52,12 @@ class SiteTest < ActiveSupport::TestCase
     assert @site.valid?
   end
 
+  def test_password_protected_returns_if_site_is_password_protected
+    assert @site.password_protected?
+    @site.update!(password: nil)
+    assert_not @site.reload.password_protected?
+  end
+
   def test_authentication_token_regenerates_when_password_is_updated
     old_authentication_token = @site.authentication_token
     @site.update!(password: "new_password@2")
