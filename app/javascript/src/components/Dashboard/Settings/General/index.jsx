@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { Button, Typography, Spinner } from "neetoui";
 import { Form, Input } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 
-import siteApi from "apis/site";
+import { useShowSite, useUpdateSite } from "hooks/reactQuery/useSiteApi";
 
 import { VALIDATION_SCHEMA } from "./constants";
 
@@ -13,33 +13,13 @@ import Header from "../Header";
 const General = () => {
   const { t } = useTranslation();
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [site, setSite] = useState({});
-
-  const fetchSite = async () => {
-    try {
-      const {
-        data: { site },
-      } = await siteApi.show();
-      setSite(site);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { isLoading, data: site } = useShowSite();
+  const { mutate: updateSite } = useUpdateSite();
 
   const handleSubmit = async ({ title }) => {
-    try {
-      const payload = { title };
-      await siteApi.update(payload);
-      fetchSite();
-    } catch (error) {
-      logger.error(error);
-    }
+    const payload = { title };
+    updateSite(payload);
   };
-
-  useEffect(() => {
-    fetchSite();
-  }, []);
 
   return (
     <div className="mx-auto w-1/2 space-y-5 py-16">
