@@ -6,6 +6,7 @@ class User < ApplicationRecord
   belongs_to :site
 
   has_many :articles, dependent: :destroy
+  has_one_attached :report
 
   validates :first_name, presence: true
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }, uniqueness: { scope: :site_id }

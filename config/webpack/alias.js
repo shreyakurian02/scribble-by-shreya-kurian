@@ -9,6 +9,7 @@ module.exports = {
       neetoicons: "@bigbinary/neeto-icons",
       neetoeditor: "@bigbinary/neeto-editor",
       hooks: "src/hooks",
+      channels: "src/channels",
       constants: "src/constants",
       utils: "src/utils",
     },

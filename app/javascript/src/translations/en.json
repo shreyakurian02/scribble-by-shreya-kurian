@@ -52,6 +52,7 @@
     "continue": "Continue",
     "goHome": "Go home",
     "restore": "Restore",
+    "download": "Download",
     "showVersionsHistory": "Show version history"
   },
   "placeholder": {
@@ -155,6 +156,7 @@
     "versionEvent": "Article {{event}}",
     "publishArticle": "Publish article",
     "unpublishArticle": "Unpublish article",
+    "articlesReport": "Articles report",
     "versionHistoryDescription": "Version history of setting up an account in scribble."
   },
   "errors": {
@@ -163,5 +165,10 @@
     "invalidPublishSchedule": "Unpublish later schedule required for creating a publish schedule of a published article.",
     "invalidUnpublishSchedule": "Publish later schedule required for creating an unpublish schedule of a draft article.",
     "versionRestore": "The category of this version has been deleted. Restoring to this version will cause the article to be assigned to the category of the latest article version."
+  },
+  "messages": {
+    "reportReadyToDownload": "Report is ready to be downloaded",
+    "generatingReport": "Generating the PDF report",
+    "downloadedReport": "Report downloaded!"
   }
 }

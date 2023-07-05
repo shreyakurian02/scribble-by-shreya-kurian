@@ -9,6 +9,11 @@ Rails.application.routes.draw do
         resource :site, only: %i[show update]
 
         resources :articles, except: %i[edit new] do
+          collection do
+            resource :report, only: %i[create], module: :articles do
+              get :download, on: :collection
+            end
+          end
           resources :versions, only: %i[show], module: :articles do
             put "restore", on: :member
           end
