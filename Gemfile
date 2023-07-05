@@ -58,6 +58,15 @@ gem "sidekiq", "<7"
 # For periodic sidekiq jobs
 gem "sidekiq-cron"
 
+# PDF generation gem
+gem "wicked_pdf"
+
+# wicked_pdf uses the following binary
+gem "wkhtmltopdf-binary"
+
+# Required by Active Storage to use the GCS
+gem "google-cloud-storage"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
