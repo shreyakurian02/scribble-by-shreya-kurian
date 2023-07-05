@@ -17,7 +17,6 @@ const Item = ({
   isAddFormOpen,
   manageRedirection,
   setManageRedirection,
-  refetchRedirections,
 }) => {
   const { t } = useTranslation();
 
@@ -30,7 +29,6 @@ const Item = ({
     return (
       <Form
         isEdit
-        refetchRedirections={refetchRedirections}
         selectedRedirection={manageRedirection.redirection}
         onClose={() => setManageRedirection(DEFAULT_REDIRECTION_VALUE)}
       />

@@ -6,9 +6,8 @@ import siteApi from "apis/site";
 const { SITE } = QUERY_KEYS;
 
 export const useShowSite = options =>
-  useQuery([SITE], () => siteApi.show(), {
+  useQuery(SITE, () => siteApi.show(), {
     select: ({ data }) => data?.site,
-    keepPreviousData: true,
     staleTime: STALE_TIME,
     ...options,
   });
@@ -18,7 +17,7 @@ export const useUpdateSite = options => {
 
   return useMutation(siteApi.update, {
     onSuccess: () => {
-      queryClient.invalidateQueries([SITE]);
+      queryClient.invalidateQueries(SITE);
       options?.onSuccess?.();
     },
   });

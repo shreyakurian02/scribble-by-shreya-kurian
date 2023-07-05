@@ -17,7 +17,7 @@ const Security = () => {
   const [isChangePasswordEnabled, setIsChangePasswordEnabled] = useState(false);
 
   const { mutate: updateSite } = useUpdateSite();
-  const { isLoading, data: siteSettings = {} } = useShowSite({});
+  const { isLoading, data: siteSettings = {} } = useShowSite();
 
   const { is_password_protected: isSitePasswordProtected = false } =
     siteSettings;

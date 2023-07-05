@@ -22,13 +22,11 @@ const Form = ({ setIsChangePasswordEnabled }) => {
   const [isPasswordHidden, setIsPasswordHidden] = useState(true);
   const [inputType, setInputType] = useState(INPUT_TYPE.password);
 
-  const { mutate: updateSite } = useUpdateSite();
+  const { mutate: updateSite } = useUpdateSite({
+    onSuccess: () => setIsChangePasswordEnabled(false),
+  });
 
-  const handleSubmit = ({ password }) =>
-    updateSite(
-      { password },
-      { onSuccess: () => setIsChangePasswordEnabled(false) }
-    );
+  const handleSubmit = ({ password }) => updateSite({ password });
 
   const handleReset = () => setIsChangePasswordEnabled(false);
 

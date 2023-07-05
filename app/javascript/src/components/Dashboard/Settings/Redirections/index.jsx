@@ -33,13 +33,11 @@ const Redirections = () => {
         isLoading={isLoading}
         manageRedirection={manageRedirection}
         redirections={redirections}
-        refetchRedirections={() => {}}
         setIsAddFormOpen={setIsAddFormOpen}
         setManageRedirection={setManageRedirection}
       />
       <Delete
         manageRedirection={manageRedirection}
-        refetchRedirections={() => {}}
         onClose={() => setManageRedirection(DEFAULT_REDIRECTION_VALUE)}
       />
     </div>
