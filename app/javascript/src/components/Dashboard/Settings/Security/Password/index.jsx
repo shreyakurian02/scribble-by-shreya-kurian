@@ -9,17 +9,11 @@ const Password = ({
   isSitePasswordProtected,
   setIsChangePasswordEnabled,
   isChangePasswordEnabled,
-  fetchSecurityDetails,
 }) => {
   const { t } = useTranslation();
 
   if (isChangePasswordEnabled || !isSitePasswordProtected) {
-    return (
-      <Form
-        fetchSecurityDetails={fetchSecurityDetails}
-        setIsChangePasswordEnabled={setIsChangePasswordEnabled}
-      />
-    );
+    return <Form setIsChangePasswordEnabled={setIsChangePasswordEnabled} />;
   }
 
   return (

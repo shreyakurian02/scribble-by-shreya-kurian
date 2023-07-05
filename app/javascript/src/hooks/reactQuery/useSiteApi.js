@@ -5,10 +5,12 @@ import siteApi from "apis/site";
 
 const { SITE } = QUERY_KEYS;
 
-export const useShowSite = () =>
+export const useShowSite = options =>
   useQuery([SITE], () => siteApi.show(), {
     select: ({ data }) => data?.site,
+    keepPreviousData: true,
     staleTime: STALE_TIME,
+    ...options,
   });
 
 export const useUpdateSite = options => {

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 import { Label, Switch, Spinner } from "neetoui";
+import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 
-import siteApi from "apis/site";
+import { useShowSite, useUpdateSite } from "hooks/reactQuery/useSiteApi";
 
 import Password from "./Password";
 
@@ -12,45 +13,26 @@ import Header from "../Header";
 const Security = () => {
   const { t } = useTranslation();
 
-  const [isLoading, setIsLoading] = useState(true);
   const [isSecurityEnabled, setIsSecurityEnabled] = useState(false);
   const [isChangePasswordEnabled, setIsChangePasswordEnabled] = useState(false);
-  const [siteSettings, setSiteSettings] = useState({});
 
-  const { is_password_protected: isSitePasswordProtected } = siteSettings;
+  const { mutate: updateSite } = useUpdateSite();
+  const { isLoading, data: siteSettings = {} } = useShowSite({});
 
-  const handleRemovePassword = async () => {
-    try {
-      await siteApi.update({ password: null });
-      fetchSecurityDetails();
-    } catch (error) {
-      logger.error(error);
-    }
-  };
+  const { is_password_protected: isSitePasswordProtected = false } =
+    siteSettings;
+
+  const handleRemovePassword = () => updateSite({ password: null });
 
   const handleSecurityToggle = () => {
     setIsSecurityEnabled(isSecurityEnabled => !isSecurityEnabled);
     isSitePasswordProtected && handleRemovePassword();
   };
 
-  const fetchSecurityDetails = async () => {
-    setIsLoading(true);
-    try {
-      const {
-        data: { site },
-      } = await siteApi.show();
-      setSiteSettings(site);
-      setIsSecurityEnabled(site.is_password_protected);
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchSecurityDetails();
-  }, []);
+    !isEmpty(siteSettings) &&
+      setIsSecurityEnabled(siteSettings.is_password_protected);
+  }, [siteSettings]);
 
   return (
     <div className="mx-auto w-1/2 space-y-5 py-16">
@@ -75,7 +57,6 @@ const Security = () => {
           </div>
           {isSecurityEnabled && (
             <Password
-              fetchSecurityDetails={fetchSecurityDetails}
               isChangePasswordEnabled={isChangePasswordEnabled}
               isSecurityEnabled={isSecurityEnabled}
               isSitePasswordProtected={isSitePasswordProtected}
