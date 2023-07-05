@@ -27,3 +27,7 @@ en:
     invalid_status: "'%{status}' is not a valid status"
   slug:
     immutable: "is immutable"
+  report:
+    generate: "Generating the PDF report"
+    upload: "Uploading to server"
+    attach: "Attaching the report to the user"
