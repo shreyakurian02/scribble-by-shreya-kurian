@@ -4,19 +4,23 @@ import { Check, Close } from "neetoicons";
 import { Button } from "neetoui";
 import { Form as NeetoUIForm, Input } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
-import { noop } from "src/utils";
 
-import redirectionsApi from "apis/redirections";
+import {
+  useCreateRedirection,
+  useUpdateRedirection,
+} from "hooks/reactQuery/useRedirectionsApi";
 
 import { INITIAL_VALUE, VALIDATION_SCHEMA } from "./constants";
 
-const Form = ({
-  selectedRedirection = {},
-  isEdit = false,
-  onClose,
-  refetchRedirections = noop,
-}) => {
+const Form = ({ selectedRedirection = {}, isEdit = false, onClose }) => {
   const { t } = useTranslation();
+  const { mutate: createRedirection } = useCreateRedirection({
+    onSuccess: onClose,
+  });
+
+  const { mutate: updateRedirection } = useUpdateRedirection({
+    onSuccess: onClose,
+  });
 
   const {
     from_path: fromPath = "",
@@ -27,17 +31,11 @@ const Form = ({
   const buildInitialValues = () =>
     isEdit ? { fromPath, toPath } : INITIAL_VALUE;
 
-  const handleSubmit = async ({ fromPath, toPath }) => {
-    try {
-      const payload = { from_path: fromPath, to_path: toPath };
-      isEdit
-        ? await redirectionsApi.update({ id: selectedRedirectionId, payload })
-        : await redirectionsApi.create(payload);
-      refetchRedirections();
-      onClose();
-    } catch (error) {
-      logger.error(error);
-    }
+  const handleSubmit = ({ fromPath, toPath }) => {
+    const payload = { from_path: fromPath, to_path: toPath };
+    isEdit
+      ? updateRedirection({ id: selectedRedirectionId, payload })
+      : createRedirection(payload);
   };
 
   return (

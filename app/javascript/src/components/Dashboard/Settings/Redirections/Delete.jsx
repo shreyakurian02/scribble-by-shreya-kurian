@@ -5,12 +5,16 @@ import React from "react";
 import { Alert } from "neetoui";
 import { useTranslation, Trans } from "react-i18next";
 
-import redirectionsApi from "apis/redirections";
+import { useDestroyRedirection } from "hooks/reactQuery/useRedirectionsApi";
 
 import { ACTION } from "./constants";
 
-const Delete = ({ manageRedirection, onClose, refetchRedirections }) => {
+const Delete = ({ manageRedirection, onClose }) => {
   const { t } = useTranslation();
+
+  const { mutate: destroyRedirection } = useDestroyRedirection({
+    onSuccess: onClose,
+  });
 
   const {
     redirection: {
@@ -21,15 +25,7 @@ const Delete = ({ manageRedirection, onClose, refetchRedirections }) => {
     action,
   } = manageRedirection;
 
-  const handleSubmit = async () => {
-    try {
-      await redirectionsApi.destroy(selectedRedirectionId);
-      refetchRedirections();
-      onClose();
-    } catch (error) {
-      logger.error(error);
-    }
-  };
+  const handleSubmit = () => destroyRedirection(selectedRedirectionId);
 
   return (
     <Alert

@@ -17,7 +17,6 @@ const List = ({
   isAddFormOpen,
   setIsAddFormOpen,
   manageRedirection,
-  refetchRedirections,
   setManageRedirection,
 }) => {
   const { t } = useTranslation();
@@ -42,7 +41,6 @@ const List = ({
                 key={redirection.id}
                 manageRedirection={manageRedirection}
                 redirection={redirection}
-                refetchRedirections={refetchRedirections}
                 setManageRedirection={setManageRedirection}
               />
             ))}
@@ -52,10 +50,7 @@ const List = ({
       {isAddFormOpen && (
         <>
           {isEmpty(redirections) && <TableHeader />}
-          <Form
-            refetchRedirections={refetchRedirections}
-            onClose={() => setIsAddFormOpen(false)}
-          />
+          <Form onClose={() => setIsAddFormOpen(false)} />
         </>
       )}
       <Button
