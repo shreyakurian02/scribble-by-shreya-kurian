@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import classnames from "classnames";
-import { Table, Typography } from "neetoui";
+import { Table, Typography, Button } from "neetoui";
 import { Header, Container, SubHeader } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 
@@ -9,6 +9,7 @@ import articlesApi from "apis/articles";
 import { DEFAULT_PAGE_PROPERTIES } from "components/Dashboard/constants";
 
 import { COLUMN_DATA, SORT_ORDER } from "./constants";
+import Report from "./Report";
 
 const Analytics = () => {
   const { t } = useTranslation();
@@ -17,6 +18,8 @@ const Analytics = () => {
   const [articles, setArticles] = useState({ data: [], count: 0 });
   const [sortOrder, setSortOrder] = useState(SORT_ORDER.descend);
   const [pageProperties, setPageProperties] = useState(DEFAULT_PAGE_PROPERTIES);
+  const [isDownloadReportModalOpen, setIsDownloadReportModalOpen] =
+    useState(false);
 
   const { size: pageSize, page: currentPageNumber } = pageProperties;
 
@@ -58,6 +61,12 @@ const Analytics = () => {
             {t("common.articleWithCount", { count: articles.count })}
           </Typography>
         }
+        rightActionBlock={
+          <Button
+            label={t("button.download")}
+            onClick={() => setIsDownloadReportModalOpen(true)}
+          />
+        }
       />
       <Table
         fixedHeight
@@ -74,6 +83,12 @@ const Analytics = () => {
         }
         onChange={(_, __, sorter) => handleSort(sorter)}
       />
+      {isDownloadReportModalOpen && (
+        <Report
+          isOpen={isDownloadReportModalOpen}
+          onClose={() => setIsDownloadReportModalOpen(false)}
+        />
+      )}
     </Container>
   );
 };

@@ -11,17 +11,25 @@ import Dashboard from "components/Dashboard";
 import EndUserInterface from "components/EndUserInterface";
 import { PREVIEW_URL, ADMIN_URL } from "constants/urls";
 import { CategoriesProvider } from "contexts/categories";
+import { setToLocalStorage } from "utils/storage";
 
 import { DEFAULT_ERROR_VALUES } from "./constants";
 
-const App = () => {
+const App = ({ user }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [notFoundError, setNotFoundError] = useState(DEFAULT_ERROR_VALUES);
+
+  const setUserToLocalStorage = () => {
+    const { id, email } = user;
+    setToLocalStorage({ key: "authUserId", value: id });
+    setToLocalStorage({ key: "authUserEmail", value: email });
+  };
 
   useEffect(() => {
     initializeLogger();
     registerIntercepts(setNotFoundError);
     setAuthHeaders(setIsLoading);
+    setUserToLocalStorage();
   }, []);
 
   if (isLoading) {
@@ -43,6 +51,7 @@ const App = () => {
               <Dashboard
                 notFoundError={notFoundError}
                 setNotFoundError={setNotFoundError}
+                user={user}
               />
             )}
           />
