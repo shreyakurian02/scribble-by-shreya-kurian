@@ -1,0 +1,17 @@
+<h1 class="mb-4" style="width: 100%">Published articles</h1>
+  <table style="width: 100%">
+    <tr style="text-align: left">
+      <th style="width: 25%">Title</th>
+      <th style="width: 25%">Views</th>
+      <th style="width: 25%">Last published at</th>
+      <th style="width: 25%">Category</th>
+    </tr>
+    <% @articles.each do |article| %>
+    <tr>
+      <td><%= article.title %></td>
+      <td><%= article.views %></td>
+      <td><%= article.last_published_at %></td>
+      <td><%= article.category.name %></td>
+    </tr>
+    <% end %>
+  </table>
