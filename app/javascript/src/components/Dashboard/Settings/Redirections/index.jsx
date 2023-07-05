@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { useTranslation } from "react-i18next";
 
-import redirectionsApi from "apis/redirections";
+import { useFetchRedirections } from "hooks/reactQuery/useRedirectionsApi";
 
 import { DEFAULT_REDIRECTION_VALUE } from "./constants";
 import Delete from "./Delete";
@@ -13,29 +13,12 @@ import Header from "../Header";
 const Redirections = () => {
   const { t } = useTranslation();
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [redirections, setRedirections] = useState([]);
   const [isAddFormOpen, setIsAddFormOpen] = useState(false);
   const [manageRedirection, setManageRedirection] = useState(
     DEFAULT_REDIRECTION_VALUE
   );
 
-  const fetchRedirections = async () => {
-    try {
-      const {
-        data: { redirections },
-      } = await redirectionsApi.fetch();
-      setRedirections(redirections);
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchRedirections();
-  }, []);
+  const { isLoading, data: redirections } = useFetchRedirections();
 
   return (
     <div className="relative mx-auto my-16 w-3/4 space-y-5">
@@ -50,13 +33,13 @@ const Redirections = () => {
         isLoading={isLoading}
         manageRedirection={manageRedirection}
         redirections={redirections}
-        refetchRedirections={fetchRedirections}
+        refetchRedirections={() => {}}
         setIsAddFormOpen={setIsAddFormOpen}
         setManageRedirection={setManageRedirection}
       />
       <Delete
         manageRedirection={manageRedirection}
-        refetchRedirections={fetchRedirections}
+        refetchRedirections={() => {}}
         onClose={() => setManageRedirection(DEFAULT_REDIRECTION_VALUE)}
       />
     </div>
