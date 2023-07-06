@@ -3,20 +3,26 @@ import React from "react";
 import { pluck } from "ramda";
 import { useTranslation } from "react-i18next";
 
-import articlesApi from "apis/articles";
 import { useCategoriesDispatch } from "contexts/categories";
+import { useBulkUpdateArticles } from "hooks/reactQuery/useArticlesApi";
 
 import UpdateModal from "../UpdateModal";
 
 const BulkUpdate = ({
   bulkUpdateData,
   onClose,
-  refetchArticles,
   selectedArticles,
   setSelectedArticles,
 }) => {
   const { t } = useTranslation();
   const { fetchCategories } = useCategoriesDispatch();
+  const { mutate: bulkUpdateArticles } = useBulkUpdateArticles({
+    onSuccess: () => {
+      setSelectedArticles([]);
+      fetchCategories();
+      onClose();
+    },
+  });
 
   const {
     isModalOpen,
@@ -29,22 +35,14 @@ const BulkUpdate = ({
   const modalTitle = shouldUpdateCategory ? categoryName : status;
 
   const handleUpdate = async () => {
-    try {
-      const payload = shouldUpdateCategory
-        ? { category_id: categoryId }
-        : { status };
+    const payload = shouldUpdateCategory
+      ? { category_id: categoryId }
+      : { status };
 
-      await articlesApi.bulkUpdate({
-        ids: pluck("id", selectedArticles),
-        payload,
-      });
-      setSelectedArticles([]);
-      refetchArticles();
-      fetchCategories();
-      onClose();
-    } catch (error) {
-      logger.error(error);
-    }
+    bulkUpdateArticles({
+      ids: pluck("id", selectedArticles),
+      payload,
+    });
   };
 
   return (

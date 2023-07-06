@@ -1,11 +1,14 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 
 import { Formik, Form } from "formik";
 import { PageLoader } from "neetoui";
 import { useHistory, useParams } from "react-router";
 
-import articlesApi from "apis/articles";
 import { ADMIN_URL, ARTICLES_URL } from "constants/urls";
+import {
+  useUpdateArticle,
+  useShowArticle,
+} from "hooks/reactQuery/useArticlesApi";
 
 import { VALIDATION_SCHEMA } from "./constants";
 import Editor from "./Editor";
@@ -15,48 +18,30 @@ import { buildInitialValues, buildUpdateArticlePayload } from "./utils";
 import { ARTICLE_STATUS } from "../constants";
 
 const Update = () => {
-  const [article, setArticle] = useState({});
   const [status, setStatus] = useState(ARTICLE_STATUS.draft);
-  const [isLoading, setIsLoading] = useState(true);
 
   const editorRef = useRef(null);
   const history = useHistory();
   const { id } = useParams();
+  const { isLoading, data: article } = useShowArticle(id);
+  const { mutate: updateArticle } = useUpdateArticle(id, {
+    onSuccess: () => history.push(ADMIN_URL),
+  });
 
-  const handleSubmit = async values => {
-    try {
-      await articlesApi.update({
+  const handleSubmit = (values, { setSubmitting }) => {
+    updateArticle(
+      {
         id,
         payload: buildUpdateArticlePayload({ values, article, status }),
-      });
-      history.push(ADMIN_URL);
-    } catch (error) {
-      logger.error(error);
-    }
+      },
+      { onSettled: () => setSubmitting(false) }
+    );
   };
 
   const handleReset = ({ description }) => {
     editorRef.current.editor.commands.setContent(description);
     history.push(ARTICLES_URL);
   };
-
-  const fetchArticle = async () => {
-    setIsLoading(true);
-    try {
-      const {
-        data: { article },
-      } = await articlesApi.show(id);
-      setArticle(article);
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchArticle();
-  }, []);
 
   if (isLoading) {
     return (
@@ -69,19 +54,14 @@ const Update = () => {
   return (
     <div className="w-full pt-5">
       <Formik
+        enableReinitialize
         initialValues={buildInitialValues(article)}
         validationSchema={VALIDATION_SCHEMA}
         onReset={handleReset}
         onSubmit={handleSubmit}
       >
         <Form className="space-y-5">
-          <Header
-            isEdit
-            article={article}
-            fetchArticle={fetchArticle}
-            setStatus={setStatus}
-            status={status}
-          />
+          <Header isEdit setStatus={setStatus} status={status} />
           <Editor editorRef={editorRef} />
         </Form>
       </Formik>

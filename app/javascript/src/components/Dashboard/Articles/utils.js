@@ -18,11 +18,11 @@ export const handleFilterByCategories = ({
 };
 
 export const pushUrlSearchParams = ({ history, param, value }) => {
-  const queryParams = getSearchParams();
+  const queryParams = getQueryParams();
   history.push({ search: stringify({ ...queryParams, [param]: value }) });
 };
 
-export const getSearchParams = () => {
+export const getQueryParams = () => {
   const {
     status = "all",
     categories = [],

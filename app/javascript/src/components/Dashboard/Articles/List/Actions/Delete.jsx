@@ -3,35 +3,26 @@ import React from "react";
 import { Alert } from "neetoui";
 import { useTranslation, Trans } from "react-i18next";
 import { SINGULAR } from "src/constants";
+import { noop } from "src/utils";
 
-import articlesApi from "apis/articles";
 import { useCategoriesDispatch } from "contexts/categories";
+import { useDestroyArticle } from "hooks/reactQuery/useArticlesApi";
 
-const Delete = ({
-  manageDeleteAlert,
-  onClose,
-  refetchArticles,
-  setSelectedArticles,
-}) => {
+const Delete = ({ manageDeleteAlert, onClose, setSelectedArticles = noop }) => {
   const { t } = useTranslation();
   const { fetchCategories } = useCategoriesDispatch();
+  const { mutate: destroyArticle } = useDestroyArticle({
+    onSuccess: () => {
+      fetchCategories();
+      setSelectedArticles([]);
+      onClose();
+    },
+  });
 
   const {
     isOpen,
     article: { id, title },
   } = manageDeleteAlert;
-
-  const handleSubmit = async () => {
-    try {
-      await articlesApi.destroy(id);
-      refetchArticles();
-      fetchCategories();
-      setSelectedArticles([]);
-      onClose();
-    } catch (error) {
-      logger.error(error);
-    }
-  };
 
   return (
     <Alert
@@ -42,7 +33,7 @@ const Delete = ({
         entity: t("common.article", SINGULAR).toLowerCase(),
       })}
       onClose={onClose}
-      onSubmit={handleSubmit}
+      onSubmit={() => destroyArticle(id)}
     />
   );
 };

@@ -169,6 +169,8 @@
   "messages": {
     "reportReadyToDownload": "Report is ready to be downloaded",
     "generatingReport": "Generating the PDF report",
-    "downloadedReport": "Report downloaded!"
+    "downloadedReport": "Report downloaded!",
+    "scheduledUnpublish": "Unpublishing is scheduled for {{datetime}}. Publishing should be scheduled for a later date.",
+    "scheduledPublish": "Publishing is scheduled for {{datetime}}. Unpublishing should be scheduled for a later date."
   }
 }

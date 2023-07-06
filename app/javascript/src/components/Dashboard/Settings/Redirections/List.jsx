@@ -7,19 +7,20 @@ import { Button, Spinner } from "neetoui";
 import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 
+import { useFetchRedirections } from "hooks/reactQuery/useRedirectionsApi";
+
 import Form from "./Form";
 import Item from "./Item";
 import TableHeader from "./TableHeader";
 
 const List = ({
-  isLoading,
-  redirections,
   isAddFormOpen,
   setIsAddFormOpen,
   manageRedirection,
   setManageRedirection,
 }) => {
   const { t } = useTranslation();
+  const { isLoading, data: redirections } = useFetchRedirections();
 
   const isAddButtonDisabled =
     isAddFormOpen || !isEmpty(manageRedirection.redirection);

@@ -4,6 +4,8 @@ import classnames from "classnames";
 import { Table } from "neetoui";
 import { isEmpty, pluck } from "ramda";
 
+import { useFetchArticles } from "hooks/reactQuery/useArticlesApi";
+
 import { Update, Delete } from "./Actions";
 import SubHeader from "./SubHeader";
 import { getAllowedColumns, getColumnData } from "./utils";
@@ -13,15 +15,9 @@ import {
   MANAGE_UPDATE_MODAL_INITIAL_VALUE,
 } from "../constants";
 import EmptyState from "../EmptyState";
+import { getQueryParams } from "../utils";
 
-const List = ({
-  articles: articlesData,
-  refetchArticles,
-  isArticlesLoading,
-  setArticleSearchTerm,
-  setPageProperties,
-  pageProperties,
-}) => {
+const List = ({ setArticleSearchTerm, setPageProperties, pageProperties }) => {
   const [selectedArticles, setSelectedArticles] = useState([]);
   const [filteredColumns, setFilteredColumns] = useState(
     pluck("dataIndex", getColumnData())
@@ -35,11 +31,23 @@ const List = ({
     MANAGE_DELETE_ALERT_INITIAL_VALUE
   );
 
+  const { status, categories: queryCategories, search } = getQueryParams();
+
   const { size: pageSize, page: currentPageNumber } = pageProperties;
+
   const {
-    articles,
-    count: { filtered: filteredArticlesCount },
-  } = articlesData;
+    isFetching: isArticlesLoading,
+    data: {
+      articles,
+      articles_count: { filtered: filteredArticlesCount } = {},
+    } = {},
+  } = useFetchArticles({
+    status,
+    search,
+    categories: queryCategories,
+    per_page: pageSize,
+    page_number: currentPageNumber,
+  });
 
   if (isEmpty(articles) && !isArticlesLoading) {
     return (
@@ -54,7 +62,6 @@ const List = ({
       <SubHeader
         articlesCount={filteredArticlesCount}
         filteredColumns={filteredColumns}
-        refetchArticles={refetchArticles}
         selectedArticles={selectedArticles}
         setFilteredColumns={setFilteredColumns}
         setSelectedArticles={setSelectedArticles}
@@ -83,13 +90,11 @@ const List = ({
       />
       <Delete
         manageDeleteAlert={manageDeleteAlert}
-        refetchArticles={refetchArticles}
         setSelectedArticles={setSelectedArticles}
         onClose={() => setManageDeleteAlert(MANAGE_DELETE_ALERT_INITIAL_VALUE)}
       />
       <Update
         manageUpdateModal={manageUpdateModal}
-        refetchArticles={refetchArticles}
         setSelectedArticles={setSelectedArticles}
         onClose={() => setManageUpdateModal(MANAGE_UPDATE_MODAL_INITIAL_VALUE)}
       />

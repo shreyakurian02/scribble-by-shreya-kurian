@@ -9,7 +9,7 @@ class Redirection < ApplicationRecord
 
   validates :from_path, presence: true, uniqueness: { scope: :site_id }, format: { with: VALID_FROM_PATH_REGEX }
   validates :to_path, presence: true, format: { with: VALID_TO_PATH_REGEX }
-  validate :validate_redirection
+  validates_with Validators::RedirectionValidator
 
   private
 

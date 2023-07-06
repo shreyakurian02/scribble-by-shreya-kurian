@@ -5,12 +5,13 @@ import { MenuHorizontal } from "neetoicons";
 import { Button, Dropdown, Typography } from "neetoui";
 import { Select } from "neetoui/formik";
 import { useTranslation, Trans } from "react-i18next";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 
 import categoriesApi from "apis/categories";
 import { getCategoryOptions } from "components/Dashboard/utils";
 import { ARTICLES_URL } from "constants/urls";
 import { useCategories } from "contexts/categories";
+import { useShowArticle } from "hooks/reactQuery/useArticlesApi";
 
 import SaveButton from "./SaveButton";
 
@@ -24,13 +25,7 @@ const {
   MenuItem: { Button: MenuButton },
 } = Dropdown;
 
-const Header = ({
-  status,
-  setStatus,
-  article = {},
-  isEdit = false,
-  fetchArticle,
-}) => {
+const Header = ({ status, setStatus, isEdit = false }) => {
   const { t } = useTranslation();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -42,7 +37,9 @@ const Header = ({
   );
 
   const history = useHistory();
+  const { id } = useParams();
   const [categories, { fetchCategories }] = useCategories();
+  const { data: article = {} } = useShowArticle(id);
 
   const {
     setFieldValue,
@@ -107,12 +104,7 @@ const Header = ({
           </Typography>
         )}
         <Button label={t("button.cancel")} style="secondary" type="reset" />
-        <SaveButton
-          article={article}
-          isEdit={isEdit}
-          setStatus={setStatus}
-          status={status}
-        />
+        <SaveButton isEdit={isEdit} setStatus={setStatus} status={status} />
         {isEdit && (
           <Dropdown buttonStyle="text" icon={MenuHorizontal}>
             <Menu>
@@ -131,12 +123,12 @@ const Header = ({
       </div>
       <Delete
         manageDeleteAlert={manageDeleteAlert}
-        refetchArticles={() => history.push(ARTICLES_URL)}
-        onClose={() => setManageDeleteAlert(MANAGE_DELETE_ALERT_INITIAL_VALUE)}
+        onClose={() => {
+          setManageDeleteAlert(MANAGE_DELETE_ALERT_INITIAL_VALUE);
+          history.push(ARTICLES_URL);
+        }}
       />
       <VersionHistory
-        article={article}
-        fetchArticle={fetchArticle}
         isOpen={isVersionHistoryPaneOpen}
         onClose={() => setIsVersionHistoryPaneOpen(false)}
       />

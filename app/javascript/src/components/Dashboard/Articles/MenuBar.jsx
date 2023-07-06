@@ -14,7 +14,7 @@ import { useCategoriesState } from "contexts/categories";
 import { STATUS_MENU_BLOCKS } from "./constants";
 import {
   pushUrlSearchParams,
-  getSearchParams,
+  getQueryParams,
   handleFilterByCategories,
 } from "./utils";
 
@@ -37,7 +37,7 @@ const MenuBar = ({
   const history = useHistory();
   const categories = useCategoriesState();
 
-  const { status, categories: queryCategories } = getSearchParams();
+  const { status, categories: queryCategories } = getQueryParams();
 
   const isSearchedCategoryResultEmpty =
     isEmpty(categories) && !isEmpty(categorySearchTerm);

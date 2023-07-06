@@ -12,7 +12,6 @@ const SubHeader = ({
   filteredColumns,
   setFilteredColumns,
   articlesCount = 0,
-  refetchArticles,
   setSelectedArticles,
   selectedArticles,
 }) => {
@@ -46,14 +45,12 @@ const SubHeader = ({
       />
       <BulkDelete
         isOpen={isBulkDeleteAlertOpen}
-        refetchArticles={refetchArticles}
         selectedArticles={selectedArticles}
         setSelectedArticles={setSelectedArticles}
         onClose={() => setIsBulkDeleteAlertOpen(false)}
       />
       <BulkUpdate
         bulkUpdateData={bulkUpdateData}
-        refetchArticles={refetchArticles}
         selectedArticles={selectedArticles}
         setSelectedArticles={setSelectedArticles}
         onClose={() => setBulkUpdateData(DEFAULT_BULK_UPDATE_VALUES)}

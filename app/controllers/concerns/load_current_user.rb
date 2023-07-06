@@ -7,5 +7,5 @@ module LoadCurrentUser
 
     def current_user
       @_current_user ||= @site.users.first
-end
+    end
 end

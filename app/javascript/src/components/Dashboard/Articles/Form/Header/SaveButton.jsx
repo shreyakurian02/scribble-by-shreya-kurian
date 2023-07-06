@@ -16,7 +16,7 @@ const {
   MenuItem: { Button: MenuButton },
 } = ActionDropdown;
 
-const SaveButton = ({ status, setStatus, article, isEdit }) => {
+const SaveButton = ({ status, setStatus, isEdit }) => {
   const { t } = useTranslation();
 
   const [isSaveFormPaneOpen, setIsSaveFormPaneOpen] = useState(false);
@@ -66,13 +66,11 @@ const SaveButton = ({ status, setStatus, article, isEdit }) => {
         </Menu>
       </ActionDropdown>
       <Publish
-        article={article}
         isEdit={isEdit}
         isOpen={status === ARTICLE_STATUS.publish && isSaveFormPaneOpen}
         onClose={() => setIsSaveFormPaneOpen(false)}
       />
       <Unpublish
-        article={article}
         isEdit={isEdit}
         isOpen={status === ARTICLE_STATUS.draft && isSaveFormPaneOpen}
         onClose={() => setIsSaveFormPaneOpen(false)}
