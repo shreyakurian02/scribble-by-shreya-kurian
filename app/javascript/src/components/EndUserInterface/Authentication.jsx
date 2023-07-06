@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { Button, Typography } from "neetoui";
 import { Form, Input } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 
 import { setAuthHeaders } from "apis/axios";
-import sessionApi from "apis/public/session";
 import { PREVIEW_URL } from "constants/urls";
+import { useCreateSession } from "hooks/reactQuery/public/useSessionApi";
 import { setToLocalStorage } from "utils/storage";
 
 import { LOGIN_INTIAL_VALUES, LOGIN_VALIDATION_SCHEMA } from "./constants";
@@ -14,25 +14,18 @@ import { LOGIN_INTIAL_VALUES, LOGIN_VALIDATION_SCHEMA } from "./constants";
 const Authentication = ({ site }) => {
   const { t } = useTranslation();
 
-  const [isLoading, setIsLoading] = useState(false);
-
   const { title } = site;
 
-  const handleSubmit = async ({ password }) => {
-    setIsLoading(true);
-    try {
-      const {
-        data: { authentication_token },
-      } = await sessionApi.login({ password });
-      setToLocalStorage({ key: "authToken", value: authentication_token });
-      setAuthHeaders();
-      window.location.href = PREVIEW_URL;
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setIsLoading(false);
-    }
+  const onSuccess = ({ data = {} }) => {
+    setToLocalStorage({ key: "authToken", value: data.authentication_token });
+    setAuthHeaders();
+    window.location.href = PREVIEW_URL;
   };
+
+  const { isLoading, mutate: createSession } = useCreateSession({ onSuccess });
+
+  const handleSubmit = ({ password }, { setSubmitting }) =>
+    createSession({ password }, { onSettled: () => setSubmitting(false) });
 
   return (
     <div className="flex h-screen flex-col items-center justify-center">

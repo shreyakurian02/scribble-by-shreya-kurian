@@ -3,8 +3,8 @@ import React, { useRef, useState } from "react";
 import { Formik, Form } from "formik";
 import { useHistory } from "react-router";
 
-import articlesApi from "apis/articles";
 import { ARTICLES_URL } from "constants/urls";
+import { useCreateArticle } from "hooks/reactQuery/useArticlesApi";
 
 import { INITIAL_VALUES, VALIDATION_SCHEMA } from "./constants";
 import Editor from "./Editor";
@@ -18,15 +18,12 @@ const Create = () => {
 
   const editorRef = useRef(null);
   const history = useHistory();
+  const { mutate: createArticle } = useCreateArticle({
+    onSuccess: () => history.push(ARTICLES_URL),
+  });
 
-  const handleSubmit = async values => {
-    try {
-      await articlesApi.create(buildCreateArticlePayload({ values, status }));
-      history.push(ARTICLES_URL);
-    } catch (error) {
-      logger.error(error);
-    }
-  };
+  const handleSubmit = values =>
+    createArticle(buildCreateArticlePayload({ values, status }));
 
   const handleReset = () => {
     editorRef.current.editor.commands.clearContent();

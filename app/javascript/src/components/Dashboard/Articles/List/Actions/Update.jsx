@@ -2,16 +2,11 @@ import React from "react";
 
 import { useTranslation } from "react-i18next";
 
-import articlesApi from "apis/articles";
+import { useUpdateArticle } from "hooks/reactQuery/useArticlesApi";
 
 import UpdateModal from "../UpdateModal";
 
-const Update = ({
-  manageUpdateModal,
-  refetchArticles,
-  onClose,
-  setSelectedArticles,
-}) => {
+const Update = ({ manageUpdateModal, onClose, setSelectedArticles }) => {
   const { t } = useTranslation();
 
   const {
@@ -20,17 +15,14 @@ const Update = ({
     status,
   } = manageUpdateModal;
 
-  const handleUpdate = async () => {
-    try {
-      const payload = { status };
-      await articlesApi.update({ id, payload });
-      refetchArticles();
+  const { mutate: updateArticle } = useUpdateArticle(id, {
+    onSuccess: () => {
       setSelectedArticles([]);
       onClose();
-    } catch (error) {
-      logger.error(error);
-    }
-  };
+    },
+  });
+
+  const handleUpdate = () => updateArticle({ id, payload: { status } });
 
   return (
     <UpdateModal

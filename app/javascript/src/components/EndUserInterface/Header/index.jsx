@@ -2,10 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { Search } from "neetoicons";
 import { Typography, Input } from "neetoui";
-import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 
-import articlesApi from "apis/public/articles";
 import useDebounce from "hooks/useDebounce";
 
 import FilteredArticles from "./FilteredArticles";
@@ -14,8 +12,6 @@ const Header = ({ siteTitle }) => {
   const { t } = useTranslation();
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredArticles, setFilteredArticles] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   const inputRef = useRef(null);
   const debouncedSearchTerm = useDebounce(searchTerm);
@@ -26,24 +22,6 @@ const Header = ({ siteTitle }) => {
       inputRef.current.focus();
     }
   };
-
-  const fetchArticles = async () => {
-    setIsLoading(true);
-    try {
-      const {
-        data: { articles },
-      } = await articlesApi.fetch({ search: searchTerm });
-      setFilteredArticles(articles);
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    !isEmpty(debouncedSearchTerm) ? fetchArticles() : setFilteredArticles([]);
-  }, [debouncedSearchTerm]);
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
@@ -66,8 +44,6 @@ const Header = ({ siteTitle }) => {
         />
         <FilteredArticles
           debouncedSearchTerm={debouncedSearchTerm}
-          filteredArticles={filteredArticles}
-          isLoading={isLoading}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
         />

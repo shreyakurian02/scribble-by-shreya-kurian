@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import classnames from "classnames";
 import { Table, Typography, Button } from "neetoui";
 import { Header, Container, SubHeader } from "neetoui/layouts";
 import { useTranslation } from "react-i18next";
 
-import articlesApi from "apis/articles";
 import { DEFAULT_PAGE_PROPERTIES } from "components/Dashboard/constants";
+import { useFetchArticles } from "hooks/reactQuery/useArticlesApi";
 
 import { COLUMN_DATA, SORT_ORDER } from "./constants";
 import Report from "./Report";
@@ -14,43 +14,25 @@ import Report from "./Report";
 const Analytics = () => {
   const { t } = useTranslation();
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [articles, setArticles] = useState({ data: [], count: 0 });
   const [sortOrder, setSortOrder] = useState(SORT_ORDER.descend);
   const [pageProperties, setPageProperties] = useState(DEFAULT_PAGE_PROPERTIES);
   const [isDownloadReportModalOpen, setIsDownloadReportModalOpen] =
     useState(false);
 
+  const {
+    isLoading,
+    data: { articles, articles_count: { all: articlesCount } = {} } = {},
+  } = useFetchArticles({
+    order_by: "views",
+    sort_order: sortOrder,
+    per_page: pageSize,
+    page_number: currentPageNumber,
+  });
+
   const { size: pageSize, page: currentPageNumber } = pageProperties;
 
   const handleSort = ({ order }) =>
     setSortOrder(order === "descend" ? SORT_ORDER.descend : SORT_ORDER.ascend);
-
-  const fetchArticles = async () => {
-    setIsLoading(true);
-    try {
-      const {
-        data: {
-          articles,
-          articles_count: { all },
-        },
-      } = await articlesApi.fetch({
-        order_by: "views",
-        sort_order: sortOrder,
-        per_page: pageSize,
-        page_number: currentPageNumber,
-      });
-      setArticles({ data: articles, count: all });
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchArticles();
-  }, [sortOrder, pageProperties]);
 
   return (
     <Container>
@@ -58,7 +40,7 @@ const Analytics = () => {
       <SubHeader
         leftActionBlock={
           <Typography style="h4">
-            {t("common.articleWithCount", { count: articles.count })}
+            {t("common.articleWithCount", { count: articlesCount })}
           </Typography>
         }
         rightActionBlock={
@@ -75,9 +57,9 @@ const Analytics = () => {
         defaultPageSize={pageSize}
         handlePageChange={(page, size) => setPageProperties({ page, size })}
         loading={isLoading}
-        rowData={articles.data}
+        rowData={articles}
         shouldDynamicallyRenderRowSize={false}
-        totalCount={articles.count}
+        totalCount={articlesCount}
         rowClassName={(_, index) =>
           classnames({ "neeto-ui-bg-gray-200": index % 2 !== 0 })
         }

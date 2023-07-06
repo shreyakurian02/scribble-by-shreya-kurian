@@ -10,7 +10,7 @@ import { getCategoryOptions } from "components/Dashboard/utils";
 import { useCategoriesState } from "contexts/categories";
 
 import { ARTICLE_STATUS } from "../../constants";
-import { getSearchParams, handleFilterByCategories } from "../../utils";
+import { getQueryParams, handleFilterByCategories } from "../../utils";
 
 const {
   Menu,
@@ -27,7 +27,7 @@ const LeftActionBlock = ({
   const history = useHistory();
   const categories = useCategoriesState();
 
-  const { search, categories: queryCategories } = getSearchParams();
+  const { search, categories: queryCategories } = getQueryParams();
 
   const categoryOptions = getCategoryOptions(categories);
 

@@ -7,15 +7,17 @@ import { Link } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 
 import HighlightedTypography from "components/Common/HighlightedTypography";
+import { useFetchArticles } from "hooks/reactQuery/public/useArticlesApi";
 
 const FilteredArticles = ({
-  filteredArticles,
   setSearchTerm,
   searchTerm,
   debouncedSearchTerm,
-  isLoading,
 }) => {
   const { t } = useTranslation();
+  const { isLoading, data: filteredArticles = [] } = useFetchArticles({
+    search: debouncedSearchTerm,
+  });
 
   if (isLoading) {
     return (

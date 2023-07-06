@@ -1,18 +1,32 @@
 import React from "react";
 
 import { useFormikContext } from "formik";
-import { Pane, Button, Typography, DatePicker, TimePicker } from "neetoui";
+import { Info } from "neetoicons";
+import {
+  Pane,
+  Button,
+  Typography,
+  DatePicker,
+  TimePicker,
+  Callout,
+} from "neetoui";
 import { Switch } from "neetoui/formik";
 import { prop } from "ramda";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router";
 
 import TooltipWrapper from "components/Common/TooltipWrapper";
+import { formatDate } from "components/Dashboard/utils";
+import { useShowArticle } from "hooks/reactQuery/useArticlesApi";
 
 import { ARTICLE_STATUS } from "../../constants";
+import { isArticleStatusDraft } from "../../List/utils";
 import { DATE_FORMAT, TIME_FORMAT } from "../constants";
 
-const Publish = ({ isOpen, onClose, article }) => {
+const Publish = ({ isOpen, onClose }) => {
   const { t } = useTranslation();
+  const { id } = useParams();
+  const { data: article = {} } = useShowArticle(id);
   const {
     isSubmitting,
     values,
@@ -24,8 +38,14 @@ const Publish = ({ isOpen, onClose, article }) => {
   } = useFormikContext();
 
   const { publishLater } = values;
+
+  const {
+    status,
+    unpublish_schedule: { datetime: unpublishScheduleDatetime } = {},
+  } = article;
+
   const isPublishLaterEnabled =
-    article.status === ARTICLE_STATUS.publish && !article?.unpublish_schedule;
+    status === ARTICLE_STATUS.publish && !article?.unpublish_schedule;
 
   const handleClose = () => {
     const { publishLater, publishDate, publishTime } = initialValues;
@@ -41,6 +61,13 @@ const Publish = ({ isOpen, onClose, article }) => {
         </Typography>
       </Pane.Header>
       <Pane.Body>
+        {!isArticleStatusDraft(status) && (
+          <Callout icon={Info}>
+            {t("messages.scheduledUnpublish", {
+              datetime: formatDate(unpublishScheduleDatetime),
+            })}
+          </Callout>
+        )}
         <div className="w-full space-y-2">
           <TooltipWrapper
             condition={isPublishLaterEnabled}

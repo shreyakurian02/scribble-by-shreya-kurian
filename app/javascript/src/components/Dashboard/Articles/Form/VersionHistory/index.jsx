@@ -3,15 +3,21 @@ import React, { useState } from "react";
 import { Pane, Typography, Tooltip } from "neetoui";
 import { last } from "ramda";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router";
+
+import { useShowArticle } from "hooks/reactQuery/useArticlesApi";
 
 import Block from "./Block";
 import Version from "./Version";
 
-const VersionHistory = ({ isOpen, onClose, article, fetchArticle }) => {
+const VersionHistory = ({ isOpen, onClose }) => {
   const { t } = useTranslation();
 
   const [isVersionModalOpen, setIsVersionModalOpen] = useState(false);
   const [selectedVersionId, setSelectedVersionId] = useState("");
+
+  const { id } = useParams();
+  const { data: article = {} } = useShowArticle(id);
 
   const { versions = [] } = article;
   const lastVersionId = last(versions)?.id;
@@ -58,9 +64,7 @@ const VersionHistory = ({ isOpen, onClose, article, fetchArticle }) => {
         </Pane.Body>
       </Pane>
       <Version
-        article={article}
         closeVersionHistory={onClose}
-        fetchArticle={fetchArticle}
         isOpen={isVersionModalOpen}
         versionId={selectedVersionId}
         onClose={() => setIsVersionModalOpen(false)}

@@ -1,18 +1,32 @@
 import React from "react";
 
 import { useFormikContext } from "formik";
-import { Pane, Button, Typography, DatePicker, TimePicker } from "neetoui";
+import { Info } from "neetoicons";
+import {
+  Pane,
+  Button,
+  Typography,
+  DatePicker,
+  TimePicker,
+  Callout,
+} from "neetoui";
 import { Switch } from "neetoui/formik";
 import { prop } from "ramda";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router";
 
 import TooltipWrapper from "components/Common/TooltipWrapper";
+import { formatDate } from "components/Dashboard/utils";
+import { useShowArticle } from "hooks/reactQuery/useArticlesApi";
 
 import { ARTICLE_STATUS } from "../../constants";
+import { isArticleStatusDraft } from "../../List/utils";
 import { DATE_FORMAT, TIME_FORMAT } from "../constants";
 
-const Unpublish = ({ isOpen, onClose, isEdit, article }) => {
+const Unpublish = ({ isOpen, onClose, isEdit }) => {
   const { t } = useTranslation();
+  const { id } = useParams();
+  const { data: article = {} } = useShowArticle(id);
   const {
     isSubmitting,
     initialValues,
@@ -24,6 +38,11 @@ const Unpublish = ({ isOpen, onClose, isEdit, article }) => {
   } = useFormikContext();
 
   const { unpublishLater } = values;
+  const {
+    status,
+    publish_schedule: { datetime: publishScheduleDatetime } = {},
+  } = article;
+
   const isUnpublishLaterEnabled =
     !isEdit ||
     (article.status === ARTICLE_STATUS.draft && !article?.publish_schedule);
@@ -43,6 +62,13 @@ const Unpublish = ({ isOpen, onClose, isEdit, article }) => {
       </Pane.Header>
       <Pane.Body>
         <div className="w-full space-y-2">
+          {isArticleStatusDraft(status) && (
+            <Callout icon={Info}>
+              {t("messages.scheduledPublish", {
+                datetime: formatDate(publishScheduleDatetime),
+              })}
+            </Callout>
+          )}
           <TooltipWrapper
             condition={isUnpublishLaterEnabled}
             message={t("errors.invalidUnpublishSchedule")}

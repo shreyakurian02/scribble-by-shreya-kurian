@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import { EditorContent } from "neetoeditor";
 import { Warning } from "neetoicons";
@@ -13,18 +13,30 @@ import {
 } from "neetoui";
 import { isNil } from "ramda";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router";
 import { SINGULAR } from "src/constants";
 
-import versionsApi from "apis/articles/versions";
+import { useShowArticle } from "hooks/reactQuery/useArticlesApi";
+import {
+  useShowVersion,
+  useRestoreVersion,
+} from "hooks/reactQuery/useVersionsApi";
 
-const Version = ({ isOpen, onClose, versionId, article, fetchArticle }) => {
+const Version = ({ isOpen, onClose, versionId }) => {
   const { t } = useTranslation();
-
-  const [version, setVersion] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-  const [isRestoring, setIsRestoring] = useState(false);
+  const { id } = useParams();
+  const { data: article = {} } = useShowArticle(id);
+  const { isLoading: isRestoring, mutate: restoreVersion } = useRestoreVersion(
+    id,
+    { onSuccess: onClose }
+  );
 
   const { id: articleId } = article;
+  const { isFetching: isLoading, data: version = {} } = useShowVersion({
+    versionId,
+    articleId,
+  });
+
   const {
     version_category: versionCategory,
     article_category: articleCategory,
@@ -32,36 +44,7 @@ const Version = ({ isOpen, onClose, versionId, article, fetchArticle }) => {
     description,
   } = version;
 
-  const handleVersionRestore = async () => {
-    setIsRestoring(true);
-    try {
-      await versionsApi.restore({ versionId, articleId });
-      onClose();
-      fetchArticle();
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setIsRestoring(false);
-    }
-  };
-
-  const fetchVersion = async () => {
-    setIsLoading(true);
-    try {
-      const {
-        data: { version },
-      } = await versionsApi.show({ versionId, articleId });
-      setVersion(version);
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (versionId) fetchVersion();
-  }, [versionId]);
+  const handleVersionRestore = () => restoreVersion({ versionId, articleId });
 
   return (
     <Modal isOpen={isOpen} size="large" onClose={onClose}>

@@ -1,49 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import { Spinner } from "neetoui";
-import { isEmpty } from "ramda";
 import { useHistory, useParams } from "react-router";
 
-import categoriesApi from "apis/public/categories";
+import { useShowArticle } from "hooks/reactQuery/public/useArticlesApi";
+import { useFetchCategories } from "hooks/reactQuery/public/useCategoriesApi";
 
 import AccordianItem from "./AccordianItem";
 import Article from "./Article";
 import Header from "./Header";
 
 const Preview = ({ site }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [categories, setCategories] = useState([]);
-  const [article, setArticle] = useState({});
-
   const history = useHistory();
   const { slug } = useParams();
+  const { data: article = {} } = useShowArticle(slug);
 
-  const { title } = site;
+  const onSuccess = categories => {
+    const firstArticle = categories[0]?.articles[0];
 
-  const fetchCategories = async () => {
-    setIsLoading(true);
-    try {
-      const {
-        data: { categories },
-      } = await categoriesApi.fetch();
-      setCategories(categories);
-      const firstCategoryWithArticles = categories.find(
-        category => !isEmpty(category.articles)
-      );
-
-      if (!slug && firstCategoryWithArticles) {
-        history.push(`/articles/${firstCategoryWithArticles.articles[0].slug}`);
-      }
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setIsLoading(false);
+    if (!slug && firstArticle) {
+      history.push(`/articles/${firstArticle?.slug}`);
     }
   };
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+  const { isLoading, data: categories = [] } = useFetchCategories({
+    onSuccess,
+  });
+
+  const { title } = site;
 
   return (
     <>
@@ -63,7 +47,7 @@ const Preview = ({ site }) => {
               />
             ))}
           </div>
-          <Article article={article} setArticle={setArticle} />
+          <Article />
         </div>
       )}
     </>

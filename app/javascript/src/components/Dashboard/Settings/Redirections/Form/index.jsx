@@ -31,11 +31,14 @@ const Form = ({ selectedRedirection = {}, isEdit = false, onClose }) => {
   const buildInitialValues = () =>
     isEdit ? { fromPath, toPath } : INITIAL_VALUE;
 
-  const handleSubmit = ({ fromPath, toPath }) => {
+  const handleSubmit = ({ fromPath, toPath }, { setSubmitting }) => {
     const payload = { from_path: fromPath, to_path: toPath };
     isEdit
-      ? updateRedirection({ id: selectedRedirectionId, payload })
-      : createRedirection(payload);
+      ? updateRedirection(
+          { id: selectedRedirectionId, payload },
+          { onSettled: () => setSubmitting(false) }
+        )
+      : createRedirection(payload, { onSettled: () => setSubmitting(false) });
   };
 
   return (

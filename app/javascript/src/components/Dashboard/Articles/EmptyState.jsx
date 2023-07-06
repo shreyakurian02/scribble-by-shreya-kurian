@@ -9,13 +9,13 @@ import { SINGULAR } from "src/constants";
 
 import { NEW_ARTICLE_URL } from "constants/urls";
 
-import { getSearchParams, pushUrlSearchParams } from "./utils";
+import { getQueryParams, pushUrlSearchParams } from "./utils";
 
 const EmptyState = ({ setArticleSearchTerm }) => {
   const { t } = useTranslation();
   const history = useHistory();
 
-  const { search } = getSearchParams();
+  const { search } = getQueryParams();
 
   const handleClearSearch = () => {
     setArticleSearchTerm("");

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { EditorContent } from "neetoeditor";
 import { Typography } from "neetoui";
@@ -6,30 +6,14 @@ import { isEmpty } from "ramda";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
 
-import articlesApi from "apis/public/articles";
+import { useShowArticle } from "hooks/reactQuery/public/useArticlesApi";
 
-const Article = ({ article, setArticle }) => {
+const Article = () => {
   const { t } = useTranslation();
   const { slug } = useParams();
+  const { data: article = {} } = useShowArticle(slug);
 
   const { title, description } = article;
-
-  const fetchArticle = async () => {
-    try {
-      const {
-        data: { article },
-      } = await articlesApi.show(slug);
-      setArticle(article);
-    } catch (error) {
-      logger.error(error);
-    }
-  };
-
-  useEffect(() => {
-    if (slug) {
-      fetchArticle();
-    }
-  }, [slug]);
 
   if (isEmpty(article) && !slug) {
     return (

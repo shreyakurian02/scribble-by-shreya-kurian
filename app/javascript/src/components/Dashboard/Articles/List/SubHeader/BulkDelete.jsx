@@ -4,32 +4,29 @@ import { Alert } from "neetoui";
 import { pluck } from "ramda";
 import { useTranslation, Trans } from "react-i18next";
 
-import articlesApi from "apis/articles";
 import { useCategoriesDispatch } from "contexts/categories";
+import { useBulkDestroyArticles } from "hooks/reactQuery/useArticlesApi";
 
 const BulkDelete = ({
   selectedArticles,
   isOpen,
   onClose,
-  refetchArticles,
   setSelectedArticles,
 }) => {
   const { t } = useTranslation();
   const { fetchCategories } = useCategoriesDispatch();
-
-  const selectedArticlesCount = selectedArticles.length;
-
-  const handleDelete = async () => {
-    try {
-      await articlesApi.bulkDestroy({ ids: pluck("id", selectedArticles) });
-      refetchArticles();
+  const { mutate: bulkDestroyArticles } = useBulkDestroyArticles({
+    onSuccess: () => {
       fetchCategories();
       setSelectedArticles([]);
       onClose();
-    } catch (error) {
-      logger.error(error);
-    }
-  };
+    },
+  });
+
+  const selectedArticlesCount = selectedArticles.length;
+
+  const handleDelete = () =>
+    bulkDestroyArticles({ ids: pluck("id", selectedArticles) });
 
   return (
     <Alert

@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import { PageLoader } from "neetoui";
 import { isEmpty, isNil, either } from "ramda";
 import { Route, Switch, Redirect } from "react-router";
 
-import siteApi from "apis/public/site";
 import ErrorPage from "components/Common/ErrorPage";
 import {
   PREVIEW_URL,
@@ -13,6 +12,7 @@ import {
   EUI_INVALID_URL,
   PUBLIC_ARTICLES_URL,
 } from "constants/urls";
+import { useShowSite } from "hooks/reactQuery/public/useSiteApi";
 import { getFromLocalStorage } from "utils/storage";
 
 import Authentication from "./Authentication";
@@ -20,8 +20,7 @@ import Preview from "./Preview";
 import PrivateRoute from "./PrivateRoute";
 
 const EndUserInterface = ({ notFoundError, setNotFoundError }) => {
-  const [site, setSite] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const { isLoading, data: site = {} } = useShowSite();
 
   const authToken = getFromLocalStorage("authToken");
 
@@ -35,22 +34,6 @@ const EndUserInterface = ({ notFoundError, setNotFoundError }) => {
   const hasAccess =
     (isPasswordProtected && isLoggedIn && isAuthTokenValid) ||
     !isPasswordProtected;
-
-  const fetchSite = async () => {
-    setIsLoading(true);
-    try {
-      const {
-        data: { site },
-      } = await siteApi.show();
-      setSite(site);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchSite();
-  }, []);
 
   if (isLoading) {
     return (
