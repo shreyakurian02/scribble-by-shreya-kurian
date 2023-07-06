@@ -20,8 +20,9 @@ import Preview from "./Preview";
 import PrivateRoute from "./PrivateRoute";
 
 const EndUserInterface = ({ notFoundError, setNotFoundError }) => {
-  const authToken = getFromLocalStorage("authToken");
   const { isLoading, data: site = {} } = useShowSite();
+
+  const authToken = getFromLocalStorage("authToken");
 
   const { show: show404Error } = notFoundError;
   const isLoggedIn = !either(isNil, isEmpty)(authToken) && authToken !== "null";

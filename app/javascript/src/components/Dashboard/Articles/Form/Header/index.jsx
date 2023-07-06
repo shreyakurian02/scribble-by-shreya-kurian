@@ -48,6 +48,11 @@ const Header = ({ status, setStatus, isEdit = false }) => {
 
   const { status: articleStatus, updated_at: articleUpdatedAt } = article;
 
+  const handleDeleteModalClose = () => {
+    setManageDeleteAlert(MANAGE_DELETE_ALERT_INITIAL_VALUE);
+    history.push(ARTICLES_URL);
+  };
+
   const handleCreateCategory = async category => {
     setIsLoading(true);
     try {
@@ -123,10 +128,7 @@ const Header = ({ status, setStatus, isEdit = false }) => {
       </div>
       <Delete
         manageDeleteAlert={manageDeleteAlert}
-        onClose={() => {
-          setManageDeleteAlert(MANAGE_DELETE_ALERT_INITIAL_VALUE);
-          history.push(ARTICLES_URL);
-        }}
+        onClose={handleDeleteModalClose}
       />
       <VersionHistory
         isOpen={isVersionHistoryPaneOpen}

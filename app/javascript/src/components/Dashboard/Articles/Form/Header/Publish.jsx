@@ -25,6 +25,8 @@ import { DATE_FORMAT, TIME_FORMAT } from "../constants";
 
 const Publish = ({ isOpen, onClose }) => {
   const { t } = useTranslation();
+  const { id } = useParams();
+  const { data: article = {} } = useShowArticle(id);
   const {
     isSubmitting,
     values,
@@ -35,9 +37,8 @@ const Publish = ({ isOpen, onClose }) => {
     setFieldValue,
   } = useFormikContext();
 
-  const { id } = useParams();
-  const { data: article = {} } = useShowArticle(id);
   const { publishLater } = values;
+
   const {
     status,
     unpublish_schedule: { datetime: unpublishScheduleDatetime } = {},

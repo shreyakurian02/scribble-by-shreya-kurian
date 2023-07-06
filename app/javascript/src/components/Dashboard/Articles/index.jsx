@@ -27,9 +27,7 @@ const Articles = () => {
   const [articleSearchTerm, setArticleSearchTerm] = useState(search);
   const [categorySearchTerm, setCategorySearchTerm] = useState("");
   const [pageProperties, setPageProperties] = useState(DEFAULT_PAGE_PROPERTIES);
-  // const [isArticlesLoading, setIsArticlesLoading] = useState(true);
   const [isNewCategoryModalOpen, setIsNewCategoryModalOpen] = useState(false);
-  // const [articles, setArticles] = useState(ARTICLES_INITIAL_VALUE);
 
   const history = useHistory();
   const debouncedCategorySearchTerm = useDebounce(categorySearchTerm);

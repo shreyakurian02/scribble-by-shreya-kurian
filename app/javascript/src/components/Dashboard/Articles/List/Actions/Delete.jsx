@@ -11,12 +11,15 @@ import { useDestroyArticle } from "hooks/reactQuery/useArticlesApi";
 const Delete = ({ manageDeleteAlert, onClose, setSelectedArticles = noop }) => {
   const { t } = useTranslation();
   const { fetchCategories } = useCategoriesDispatch();
+
+  const onDestroyArticleSuccess = () => {
+    fetchCategories();
+    setSelectedArticles([]);
+    onClose();
+  };
+
   const { mutate: destroyArticle } = useDestroyArticle({
-    onSuccess: () => {
-      fetchCategories();
-      setSelectedArticles([]);
-      onClose();
-    },
+    onSuccess: onDestroyArticleSuccess,
   });
 
   const {

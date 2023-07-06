@@ -22,7 +22,7 @@ const Create = () => {
     onSuccess: () => history.push(ARTICLES_URL),
   });
 
-  const handleSubmit = async values =>
+  const handleSubmit = values =>
     createArticle(buildCreateArticlePayload({ values, status }));
 
   const handleReset = () => {

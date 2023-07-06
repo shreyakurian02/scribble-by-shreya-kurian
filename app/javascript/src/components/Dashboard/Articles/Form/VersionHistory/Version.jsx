@@ -24,7 +24,6 @@ import {
 
 const Version = ({ isOpen, onClose, versionId }) => {
   const { t } = useTranslation();
-
   const { id } = useParams();
   const { data: article = {} } = useShowArticle(id);
   const { isLoading: isRestoring, mutate: restoreVersion } = useRestoreVersion(

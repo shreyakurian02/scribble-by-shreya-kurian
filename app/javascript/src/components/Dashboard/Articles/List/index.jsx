@@ -32,7 +32,6 @@ const List = ({ setArticleSearchTerm, setPageProperties, pageProperties }) => {
   );
 
   const { status, categories: queryCategories, search } = getQueryParams();
-
   const { size: pageSize, page: currentPageNumber } = pageProperties;
 
   const {

@@ -34,15 +34,11 @@ const BulkUpdate = ({
   const shouldUpdateCategory = type === "category";
   const modalTitle = shouldUpdateCategory ? categoryName : status;
 
-  const handleUpdate = async () => {
+  const handleUpdate = () => {
     const payload = shouldUpdateCategory
       ? { category_id: categoryId }
       : { status };
-
-    bulkUpdateArticles({
-      ids: pluck("id", selectedArticles),
-      payload,
-    });
+    bulkUpdateArticles({ ids: pluck("id", selectedArticles), payload });
   };
 
   return (
