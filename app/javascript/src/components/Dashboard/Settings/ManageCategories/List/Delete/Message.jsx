@@ -5,7 +5,7 @@ import { Callout, Select, Typography } from "neetoui";
 import { useTranslation, Trans } from "react-i18next";
 
 import { getCategoryOptions } from "components/Dashboard/utils";
-import { useCategoriesState } from "contexts/categories";
+import { useFetchCategories } from "hooks/reactQuery/useCategoriesApi";
 
 const Message = ({
   selectedMoveToCategory,
@@ -13,7 +13,7 @@ const Message = ({
   selectedCategory,
 }) => {
   const { t } = useTranslation();
-  const categories = useCategoriesState();
+  const { data: categories = [] } = useFetchCategories();
 
   const isLastCategory = categories.length === 1;
   const {

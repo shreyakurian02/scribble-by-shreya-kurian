@@ -11,7 +11,6 @@ import { initializeLogger } from "common/logger";
 import Dashboard from "components/Dashboard";
 import EndUserInterface from "components/EndUserInterface";
 import { PREVIEW_URL, ADMIN_URL } from "constants/urls";
-import { CategoriesProvider } from "contexts/categories";
 import queryClient from "utils/queryClient";
 import { setToLocalStorage } from "utils/storage";
 
@@ -46,29 +45,27 @@ const App = ({ user }) => {
     <QueryClientProvider client={queryClient}>
       <Router>
         <ToastContainer />
-        <CategoriesProvider>
-          <Switch>
-            <Route
-              path={ADMIN_URL}
-              render={() => (
-                <Dashboard
-                  notFoundError={notFoundError}
-                  setNotFoundError={setNotFoundError}
-                  user={user}
-                />
-              )}
-            />
-            <Route
-              path={PREVIEW_URL}
-              render={() => (
-                <EndUserInterface
-                  notFoundError={notFoundError}
-                  setNotFoundError={setNotFoundError}
-                />
-              )}
-            />
-          </Switch>
-        </CategoriesProvider>
+        <Switch>
+          <Route
+            path={ADMIN_URL}
+            render={() => (
+              <Dashboard
+                notFoundError={notFoundError}
+                setNotFoundError={setNotFoundError}
+                user={user}
+              />
+            )}
+          />
+          <Route
+            path={PREVIEW_URL}
+            render={() => (
+              <EndUserInterface
+                notFoundError={notFoundError}
+                setNotFoundError={setNotFoundError}
+              />
+            )}
+          />
+        </Switch>
       </Router>
     </QueryClientProvider>
   );

@@ -9,7 +9,8 @@ import { useHistory } from "react-router";
 import { PLURAL } from "src/constants";
 import { v4 as uuid } from "uuid";
 
-import { useCategoriesState } from "contexts/categories";
+import { useFetchCategories } from "hooks/reactQuery/useCategoriesApi";
+import useDebounce from "hooks/useDebounce";
 
 import { STATUS_MENU_BLOCKS } from "./constants";
 import {
@@ -24,8 +25,6 @@ const { Block, SubTitle, Search: MenuSearch } = NeetoUIMenuBar;
 
 const MenuBar = ({
   articlesCount,
-  setCategorySearchTerm,
-  categorySearchTerm,
   showMenu,
   setIsNewCategoryModalOpen,
   setPageProperties,
@@ -33,14 +32,18 @@ const MenuBar = ({
   const { t } = useTranslation();
 
   const [isSearchCollapsed, setIsSearchCollapsed] = useState(true);
+  const [categorySearchTerm, setCategorySearchTerm] = useState("");
 
   const history = useHistory();
-  const categories = useCategoriesState();
-
-  const { status, categories: queryCategories } = getQueryParams();
+  const debouncedCategorySearchTerm = useDebounce(categorySearchTerm);
+  const { data: categories = [] } = useFetchCategories({
+    search: debouncedCategorySearchTerm,
+  });
 
   const isSearchedCategoryResultEmpty =
-    isEmpty(categories) && !isEmpty(categorySearchTerm);
+    isEmpty(categories) && !isEmpty(debouncedCategorySearchTerm);
+
+  const { status, categories: queryCategories } = getQueryParams();
 
   const handleAddCategory = () => setIsNewCategoryModalOpen(true);
 

@@ -7,7 +7,7 @@ import { useHistory } from "react-router";
 import { v4 as uuid } from "uuid";
 
 import { getCategoryOptions } from "components/Dashboard/utils";
-import { useCategoriesState } from "contexts/categories";
+import { useFetchCategories } from "hooks/reactQuery/useCategoriesApi";
 
 import { ARTICLE_STATUS } from "../../constants";
 import { getQueryParams, handleFilterByCategories } from "../../utils";
@@ -25,7 +25,7 @@ const LeftActionBlock = ({
 }) => {
   const { t } = useTranslation();
   const history = useHistory();
-  const categories = useCategoriesState();
+  const { data: categories = [] } = useFetchCategories();
 
   const { search, categories: queryCategories } = getQueryParams();
 

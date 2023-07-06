@@ -2,26 +2,19 @@ import React from "react";
 
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-import categoriesApi from "apis/categories";
-import { useCategories } from "contexts/categories";
+import {
+  useFetchCategories,
+  useUpdateCategory,
+} from "hooks/reactQuery/useCategoriesApi";
 
 import Item from "./Item";
 
 const List = () => {
-  const [categories, { fetchCategories, setCategories }] = useCategories();
+  const { data: categories = [] } = useFetchCategories();
+  const { mutate: updateCategory } = useUpdateCategory();
 
-  const reorderCategories = async ({ draggableId, position }) => {
-    try {
-      await categoriesApi.update({
-        id: draggableId,
-        payload: { position },
-        quiet: true,
-      });
-      fetchCategories();
-    } catch (error) {
-      logger.error(error);
-    }
-  };
+  const reorderCategories = ({ draggableId, position }) =>
+    updateCategory({ id: draggableId, payload: { position }, quiet: true });
 
   const onDragEnd = result => {
     if (!result.destination) {
@@ -37,7 +30,6 @@ const List = () => {
     const reorderedCategories = [...categories];
     const [removed] = reorderedCategories.splice(sourceIndex, 1);
     reorderedCategories.splice(destinationIndex, 0, removed);
-    setCategories(reorderedCategories);
     reorderCategories({ draggableId, position: destinationIndex + 1 });
   };
 

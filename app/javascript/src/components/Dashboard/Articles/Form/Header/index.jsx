@@ -7,11 +7,13 @@ import { Select } from "neetoui/formik";
 import { useTranslation, Trans } from "react-i18next";
 import { useHistory, useParams } from "react-router";
 
-import categoriesApi from "apis/categories";
 import { getCategoryOptions } from "components/Dashboard/utils";
 import { ARTICLES_URL } from "constants/urls";
-import { useCategories } from "contexts/categories";
 import { useShowArticle } from "hooks/reactQuery/useArticlesApi";
+import {
+  useFetchCategories,
+  useCreateCategory,
+} from "hooks/reactQuery/useCategoriesApi";
 
 import SaveButton from "./SaveButton";
 
@@ -28,7 +30,6 @@ const {
 const Header = ({ status, setStatus, isEdit = false }) => {
   const { t } = useTranslation();
 
-  const [isLoading, setIsLoading] = useState(false);
   const [isVersionHistoryPaneOpen, setIsVersionHistoryPaneOpen] =
     useState(false);
 
@@ -38,13 +39,14 @@ const Header = ({ status, setStatus, isEdit = false }) => {
 
   const history = useHistory();
   const { id } = useParams();
-  const [categories, { fetchCategories }] = useCategories();
+  const { data: categories = [] } = useFetchCategories();
   const { data: article = {} } = useShowArticle(id);
-
   const {
     setFieldValue,
     values: { category },
   } = useFormikContext();
+
+  const { isLoading, mutate: createCategory } = useCreateCategory();
 
   const { status: articleStatus, updated_at: articleUpdatedAt } = article;
 
@@ -53,22 +55,14 @@ const Header = ({ status, setStatus, isEdit = false }) => {
     history.push(ARTICLES_URL);
   };
 
-  const handleCreateCategory = async category => {
-    setIsLoading(true);
-    try {
-      const payload = { name: category };
-      await categoriesApi.create(payload);
-      setFieldValue("category", {
-        label: category,
-        value: category,
-      });
-      fetchCategories();
-    } catch (error) {
-      logger.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const handleCreateCategory = category =>
+    createCategory(
+      { name: category },
+      {
+        onSuccess: () =>
+          setFieldValue("category", { label: category, value: category }),
+      }
+    );
 
   const setNewCategory = () => {
     const newCategory = category?.label;

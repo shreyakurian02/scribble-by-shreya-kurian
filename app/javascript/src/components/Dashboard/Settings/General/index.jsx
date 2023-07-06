@@ -16,7 +16,7 @@ const General = () => {
   const { isLoading, data: site } = useShowSite();
   const { mutate: updateSite } = useUpdateSite();
 
-  const handleSubmit = async ({ title }) => {
+  const handleSubmit = ({ title }) => {
     const payload = { title };
     updateSite(payload);
   };

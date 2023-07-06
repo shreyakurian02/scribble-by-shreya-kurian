@@ -3,7 +3,6 @@ import React from "react";
 import { pluck } from "ramda";
 import { useTranslation } from "react-i18next";
 
-import { useCategoriesDispatch } from "contexts/categories";
 import { useBulkUpdateArticles } from "hooks/reactQuery/useArticlesApi";
 
 import UpdateModal from "../UpdateModal";
@@ -15,11 +14,9 @@ const BulkUpdate = ({
   setSelectedArticles,
 }) => {
   const { t } = useTranslation();
-  const { fetchCategories } = useCategoriesDispatch();
   const { mutate: bulkUpdateArticles } = useBulkUpdateArticles({
     onSuccess: () => {
       setSelectedArticles([]);
-      fetchCategories();
       onClose();
     },
   });
