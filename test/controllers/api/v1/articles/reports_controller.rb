@@ -4,8 +4,7 @@ require "test_helper"
 
 class Api::V1::Articles::ReportsControllerTest < ActionDispatch::IntegrationTest
   def setup
-    @site = create :site
-    @user = create :user, site: @site
+    @user = create :user
   end
 
   def test_can_generate_report
