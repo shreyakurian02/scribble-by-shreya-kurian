@@ -10,7 +10,6 @@ import { useHistory } from "react-router-dom";
 import AddCategory from "components/Dashboard/CategoryForm";
 import { DEFAULT_PAGE_PROPERTIES } from "components/Dashboard/constants";
 import { NEW_ARTICLE_URL } from "constants/urls";
-import { useCategoriesDispatch } from "contexts/categories";
 import { useFetchArticles } from "hooks/reactQuery/useArticlesApi";
 import useDebounce from "hooks/useDebounce";
 
@@ -25,14 +24,11 @@ const Articles = () => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [articleSearchTerm, setArticleSearchTerm] = useState(search);
-  const [categorySearchTerm, setCategorySearchTerm] = useState("");
   const [pageProperties, setPageProperties] = useState(DEFAULT_PAGE_PROPERTIES);
   const [isNewCategoryModalOpen, setIsNewCategoryModalOpen] = useState(false);
 
   const history = useHistory();
-  const debouncedCategorySearchTerm = useDebounce(categorySearchTerm);
   const debouncedArticleSearchTerm = useDebounce(articleSearchTerm);
-  const { fetchCategories } = useCategoriesDispatch();
 
   const { data: { articles_count: articlesCount = {} } = {} } =
     useFetchArticles({
@@ -54,16 +50,10 @@ const Articles = () => {
     setPageProperties(DEFAULT_PAGE_PROPERTIES);
   }, [debouncedArticleSearchTerm]);
 
-  useEffect(() => {
-    fetchCategories(debouncedCategorySearchTerm.trim());
-  }, [debouncedCategorySearchTerm]);
-
   return (
     <>
       <MenuBar
         articlesCount={articlesCount}
-        categorySearchTerm={categorySearchTerm}
-        setCategorySearchTerm={setCategorySearchTerm}
         setIsNewCategoryModalOpen={setIsNewCategoryModalOpen}
         setPageProperties={setPageProperties}
         showMenu={isMenuOpen}

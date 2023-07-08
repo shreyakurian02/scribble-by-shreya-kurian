@@ -4,7 +4,6 @@ import { Alert } from "neetoui";
 import { pluck } from "ramda";
 import { useTranslation, Trans } from "react-i18next";
 
-import { useCategoriesDispatch } from "contexts/categories";
 import { useBulkDestroyArticles } from "hooks/reactQuery/useArticlesApi";
 
 const BulkDelete = ({
@@ -14,10 +13,8 @@ const BulkDelete = ({
   setSelectedArticles,
 }) => {
   const { t } = useTranslation();
-  const { fetchCategories } = useCategoriesDispatch();
   const { mutate: bulkDestroyArticles } = useBulkDestroyArticles({
     onSuccess: () => {
-      fetchCategories();
       setSelectedArticles([]);
       onClose();
     },

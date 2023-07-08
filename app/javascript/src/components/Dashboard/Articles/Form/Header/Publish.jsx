@@ -62,7 +62,7 @@ const Publish = ({ isOpen, onClose }) => {
       </Pane.Header>
       <Pane.Body>
         {!isArticleStatusDraft(status) && (
-          <Callout icon={Info}>
+          <Callout className="mb-3" icon={Info}>
             {t("messages.scheduledUnpublish", {
               datetime: formatDate(unpublishScheduleDatetime),
             })}

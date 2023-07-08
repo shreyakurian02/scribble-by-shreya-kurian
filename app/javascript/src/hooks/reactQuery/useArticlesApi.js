@@ -3,7 +3,7 @@ import { QUERY_KEYS } from "src/constants/query";
 
 import articlesApi from "apis/articles";
 
-const { ARTICLES_LIST, ARTICLE } = QUERY_KEYS;
+const { ARTICLES_LIST, ARTICLE, CATEGORIES_LIST } = QUERY_KEYS;
 
 export const useFetchArticles = (params = {}) =>
   useQuery([ARTICLES_LIST, params], () => articlesApi.fetch(params), {
@@ -16,6 +16,7 @@ export const useCreateArticle = options => {
   return useMutation(articlesApi.create, {
     onSuccess: () => {
       queryClient.invalidateQueries(ARTICLES_LIST);
+      queryClient.invalidateQueries(CATEGORIES_LIST);
       options?.onSuccess?.();
     },
   });
@@ -39,6 +40,7 @@ export const useDestroyArticle = options => {
   return useMutation(articlesApi.destroy, {
     onSuccess: () => {
       queryClient.invalidateQueries(ARTICLES_LIST);
+      queryClient.invalidateQueries(CATEGORIES_LIST);
       options?.onSuccess?.();
     },
   });
@@ -51,6 +53,7 @@ export const useBulkDestroyArticles = options => {
     onSuccess: () => {
       queryClient.invalidateQueries(ARTICLES_LIST);
       queryClient.invalidateQueries(ARTICLE);
+      queryClient.invalidateQueries(CATEGORIES_LIST);
       options?.onSuccess?.();
     },
   });
@@ -63,6 +66,7 @@ export const useBulkUpdateArticles = options => {
     onSuccess: () => {
       queryClient.invalidateQueries(ARTICLES_LIST);
       queryClient.invalidateQueries(ARTICLE);
+      queryClient.invalidateQueries(CATEGORIES_LIST);
       options?.onSuccess?.();
     },
   });

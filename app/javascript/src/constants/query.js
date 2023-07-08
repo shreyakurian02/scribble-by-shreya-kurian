@@ -7,6 +7,7 @@ export const QUERY_KEYS = {
   PUBLIC_ARTICLES_LIST: "public-articles-list",
   PUBLIC_ARTICLE: "public-article",
   PUBLIC_CATEGORIES_LIST: "public-categories-list",
+  CATEGORIES_LIST: "categories-list",
   PUBLIC_SITE: "public-site",
 };
 

@@ -5,8 +5,7 @@ import React, { useState } from "react";
 import { Alert } from "neetoui";
 import { useTranslation } from "react-i18next";
 
-import categoriesApi from "apis/categories";
-import { useCategoriesDispatch } from "contexts/categories";
+import { useDestroyCategory } from "hooks/reactQuery/useCategoriesApi";
 
 import Message from "./Message";
 
@@ -15,19 +14,13 @@ const Delete = ({ isOpen, onClose, selectedCategory }) => {
 
   const [selectedMoveToCategory, setSelectedMoveToCategory] = useState({});
 
-  const { fetchCategories } = useCategoriesDispatch();
+  const { mutate: destroyCategory } = useDestroyCategory();
 
   const { id: selectedCategoryId } = selectedCategory;
 
-  const handleSubmit = async () => {
-    try {
-      const params = { move_to_category_id: selectedMoveToCategory.value };
-      await categoriesApi.destroy({ id: selectedCategoryId, params });
-      fetchCategories();
-      onClose();
-    } catch (error) {
-      logger.error(error);
-    }
+  const handleSubmit = () => {
+    const params = { move_to_category_id: selectedMoveToCategory.value };
+    destroyCategory({ id: selectedCategoryId, params });
   };
 
   return (

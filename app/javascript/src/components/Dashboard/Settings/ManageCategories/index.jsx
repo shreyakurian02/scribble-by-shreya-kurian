@@ -5,7 +5,7 @@ import { Button, Typography } from "neetoui";
 import { useTranslation } from "react-i18next";
 
 import AddCategory from "components/Dashboard/CategoryForm";
-import { useCategoriesState } from "contexts/categories";
+import { useFetchCategories } from "hooks/reactQuery/useCategoriesApi";
 
 import List from "./List";
 
@@ -16,7 +16,7 @@ const ManageCategories = () => {
 
   const [isAddCategoryModalOpen, setIsAddCategoryModalOpen] = useState(false);
 
-  const categories = useCategoriesState();
+  const { data: categories = [] } = useFetchCategories();
 
   return (
     <div className="mx-auto w-1/2 space-y-5 py-16">

@@ -4,8 +4,10 @@ import { Modal, Typography, Button } from "neetoui";
 import { Form, Input } from "neetoui/formik";
 import { useTranslation } from "react-i18next";
 
-import categoriesApi from "apis/categories";
-import { useCategoriesDispatch } from "contexts/categories";
+import {
+  useCreateCategory,
+  useUpdateCategory,
+} from "hooks/reactQuery/useCategoriesApi";
 
 import { VALIDATION_SCHEMA, INITIAL_VALUES } from "./constants";
 
@@ -16,7 +18,8 @@ const CategoryForm = ({
   isEdit = false,
 }) => {
   const { t } = useTranslation();
-  const { fetchCategories } = useCategoriesDispatch();
+  const { mutate: createCategory } = useCreateCategory({ onSuccess: onClose });
+  const { mutate: updateCategory } = useUpdateCategory({ onSuccess: onClose });
 
   const { name: selectedCategoryName, id: selectedCategoryId } =
     selectedCategory;
@@ -25,17 +28,14 @@ const CategoryForm = ({
     ? { category: selectedCategoryName }
     : INITIAL_VALUES;
 
-  const handleSubmit = async ({ category }) => {
-    try {
-      const payload = { name: category };
-      isEdit
-        ? await categoriesApi.update({ id: selectedCategoryId, payload })
-        : await categoriesApi.create(payload);
-      fetchCategories();
-      onClose();
-    } catch (error) {
-      logger.error(error);
-    }
+  const handleSubmit = ({ category }, { setSubmitting }) => {
+    const payload = { name: category };
+    isEdit
+      ? updateCategory(
+          { id: selectedCategoryId, payload },
+          { onSettled: () => setSubmitting(false) }
+        )
+      : createCategory(payload, { onSettled: () => setSubmitting(false) });
   };
 
   return (

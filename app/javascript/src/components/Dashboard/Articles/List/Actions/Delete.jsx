@@ -5,15 +5,12 @@ import { useTranslation, Trans } from "react-i18next";
 import { SINGULAR } from "src/constants";
 import { noop } from "src/utils";
 
-import { useCategoriesDispatch } from "contexts/categories";
 import { useDestroyArticle } from "hooks/reactQuery/useArticlesApi";
 
 const Delete = ({ manageDeleteAlert, onClose, setSelectedArticles = noop }) => {
   const { t } = useTranslation();
-  const { fetchCategories } = useCategoriesDispatch();
 
   const onDestroyArticleSuccess = () => {
-    fetchCategories();
     setSelectedArticles([]);
     onClose();
   };

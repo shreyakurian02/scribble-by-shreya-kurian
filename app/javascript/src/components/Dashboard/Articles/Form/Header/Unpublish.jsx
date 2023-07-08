@@ -63,7 +63,7 @@ const Unpublish = ({ isOpen, onClose, isEdit }) => {
       <Pane.Body>
         <div className="w-full space-y-2">
           {isArticleStatusDraft(status) && (
-            <Callout icon={Info}>
+            <Callout className="mb-3" icon={Info}>
               {t("messages.scheduledPublish", {
                 datetime: formatDate(publishScheduleDatetime),
               })}
