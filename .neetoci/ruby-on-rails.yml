@@ -1,0 +1,17 @@
+---
+plan_slug: standard-2
+triggers:
+- event: branch
+  branch_name: main
+- event: pull_request
+commands:
+- checkout
+- neetoci-version ruby 3.2.2
+- neetoci-version node 18.12
+- neetoci-service start postgres 15
+- neetoci-service start redis 7.0.5
+- cache restore
+- bundle install --deployment --path vendor/bundle
+- cache store
+- bundle exec rake db:setup
+- 
